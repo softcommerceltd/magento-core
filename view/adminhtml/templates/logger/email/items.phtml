@@ -1,0 +1,12 @@
+<?php
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var $block \SoftCommerce\Core\Block\Adminhtml\Logger\Email\Items */
+?>
+<?php foreach ($block->getItems() as $title => $contents) : ?>
+    <h3><?= $block->escapeHtml($title) ?></h3>
+    <?= $contents ?>
+<?php endforeach; ?>

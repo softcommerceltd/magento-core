@@ -1,0 +1,21 @@
+{
+    "name": "softcommerce/module-core",
+    "description": "Soft Commerce - Magento: Core Module.",
+    "require": {
+        "magento/framework": "^102||^103",
+        "php": "~7.2.0||~7.3.0||~7.4.0||~8.0.0",
+        "magento/magento-composer-installer": "*",
+        "magento/module-ui": "^101"
+    },
+    "type": "magento2-module",
+    "license": "EULA",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "SoftCommerce\\Core\\": ""
+        }
+    },
+    "version": "1.0.1"
+}

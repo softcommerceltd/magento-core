@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var $block \SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\ModuleList */
+?>
+<section class="module-list-container">
+    <div class="title">
+        <h2 class=""><?= $block->escapeHtml(__('List of installed modules:')) ?></h2>
+    </div>
+    <ul class="ul-list">
+        <?php foreach ($block->getList() as $moduleName => $moduleData): ?>
+            <?php if (!isset($moduleData['name'], $moduleData['package_name'], $moduleData['package_version'])) continue; ?>
+            <li class="list-item">
+                <b><?= $block->escapeHtml(__('Name:')) ?></b>
+                <span class="separator"><?= $moduleData['name'] ?></span>
+                <b><?= $block->escapeHtml(__('Package:')) ?></b>
+                <span class="separator"><?= $moduleData['package_name'] ?></span>
+                <b><?= $block->escapeHtml(__('Version:')) ?></b>
+                <span><?= $moduleData['package_version'] ?></span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</section>

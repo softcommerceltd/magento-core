@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © Soft Commerce Ltd. All rights reserved.
+ ~ See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="softcommerce_tab" translate="label" sortOrder="200" class="softcommerce-tab">
+            <label>Soft Commerce</label>
+        </tab>
+        <section id="softcommerce_core" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Core Configuration</label>
+            <tab>softcommerce_tab</tab>
+            <resource>SoftCommerce_Core::core_config</resource>
+            <group id="general" type="text" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="version" type="note" translate="label" sortOrder="1" showInDefault="1">
+                    <label>Version</label>
+                    <frontend_model>SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\Version</frontend_model>
+                    <comment>Current module version</comment>
+                </field>
+            </group>
+            <group id="vendor_module_list" translate="label" type="text" sortOrder="2" showInDefault="1">
+                <label>List of installed modules</label>
+                <frontend_model>SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\ModuleList</frontend_model>
+            </group>
+            <group id="dev" translate="label" type="text" sortOrder="3" showInDefault="1">
+                <label>Developer Settings</label>
+                <field id="is_active_log_rotation" translate="label comment" type="select" sortOrder="1" showInDefault="1">
+                    <label>Enable log rotation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Files are rotated every day and a limited number of files are kept.</comment>
+                </field>
+                <field id="is_active_log_print_to_array" translate="label comment" type="select" sortOrder="2" showInDefault="1">
+                    <label>Print data to array</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enables logging data in array format. This improves human readability but increases size of the file.</comment>
+                </field>
+                <field id="is_active_mail_log" translate="label" type="select" sortOrder="3" showInDefault="1">
+                    <label>Enable logging to Email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Global setting for "log over email" notifications.</comment>
+                </field>
+                <field id="mail_log_email" translate="label" type="text" sortOrder="4" showInDefault="1">
+                    <label>Email Recipient</label>
+                    <validate>validate-email</validate>
+                    <depends>
+                        <field id="is_active_mail_log">1</field>
+                    </depends>
+                </field>
+                <field id="mail_log_email_identity" translate="label" type="select" sortOrder="5" showInDefault="1">
+                    <label>Log Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <depends>
+                        <field id="is_active_mail_log">1</field>
+                    </depends>
+                </field>
+                <field id="mail_log_email_template" translate="label comment" type="select" sortOrder="6" showInDefault="1">
+                    <label>Log Email Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="is_active_mail_log">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="ui" translate="label" type="text" sortOrder="4" showInDefault="1">
+                <label>UI Settings</label>
+                <field id="is_active_fontawesome" translate="label comment" type="select" sortOrder="1" showInDefault="1">
+                    <label>Enable Font Awesome Icons</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fontawesome_resource" translate="label" type="text" sortOrder="2" showInDefault="1">
+                    <label>Fontawesome host URL</label>
+                    <validate>validate-url validate-no-html-tags</validate>
+                    <comment>Default source: https://use.fontawesome.com/releases/v6.1.1/css/all.css</comment>
+                    <depends>
+                        <field id="is_active_fontawesome">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

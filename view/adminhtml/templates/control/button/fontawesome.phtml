@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/**
+ * @var $block \SoftCommerce\Core\Ui\Component\Control\FontAwesomeButton
+ */
+?>
+<?= $block->getBeforeHtml() ?>
+<button <?= /* @noEscape */ $block->getAttributesHtml(), /* @noEscape */ $block->getUiId() ?>>
+    <?php  if ($block->getFontName() && $label = $block->getLabel()) : ?>
+        <i class="<?= /* @noEscape */ $block->getFontName() ?>" ></i>
+        <span><?= $block->escapeHtml($label) ?></span>
+    <?php  elseif ($fontName = $block->getFontName()) : ?>
+        <i class="<?= /* @noEscape */ $fontName ?>" ></i>
+    <?php elseif ($label = $block->getLabel()) : ?>
+        <span><?= $block->escapeHtml($label) ?></span>
+    <?php else : ?>
+        <span><?= __('Action') ?></span>
+    <?php endif ?>
+</button>
+<?= $block->getAfterHtml() ?>

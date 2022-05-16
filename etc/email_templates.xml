@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+ ~ Copyright © Soft Commerce Ltd. All rights reserved.
+ ~ See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template
+        id="softcommerce_core_dev_mail_log_email_template"
+        label="Email Log Template"
+        file="log-to-email.html"
+        type="text"
+        module="SoftCommerce_Core"
+        area="adminhtml"/>
+</config>

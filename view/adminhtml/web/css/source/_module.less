@@ -1,0 +1,102 @@
+// /**
+// * Copyright © Soft Commerce Ltd. All rights reserved.
+// * See LICENSE.txt for license details.
+// */
+
+@import '_bootstrap-utils.less';
+
+& when (@media-common = true) {
+    #menu-softcommerce-core-softcommerce-core {
+        > a:before {
+            content: '';
+            background-image: url('@{baseDir}SoftCommerce_Core/images/logo-s-menu.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+    .config-nav {
+        .softcommerce-tab {
+            .title {
+                strong {
+                    &:before {
+                        content: '';
+                        background: url('@{baseDir}SoftCommerce_Core/images/logo-s-menu.svg') no-repeat center;
+                        background-size: contain;
+                        display: inline-block;
+                        width: 1.6rem;
+                        height: 1.6rem;
+                        margin-right: 1rem;
+                        vertical-align: bottom;
+                    }
+                }
+            }
+        }
+    }
+    .module-list-container {
+        padding-top: 2rem;
+        .ul-list {
+            list-style: none;
+        }
+        .list-item {
+            padding: 0.5rem 0;
+            .separator {
+                border-right: 1px solid #676056;
+                padding: 0 1rem;
+                margin: 0 5px 0 0;
+            }
+        }
+    }
+}
+
+.modal-cell {
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0;
+    margin: 0;
+}
+.data-grid-cell-content {
+    i {
+        font-size: 1.8rem;
+        cursor: help;
+        color: #666;
+        &.empty {
+            cursor: default;
+        }
+    }
+}
+
+.modal-content {
+    .data-tree {
+        list-style: none;
+        .parent-node {
+        }
+
+        .child-node-title {
+            color: #999;
+        }
+
+        .child-node {
+            padding-left: 1.4rem;
+        }
+    }
+}
+
+/** Button actions **/
+
+.page-actions {
+    .actions-split {
+        &.secondary {
+            button {
+                &.primary {
+                    background-color: #514943;
+                    border-color: #eee;
+                    &:hover {
+                        background-color: #57524d;
+                        border-color: #ccc;
+                    }
+                }
+            }
+        }
+    }
+}

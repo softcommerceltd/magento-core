@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<div class="data-grid-cell-content modal-cell" attr="'modal-trigger': ++ko.uid">
+    <span data-bind="html: $col.getCellLabel($row())"/>
+    <!-- ko if:  $col.hasCellContent($row()) -->
+    <div data-bind="mageInit: {
+        'Magento_Ui/js/modal/modal':{
+            'type': 'slide',
+            'title': $col.getModalTitle(),
+            'trigger': '[modal-trigger=' + ko.uid + ']',
+            'responsive': true,
+            'buttons': []
+        }}">
+        <div class="content" data-bind="html: $col.getCellContent($row())"/>
+    </div>
+    <!-- /ko -->
+</div>

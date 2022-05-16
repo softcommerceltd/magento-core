@@ -1,0 +1,26 @@
+<!--
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<div class="data-grid-cell-content tooltip-cell text-center" attr="'data-tooltip-trigger': ++ko.uid">
+    <span data-bind="html: $col.getCellContent($row())"/>
+</div>
+
+<div tooltip="
+    trigger: '[data-tooltip-trigger=' + ko.uid + ']',
+    action: 'hover',
+    closeOnScroll: false,
+    delay: 0,
+    position: 'top',
+    step: 30,
+    track: false,
+    strict: true">
+    <div>
+        <div class="data-tooltip-title" data-bind="i18n: 'Status:'"></div>
+        <div class="data-tooltip-content">
+            <div class="content" data-bind="html: $col.getLabel($row())"/>
+        </div>
+    </div>
+</div>
