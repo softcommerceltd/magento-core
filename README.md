@@ -1,28 +1,21 @@
-# Magento - SoftCommerce Core
-Global Functionalities for bundle modules.
+# Magento - PlentyMarkets integration
+Metapackage of bundled modules.
 
 ## Requirements
-* [Magento 2.4](https://magento.com/tech-resources/download).
-* PHP 7.4.0 or later
+* [Magento 2.3.5 - 2.4.3](https://magento.com/tech-resources/download).
+* PHP 7.3.0 or later
 
 ## Installation
-
-### Install via FTP
-* Download compressed file and unzip it.
-* Login to your magento server and move to magento's app/code directory
-`cd app/code && mkdir SoftCommerce && cd SoftCommerce && mkdir Core` to create new directory app/code/SoftCommerce/Core
-* Upload contents to app/code/SoftCommerce/Core directory.
-* Move back to your magento root directory and execute "Post Installation" commands described bellow.
 
 ### Install via composer
 
 Run the following command from Magento root directory:
 
 ```
-composer config repositories.softcommerce-core vcs https://github.com/softcommerceltd/softcommerce-core.git
-composer require softcommerce/module-core
+composer config repositories.softcommerce-mage2plenty-ce vcs https://github.com/softcommerceltd/mage2plenty-open-source.git
+composer require softcommerce/mage2plenty-ce
 ```
-If you receive an error regarding php incompatibility, but you are sure your php version is compatible, then use --ignore-platform-reqs
+If you receive an error regarding any incompatibility - use --ignore-platform-reqs
 ```
 composer require softcommerce/module-core --ignore-platform-reqs
 ```
