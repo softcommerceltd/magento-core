@@ -1,5 +1,5 @@
 # Magento - SoftCommerce Core module
-Global Functionalities for bundle modules.
+Global Functionalities for bundle.
 
 ## Requirements
 * [Magento 2.3.5 - 2.4.3](https://magento.com/tech-resources/download).
