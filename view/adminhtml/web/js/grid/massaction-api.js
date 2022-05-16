@@ -6,7 +6,7 @@ define([
     'jquery',
     'Magento_Ui/js/modal/alert',
     'mage/translate',
-], function($, alert) {
+], function ($, alert) {
     'use strict';
 
     $.widget('plenty.gridMassActionApi', {
@@ -16,18 +16,18 @@ define([
             title: ''
         },
 
-        _create: function() {
+        _create: function () {
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             let self = this;
-            self.element.on('click', function() {
+            self.element.on('click', function () {
                 self._ajaxSubmit();
             });
         },
 
-        _ajaxSubmit: function() {
+        _ajaxSubmit: function () {
             let self = this;
             $.ajax({
                 url: self.options.url,
@@ -45,7 +45,7 @@ define([
                     content: message,
                     modalClass: 'alert',
                     actions: {
-                        always: function() {
+                        always: function () {
                             if (self.options.gridObject) {
                                 self._gridJsObject().resetFilter();
                             }
@@ -72,8 +72,7 @@ define([
             return html += '</ul>';
         },
 
-        _gridJsObject: function()
-        {
+        _gridJsObject: function () {
             return window[this.options.gridObject];
         },
     });
