@@ -1,5 +1,5 @@
-# Magento - PlentyMarkets integration
-Metapackage of bundled modules.
+# Magento - SoftCommerce Core module
+Global Functionalities for bundle modules.
 
 ## Requirements
 * [Magento 2.3.5 - 2.4.3](https://magento.com/tech-resources/download).
@@ -12,10 +12,10 @@ Metapackage of bundled modules.
 Run the following command from Magento root directory:
 
 ```
-composer config repositories.softcommerce-mage2plenty-ce vcs https://github.com/softcommerceltd/mage2plenty-open-source.git
-composer require softcommerce/mage2plenty-ce
+composer config repositories.softcommerce-core vcs https://github.com/softcommerceltd/magento-core.git
+composer require softcommerce/module-core
 ```
-If you receive an error regarding any incompatibility - use --ignore-platform-reqs
+If you receive an error regarding php incompatibility, but you are sure your php version is compatible, then use --ignore-platform-reqs
 ```
 composer require softcommerce/module-core --ignore-platform-reqs
 ```
