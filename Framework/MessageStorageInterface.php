@@ -12,13 +12,14 @@ use SoftCommerce\Core\Model\Source\Status;
 
 /**
  * Interface MessageStorageInterface used to store
- * messages as array data
+ * and retrieve messages in array format.
  */
 interface MessageStorageInterface
 {
     public const ENTITY = 'entity';
     public const STATUS = 'status';
     public const MESSAGE = 'message';
+    public const PARAMS = 'params';
 
     /**
      * @param int|string|null $entity
@@ -28,12 +29,19 @@ interface MessageStorageInterface
     public function getData($entity = null, array $status = []): array;
 
     /**
+     * @param string $status
+     * @return array
+     */
+    public function getDataByStatus(string $status): array;
+
+    /**
      * @param string|array|mixed $message
      * @param int|string $entity
      * @param string $status
+     * @param array $params [additional parameters]
      * @return $this
      */
-    public function addData($message, $entity, string $status = Status::SUCCESS);
+    public function addData($message, $entity, string $status = Status::SUCCESS, array $params = []);
 
     /**
      * @param array $data
@@ -43,6 +51,7 @@ interface MessageStorageInterface
 
     /**
      * @param array $data
+     * @param null $entity
      * @param int|string|null $key
      * @return $this
      */

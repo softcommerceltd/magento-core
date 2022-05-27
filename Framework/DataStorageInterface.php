@@ -47,7 +47,7 @@ interface DataStorageInterface
      * @param int|string|null $key
      * @return $this
      */
-    public function mergeRecusiveData($data, $key = null);
+    public function mergeRecursiveData($data, $key = null);
 
     /**
      * @param int|string|null $key

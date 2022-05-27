@@ -243,28 +243,32 @@ abstract class AbstractResource extends AbstractDb
      * @return array
      * @throws LocalizedException
      */
-    public function getAllIds(?string $fieldName = null)
+    public function getAllIds(?string $fieldName = null): array
     {
         if (null === $fieldName) {
             $fieldName = $this->getIdFieldName();
         }
         $connection = $this->getConnection();
         $select = $connection->select()->from($this->getMainTable(), [$fieldName]);
-        return $this->getConnection()->fetchCol($select);
+        return $this->getConnection()->fetchCol($select) ?: [];
     }
 
     /**
      * @param string|int $status
      * @param array $entityIds
-     * @return $this
+     * @return int
      * @throws LocalizedException
      */
     public function updateStatus($status = 'pending', array $entityIds = [])
     {
         $data = ['status' => $status];
         $where = empty($entityIds) ? '' : [$this->getIdFieldName() . ' in (?)' => $entityIds];
-        $this->getConnection()->update($this->getMainTable(), $data, $where);
-        return $this;
+
+        return $this->getConnection()->update(
+            $this->getMainTable(),
+            $data,
+            $where
+        );
     }
 
     /**
@@ -313,25 +317,17 @@ abstract class AbstractResource extends AbstractDb
         string $primaryKey = 'entity_id',
         ?string $pairKey = null
     ) {
-        var_dump('$data', $data);
         $requestRowCount = count(array_keys($data));
-        var_dump('$requestRowCount', $requestRowCount);
         $responseRowCount = $this->insertOnDuplicate($data, $fields);
-        var_dump('$responseRowCount', $responseRowCount);
         $lastInsertId = $this->getLastInsertId();
-        var_dump('$lastInsertId', $lastInsertId);
 
         $cols = [$primaryKey];
         if (null !== $pairKey) {
             array_unshift($cols, $pairKey);
         }
 
-        $select = $this->getConnection()->select()
-            ->from(['main_tb' => $this->getMainTable()], $cols);
-
+        $select = $this->getConnection()->select()->from(['main_tb' => $this->getMainTable()], $cols);
         if (null !== $pairKey && $requestIds = array_column($data, $pairKey)) {
-            var_dump('$requestIds', $requestIds);
-
             $select->where('main_tb.' . $pairKey . ' in (?)', $requestIds);
             return $this->getConnection()->fetchPairs($select);
         }

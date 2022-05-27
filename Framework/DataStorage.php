@@ -8,6 +8,14 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Framework;
 
+use function array_merge;
+use function array_merge_recursive;
+use function array_key_first;
+use function count;
+use function current;
+use function explode;
+use function is_array;
+
 /**
  * @inheritDoc
  */
@@ -42,7 +50,7 @@ class DataStorage implements DataStorageInterface
     public function setData($data, $key = null, ?string $keySeparator = null)
     {
         if (null !== $keySeparator) {
-            $this->setMultidimensionalData(explode('/', $key), $data);
+            return $this->setMultidimensionalData(explode('/', $key), $data);
         }
 
         null !== $key
@@ -76,7 +84,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function mergeRecusiveData($data, $key = null)
+    public function mergeRecursiveData($data, $key = null)
     {
         null !== $key
             ? $this->data[$key] = array_merge_recursive(
@@ -128,7 +136,8 @@ class DataStorage implements DataStorageInterface
         $data = $value;
 
         if ($result) {
-            $this->data[key($result)] = current($result);
+            $index = array_key_first($result);
+            $this->data[$index] = array_merge($this->data[$index], current($result));
         }
 
         return $this;

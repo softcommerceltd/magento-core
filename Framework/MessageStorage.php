@@ -9,6 +9,11 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Framework;
 
 use SoftCommerce\Core\Model\Source\Status;
+use function array_filter;
+use function array_merge_recursive;
+use function array_keys;
+use function array_unique;
+use function in_array;
 
 /**
  * @inheritDoc
@@ -21,9 +26,7 @@ class MessageStorage implements MessageStorageInterface
     private $data = [];
 
     /**
-     * @param int|string|null $entity
-     * @param array $status
-     * @return array
+     * @inheritDoc
      */
     public function getData($entity = null, array $status = []): array
     {
@@ -36,12 +39,18 @@ class MessageStorage implements MessageStorageInterface
         }
 
         $resultData = [];
-        foreach ($data as $entity => $items) {
+        foreach ($data as $index => $items) {
+            if (isset($items[self::STATUS]) && in_array($items[self::STATUS], $status)) {
+                $resultData[$index] = $items;
+                continue;
+            }
+
             $result = array_filter($items, function ($item) use ($status) {
                 return isset($item[self::STATUS]) && in_array($item[self::STATUS], $status);
             });
-            if (!empty($result)) {
-                $resultData[$entity] = $result;
+
+            if ($result) {
+                $resultData[$index] = $result;
             }
         }
 
@@ -49,24 +58,38 @@ class MessageStorage implements MessageStorageInterface
     }
 
     /**
-     * @param string|array|mixed $message
-     * @param int|string $entity
-     * @param string $status
-     * @return $this
+     * @inheritDoc
      */
-    public function addData($message, $entity, string $status = Status::SUCCESS)
+    public function getDataByStatus(string $status): array
+    {
+        $result = [];
+        foreach ($this->getData() as $entity => $items) {
+            foreach ($items as $index => $item) {
+                if ($status === ($item[self::STATUS] ?? '')) {
+                    $result[$entity][$index] = $item;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addData($message, $entity, string $status = Status::SUCCESS, array $params = [])
     {
         $this->data[$entity][] = [
             self::ENTITY => $entity,
             self::STATUS => $status,
-            self::MESSAGE => $message
+            self::MESSAGE => $message,
+            self::PARAMS => $params
         ];
         return $this;
     }
 
     /**
-     * @param array $data
-     * @return $this
+     * @inheritDoc
      */
     public function setData(array $data)
     {
@@ -75,20 +98,19 @@ class MessageStorage implements MessageStorageInterface
     }
 
     /**
-     * @param array $data
-     * @param int|string|null $key
-     * @return $this
+     * @inheritDoc
      */
     public function mergeData(array $data, $key = null)
     {
         null !== $key
             ? $this->data[$key] = array_merge_recursive($this->data[$key] ?? [], $data[$key] ?? [])
             : $this->data = array_merge_recursive($this->data, $data);
+
         return $this;
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getEntityIds(): array
     {
@@ -96,8 +118,7 @@ class MessageStorage implements MessageStorageInterface
     }
 
     /**
-     * @param  int|string|null $key
-     * @return $this
+     * @inheritDoc
      */
     public function resetData($key = null)
     {
