@@ -10,6 +10,10 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
 
 use SoftCommerce\Core\Framework\MessageStorageInterface;
 use SoftCommerce\Core\Model\Source\Status;
+use function array_column;
+use function array_merge;
+use function in_array;
+use function is_array;
 
 /**
  * @inheritDoc
@@ -17,9 +21,7 @@ use SoftCommerce\Core\Model\Source\Status;
 class StatusPrediction implements StatusPredictionInterface
 {
     /**
-     * @param array $data
-     * @param string $fallback
-     * @return string
+     * @inheritDoc
      */
     public function execute(array $data, string $fallback = Status::SUCCESS): string
     {

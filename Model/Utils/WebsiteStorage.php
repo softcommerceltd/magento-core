@@ -297,10 +297,7 @@ class WebsiteStorage implements WebsiteStorageInterface
                 }
 
                 $id = (int) $item['store_id'];
-                if (isset($item['is_default_website'], $item['default_store_id'])
-                    && $item['is_default_website']
-                    // && ($item['default_store_id'] == $item['store_id'])
-                ) {
+                if (isset($item['is_default_website'], $item['default_store_id']) && $item['is_default_website']) {
                     $this->storeIdToAdminWebsiteStoreId[$id] = 0;
                 } else {
                     $this->storeIdToAdminWebsiteStoreId[$id] = $id;

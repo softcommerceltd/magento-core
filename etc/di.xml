@@ -9,6 +9,7 @@
     <preference for="SoftCommerce\Core\Framework\DataMap\StatusToLabelMappingInterface" type="SoftCommerce\Core\Framework\DataMap\StatusToLabelMapping"/>
     <!-- global framework interfaces :: data storage-->
     <preference for="SoftCommerce\Core\Framework\DataStorageInterface" type="SoftCommerce\Core\Framework\DataStorage"/>
+    <preference for="SoftCommerce\Core\Framework\EntityDataStorageInterface" type="SoftCommerce\Core\Framework\EntityDataStorage"/>
     <preference for="SoftCommerce\Core\Framework\DataStorage\OutputArrayInterface" type="SoftCommerce\Core\Framework\DataStorage\OutputArray"/>
     <preference for="SoftCommerce\Core\Framework\DataStorage\OutputArrayPrintReadableInterface" type="SoftCommerce\Core\Framework\DataStorage\OutputArrayPrintReadable"/>
     <preference for="SoftCommerce\Core\Framework\DataStorage\OutputHtmlInterface" type="SoftCommerce\Core\Framework\DataStorage\OutputHtml"/>

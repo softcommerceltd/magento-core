@@ -19,7 +19,6 @@ interface MessageStorageInterface
     public const ENTITY = 'entity';
     public const STATUS = 'status';
     public const MESSAGE = 'message';
-    public const PARAMS = 'params';
 
     /**
      * @param int|string|null $entity
@@ -38,10 +37,9 @@ interface MessageStorageInterface
      * @param string|array|mixed $message
      * @param int|string $entity
      * @param string $status
-     * @param array $params [additional parameters]
      * @return $this
      */
-    public function addData($message, $entity, string $status = Status::SUCCESS, array $params = []);
+    public function addData($message, $entity, string $status = Status::SUCCESS);
 
     /**
      * @param array $data
@@ -51,7 +49,6 @@ interface MessageStorageInterface
 
     /**
      * @param array $data
-     * @param null $entity
      * @param int|string|null $key
      * @return $this
      */
