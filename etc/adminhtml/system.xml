@@ -13,7 +13,7 @@
             <label>Core Configuration</label>
             <tab>softcommerce_tab</tab>
             <resource>SoftCommerce_Core::core_config</resource>
-            <group id="general" type="text" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" type="text" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
                 <field id="version" type="note" translate="label" sortOrder="1" showInDefault="1">
                     <label>Version</label>
@@ -21,11 +21,7 @@
                     <comment>Current module version</comment>
                 </field>
             </group>
-            <group id="vendor_module_list" translate="label" type="text" sortOrder="2" showInDefault="1">
-                <label>List of installed modules</label>
-                <frontend_model>SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\ModuleList</frontend_model>
-            </group>
-            <group id="dev" translate="label" type="text" sortOrder="3" showInDefault="1">
+            <group id="dev" translate="label" type="text" showInDefault="1">
                 <label>Developer Settings</label>
                 <field id="is_active_log_rotation" translate="label comment" type="select" sortOrder="1" showInDefault="1">
                     <label>Enable log rotation</label>
@@ -65,7 +61,7 @@
                     </depends>
                 </field>
             </group>
-            <group id="ui" translate="label" type="text" sortOrder="4" showInDefault="1">
+            <group id="ui" translate="label" type="text" showInDefault="1">
                 <label>UI Settings</label>
                 <field id="is_active_fontawesome" translate="label comment" type="select" sortOrder="1" showInDefault="1">
                     <label>Enable Font Awesome Icons</label>
@@ -79,6 +75,10 @@
                         <field id="is_active_fontawesome">1</field>
                     </depends>
                 </field>
+            </group>
+            <group id="vendor_module_list" translate="label" type="text" showInDefault="1">
+                <label>List of installed modules</label>
+                <frontend_model>SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\ModuleList</frontend_model>
             </group>
         </section>
     </system>

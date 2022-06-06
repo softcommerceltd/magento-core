@@ -1,8 +1,12 @@
 ## Changelog
 
+### Version 1.0.3
+- **Feature**: New module to handle Plenty Log services. [#3]
+- **Compatibility**: Compatibility with Magento Open Source 2.3.5 - 2.4.3 [#2]
+- **Enhancement**: Integration Tests [#1]
+
 ### Version 1.0.2
 - **Feature**: Added new entity data storage for request and response queries.
-- **Compatibility**: Magento 2.4.3 compatibility and general code improvement.
 - **Compatibility**: Compatibility with removed \Laminas\Log\Loger package.
 
 ### Version 1.0.1

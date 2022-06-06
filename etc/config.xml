@@ -9,6 +9,9 @@
             <dev>
                 <mail_log_email_template>softcommerce_core_dev_mail_log_email_template</mail_log_email_template>
             </dev>
+            <ui>
+                <is_active_fontawesome>1</is_active_fontawesome>
+            </ui>
         </softcommerce_core>
     </default>
 </config>
