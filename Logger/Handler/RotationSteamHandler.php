@@ -57,7 +57,7 @@ class RotationSteamHandler extends RotatingFileHandler
     /**
      * @inheritDoc
      */
-    protected function write(array $record)
+    protected function write(array $record): void
     {
         $logDirectory = $this->filesystem->getParentDirectory($this->url);
         if (!$this->filesystem->isDirectory($logDirectory)) {

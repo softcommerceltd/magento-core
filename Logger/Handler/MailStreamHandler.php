@@ -67,10 +67,11 @@ class MailStreamHandler extends MailHandler
      * @param string $content
      * @param array $records
      * @param bool $forceSend
+     * @return void
      * @throws LocalizedException
      * @throws MailException
      */
-    protected function send($content, array $records, bool $forceSend = false)
+    protected function send(string $content, array $records, bool $forceSend = false): void
     {
         if (false === $forceSend && !$this->scopeConfig->getValue(self::XML_PATH_IS_ACTIVE)) {
             return;
