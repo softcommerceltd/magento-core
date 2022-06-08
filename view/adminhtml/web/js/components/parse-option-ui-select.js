@@ -52,7 +52,7 @@ define([
 
             if (!_.isUndefined(optionIndex)) {
                 existingOptions.splice(optionIndex, 1, option);
-                // this.value(null);
+                this.value(null);
             } else {
                 existingOptions.push(option);
             }
