@@ -64,4 +64,12 @@ class GetEntityMetadata implements GetEntityMetadataInterface
         }
         return $this->identifierField[$entityType];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateIdentifier(string $entityType = ProductInterface::class): int
+    {
+        return (int) $this->metadataPool->getMetadata($entityType)->generateIdentifier();
+    }
 }

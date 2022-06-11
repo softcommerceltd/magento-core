@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.1
+- **Enhancement**: [M2P-7] Add support for sequence entity ID generation to `\SoftCommerce\Core\Model\Utils\GetEntityMetadata`.
+
 ### Version 1.2.0
 - **Compatibility**: Compatibility with Magento Open Source 2.4.4 [#4]
 
