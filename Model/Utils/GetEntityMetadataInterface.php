@@ -29,4 +29,11 @@ interface GetEntityMetadataInterface
      * @throws \Exception
      */
     public function getIdentifierField(string $entityType = ProductInterface::class): string;
+
+    /**
+     * @param string $entityType
+     * @return int
+     * @throws \Exception
+     */
+    public function generateIdentifier(string $entityType = ProductInterface::class): int;
 }
