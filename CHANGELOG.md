@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.4
+- **Enhancement**: Changes to PDT.
+
 ### Version 1.0.3
 - **Enhancement**: [M2P-7] Add support for sequence entity ID generation to `\SoftCommerce\Core\Model\Utils\GetEntityMetadata`.
 
