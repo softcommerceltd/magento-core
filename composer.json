@@ -2,9 +2,9 @@
     "name": "softcommerce/module-core",
     "description": "Soft Commerce - Magento: Core Module.",
     "require": {
-        "magento/framework": "^102",
         "php": "~7.2.0||~7.3.0||~7.4.0",
         "magento/magento-composer-installer": "*",
+        "magento/framework": "^102||^103",
         "magento/module-ui": "^101"
     },
     "type": "magento2-module",
@@ -17,5 +17,5 @@
             "SoftCommerce\\Core\\": ""
         }
     },
-    "version": "1.0.4"
+    "version": "1.0.5"
 }

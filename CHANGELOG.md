@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.5
+- **Fix**: Added fix to composer.json dependencies.
+
 ### Version 1.0.4
 - **Enhancement**: Changes to PDT.
 
