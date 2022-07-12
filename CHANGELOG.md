@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.6
+- **Fix**: JQMIGRATE: HTML tags must be properly nested and closed.
+
 ### Version 1.0.5
 - **Fix**: Added fix to composer.json dependencies.
 
