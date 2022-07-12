@@ -337,7 +337,7 @@ abstract class AbstractResource extends AbstractDb
             : ' >= ?';
 
         $select->where("main_tb.$primaryKey $condition", $lastInsertId)
-            ->order("$primaryKey "  . Select::SQL_DESC)
+            ->order("$primaryKey " . Select::SQL_DESC)
             ->limit(min($requestRowCount, $responseRowCount));
 
         if (null !== $pairKey) {
