@@ -5,7 +5,7 @@
  */
 -->
 <div class="data-grid-cell-content modal-cell" attr="'modal-trigger': ++ko.uid">
-    <span data-bind="html: $col.getCellLabel($row())"/>
+    <span data-bind="html: $col.getCellLabel($row())"></span>
     <!-- ko if:  $col.hasCellContent($row()) -->
     <div data-bind="mageInit: {
         'Magento_Ui/js/modal/modal':{
@@ -15,7 +15,7 @@
             'responsive': true,
             'buttons': []
         }}">
-        <div class="content" data-bind="html: $col.getCellContent($row())"/>
+        <div class="content" data-bind="html: $col.getCellContent($row())"></div>
     </div>
     <!-- /ko -->
 </div>

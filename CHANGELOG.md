@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.3
+- **Fix**: JQMIGRATE: HTML tags must be properly nested and closed.
+
 ### Version 1.2.2
 - **Enhancement**: Changes to PDT.
 
