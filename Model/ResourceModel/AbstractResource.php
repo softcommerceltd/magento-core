@@ -364,11 +364,11 @@ abstract class AbstractResource extends AbstractDb
     }
 
     /**
-     * @param $where
+     * @param array|string|null $where
      * @return int
      * @throws LocalizedException
      */
-    public function remove($where)
+    public function remove($where = '')
     {
         return $this->getConnection()->delete($this->getMainTable(), $where);
     }

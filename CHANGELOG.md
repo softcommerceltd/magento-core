@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.4
+- **Compatibility**: Compatibility with Magento Extension Quality Program (EQP).
+
 ### Version 1.2.3
 - **Fix**: JQMIGRATE: HTML tags must be properly nested and closed.
 
