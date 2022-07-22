@@ -39,6 +39,9 @@ class ModuleList extends Field
         parent::__construct($context, $data);
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function _getElementHtml(AbstractElement $element)
     {
         return $this->toHtml();
@@ -47,7 +50,7 @@ class ModuleList extends Field
     /**
      * @return array
      */
-    public function getList()
+    public function getList(): array
     {
         return $this->moduleListProvider->getList();
     }

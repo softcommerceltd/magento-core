@@ -25,7 +25,6 @@ class Version extends Field
     private $packageInfo;
 
     /**
-     * Version constructor.
      * @param PackageInfo $packageInfo
      * @param Context $context
      * @param array $data
