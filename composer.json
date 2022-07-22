@@ -4,7 +4,6 @@
     "require": {
         "magento/framework": "^102||^103",
         "php": "~7.4.0||~8.0.0||~8.1.0",
-        "magento/magento-composer-installer": "*",
         "magento/module-ui": "^101"
     },
     "type": "magento2-module",
@@ -17,5 +16,5 @@
             "SoftCommerce\\Core\\": ""
         }
     },
-    "version": "1.2.3"
+    "version": "1.2.4"
 }

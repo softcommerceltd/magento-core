@@ -40,13 +40,22 @@ class MessageStorage implements MessageStorageInterface
 
         $resultData = [];
         foreach ($data as $index => $items) {
+            if (!is_array($items)) {
+                if (in_array($items, $status)) {
+                    $resultData[$index] = $items;
+                }
+                continue;
+            }
+
             if (isset($items[self::STATUS]) && in_array($items[self::STATUS], $status)) {
                 $resultData[$index] = $items;
                 continue;
             }
 
             $result = array_filter($items, function ($item) use ($status) {
-                return isset($item[self::STATUS]) && in_array($item[self::STATUS], $status);
+                return is_array($item)
+                    && isset($item[self::STATUS])
+                    && in_array($item[self::STATUS], $status);
             });
 
             if ($result) {
