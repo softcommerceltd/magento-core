@@ -2,8 +2,8 @@
     "name": "softcommerce/module-core",
     "description": "Soft Commerce - Magento: Core Module.",
     "require": {
-        "magento/framework": "^102||^103",
         "php": "~7.4.0||~8.0.0||~8.1.0",
+        "magento/framework": "^102||^103",
         "magento/module-ui": "^101"
     },
     "type": "magento2-module",
