@@ -16,9 +16,9 @@ use Magento\Framework\Data\OptionSourceInterface;
 class StatusError extends Status implements OptionSourceInterface
 {
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             ['value' => self::CRITICAL, 'label' => __('Critical')],

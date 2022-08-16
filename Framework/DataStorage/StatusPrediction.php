@@ -16,9 +16,7 @@ use SoftCommerce\Core\Model\Source\Status;
 class StatusPrediction implements StatusPredictionInterface
 {
     /**
-     * @param array $data
-     * @param array|string $fallback
-     * @return string
+     * @inheritDoc
      */
     public function execute(array $data, $fallback = Status::SUCCESS): string
     {
