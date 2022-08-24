@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.6
+- **Enhancement**: Improvements to `SkuStorage` functionality.
+
 ### Version 1.2.5
 - **Enhancement**: Improvements to ACL rules.
 

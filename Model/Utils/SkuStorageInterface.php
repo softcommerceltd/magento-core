@@ -39,7 +39,7 @@ interface SkuStorageInterface
      * @return bool
      * @throws \Exception
      */
-    public function isExistsSku(string $sku): bool;
+    public function isSkuExists(string $sku): bool;
 
     /**
      * @param string $sku
