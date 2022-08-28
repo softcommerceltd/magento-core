@@ -1,5 +1,9 @@
 ## Changelog
 
+### Version 1.1.5
+- **Enhancement**: Improvements to `SkuStorage` functionality.
+- **Enhancement**: Improvements to ACL rules.
+
 ### Version 1.1.4
 - **Compatibility**: Compatibility with Magento Extension Quality Program (EQP).
 

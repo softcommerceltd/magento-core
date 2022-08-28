@@ -17,7 +17,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="SoftCommerce_Core::core_config" title="SoftCommerce Core Configuration" translate="title" sortOrder="10"/>
+                            <resource id="SoftCommerce_Core::system_config" title="SoftCommerce Core Section" translate="title" sortOrder="999"/>
                         </resource>
                     </resource>
                 </resource>

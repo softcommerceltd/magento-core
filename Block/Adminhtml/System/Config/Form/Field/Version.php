@@ -25,25 +25,33 @@ class Version extends Field
     private $packageInfo;
 
     /**
+     * @var string
+     */
+    private $moduleName;
+
+    /**
      * @param PackageInfo $packageInfo
      * @param Context $context
+     * @param string|null $moduleName
      * @param array $data
      */
     public function __construct(
         PackageInfo $packageInfo,
         Context $context,
+        ?string $moduleName = null,
         array $data = []
     ) {
         $this->packageInfo = $packageInfo;
+        $this->moduleName = $moduleName ?: 'SoftCommerce_Core';
         parent::__construct($context, $data);
     }
 
     /**
      * @inheritDoc
      */
-    protected function _getElementHtml(AbstractElement $element)
+    protected function _getElementHtml(AbstractElement $element): string
     {
-        $element->setData('text', $this->packageInfo->getVersion('SoftCommerce_Core'));
+        $element->setData('text', $this->packageInfo->getVersion($this->moduleName));
         return parent::_getElementHtml($element);
     }
 }

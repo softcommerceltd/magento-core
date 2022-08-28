@@ -80,7 +80,7 @@ class SkuStorage implements SkuStorageInterface
     /**
      * @inheritDoc
      */
-    public function isExistsSku(string $sku): bool
+    public function isSkuExists(string $sku): bool
     {
         return (bool) $this->getData($sku);
     }
@@ -90,7 +90,8 @@ class SkuStorage implements SkuStorageInterface
      */
     public function isNewSku(string $sku): bool
     {
-        return (bool) $this->getData($sku, self::IS_NEW_SKU);
+        $skuData = $this->getData($sku);
+        return !$skuData || false !== ($skuData[self::IS_NEW_SKU] ?? false);
     }
 
     /**
@@ -131,6 +132,7 @@ class SkuStorage implements SkuStorageInterface
         foreach ($this->connection->fetchAll($select) as $item) {
             $sku = $this->parseSku($item['sku'] ?? '');
             $item['website_ids'] = isset($item['website_ids']) ? explode(',', $item['website_ids']) : [];
+            $item[self::IS_NEW_SKU] = false;
             $result[$sku] = $item;
         }
 

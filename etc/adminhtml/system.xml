@@ -14,15 +14,7 @@
             <class>separator-top</class>
             <label>Core Configuration</label>
             <tab>softcommerce_tab</tab>
-            <resource>SoftCommerce_Core::core_config</resource>
-            <group id="general" type="text" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>General</label>
-                <field id="version" type="note" translate="label" sortOrder="1" showInDefault="1">
-                    <label>Version</label>
-                    <frontend_model>SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field\Version</frontend_model>
-                    <comment>Current module version</comment>
-                </field>
-            </group>
+            <resource>SoftCommerce_Core::system_config</resource>
             <group id="dev" translate="label" type="text" showInDefault="1">
                 <label>Developer Settings</label>
                 <field id="is_active_log_rotation" translate="label comment" type="select" sortOrder="1" showInDefault="1">

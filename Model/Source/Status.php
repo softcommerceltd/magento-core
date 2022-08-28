@@ -68,7 +68,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             ['value' => self::CRITICAL, 'label' => __('Critical')],
@@ -85,7 +85,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionArrayScheduleStatus()
+    public function toOptionArrayScheduleStatus(): array
     {
         return [
             ['value' => self::ERROR, 'label' => __('Error')],
@@ -99,7 +99,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionArrayScheduleHistoryStatus()
+    public function toOptionArrayScheduleHistoryStatus(): array
     {
         return [
             ['value' => self::ERROR, 'label' => __('Error')],
@@ -112,7 +112,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionHashScheduleHistoryStatuses()
+    public function toOptionHashScheduleHistoryStatuses(): array
     {
         $options =[];
         foreach ($this->toOptionArrayScheduleHistoryStatus() as $index => $item) {
@@ -125,7 +125,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionArrayImportExportStatus()
+    public function toOptionArrayImportExportStatus(): array
     {
         return [
             ['value' => self::ERROR, 'label' => __('Error')],
@@ -141,7 +141,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function getImportExportStatusOptionsArray()
+    public function getImportExportStatusOptionsArray(): array
     {
         $options = [];
         foreach ($this->toOptionArrayImportExportStatus() as $item) {
@@ -154,7 +154,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionArrayExportStatus()
+    public function toOptionArrayExportStatus(): array
     {
         return [
             ['value' => self::FAILED, 'label' => __('Failed')],
@@ -168,7 +168,7 @@ class Status implements StatusInterface
     /**
      * @return array
      */
-    public function toOptionHashImportExportStatus()
+    public function toOptionHashImportExportStatus(): array
     {
         $options = [];
         foreach ($this->toOptionArrayImportExportStatus() as $item) {
