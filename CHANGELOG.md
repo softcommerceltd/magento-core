@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.7
+- **Enhancement**: Added option to store multidimensional data to `SoftCommerce\Core\Framework\DataStorageInterface::setData`.
+
 ### Version 1.2.6
 - **Enhancement**: Improvements to `SkuStorage` functionality.
 
