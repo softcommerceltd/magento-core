@@ -8,7 +8,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name='root'>
-            <block class='SoftCommerce\Core\Block\Adminhtml\Page\Assets\FontAwesomeInit' name='plenty_core.fontawesome.init'/>
+            <block class='SoftCommerce\Core\Block\Adminhtml\Page\Assets\FontAwesomeInit' name='softcommerce_core.fontawesome.init'/>
         </referenceContainer>
     </body>
 </page>
