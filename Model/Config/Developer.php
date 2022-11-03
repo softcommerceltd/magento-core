@@ -32,7 +32,7 @@ class Developer implements DeveloperInterface
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        string $entityType = 'plenty_core'
+        string $entityType = 'softcommerce_core'
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->entity = $entityType;
