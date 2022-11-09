@@ -22,12 +22,12 @@ class StatusRenderer extends Column
     /**
      * @var StatusToFaMappingInterface
      */
-    private $statusToFaMapping;
+    private StatusToFaMappingInterface $statusToFaMapping;
 
     /**
      * @var StatusToLabelMappingInterface
      */
-    private $statusToLabelMapping;
+    private StatusToLabelMappingInterface $statusToLabelMapping;
 
     /**
      * @param StatusToFaMappingInterface $statusToFaMapping
@@ -53,7 +53,7 @@ class StatusRenderer extends Column
     /**
      * @inheritDoc
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         $componentIndex = $this->getData('name');
         foreach ($dataSource['data']['items'] ?? [] as $index => $item) {

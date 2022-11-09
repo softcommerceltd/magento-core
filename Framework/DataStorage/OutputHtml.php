@@ -26,17 +26,17 @@ class OutputHtml implements OutputHtmlInterface
     /**
      * @var string
      */
-    private $dataOutputToHtml;
+    private string $dataOutputToHtml = '';
 
     /**
      * @var Status
      */
-    private $statusOptions;
+    private Status $statusOptions;
 
     /**
      * @var int
      */
-    private $index;
+    private int $index = 0;
 
     /**
      * @param Status $statusOptions

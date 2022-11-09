@@ -15,7 +15,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\Math\Random;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
-use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * Class Serialized
@@ -24,40 +24,39 @@ use Magento\Framework\Serialize\Serializer\Json;
 class Serialized extends Value
 {
     /**
-     * @var Json
+     * @var Json|mixed
      */
     protected $serializer;
 
     /**
      * @var Random
      */
-    protected $mathRandom;
+    protected Random $mathRandom;
 
     /**
-     * Serialized constructor.
+     * @param Random $mathRandom
+     * @param SerializerInterface $serializer
      * @param Context $context
      * @param Registry $registry
      * @param ScopeConfigInterface $config
      * @param TypeListInterface $cacheTypeList
-     * @param Random $mathRandom
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
-     * @param Json|null $serializer
      */
     public function __construct(
+        Random $mathRandom,
+        SerializerInterface $serializer,
         Context $context,
         Registry $registry,
         ScopeConfigInterface $config,
         TypeListInterface $cacheTypeList,
-        Random $mathRandom,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
-        array $data = [],
-        Json $serializer = null
+        array $data = []
     ) {
         $this->mathRandom = $mathRandom;
-        $this->serializer = $serializer ?: ObjectManager::getInstance()->get(Json::class);
+        $this->serializer = $serializer;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
     }
 

@@ -19,12 +19,12 @@ class GetAttributeEntityTypeId implements GetAttributeEntityTypeIdInterface
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
      * @var array
      */
-    private $entityTypeId;
+    private array $entityTypeId = [];
 
     /**
      * @param ResourceConnection $resourceConnection

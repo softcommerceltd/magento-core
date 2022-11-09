@@ -37,7 +37,7 @@ class Status implements StatusInterface
     private $options;
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getOptions(): array
     {
@@ -66,7 +66,7 @@ class Status implements StatusInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function toOptionArray(): array
     {

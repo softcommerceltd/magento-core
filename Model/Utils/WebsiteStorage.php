@@ -20,54 +20,54 @@ use function explode;
 class WebsiteStorage implements WebsiteStorageInterface
 {
     /**
-     * @var array
+     * @var array|null
      */
-    private $adminStoreInMemory;
+    private ?array $adminStoreInMemory = null;
 
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $dataInMemory;
+    private ?array $dataInMemory = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteCodeToId;
+    private ?array $websiteCodeToId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteCodeToStoreIds;
+    private ?array $websiteCodeToStoreIds = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteIdToCode;
+    private ?array $websiteIdToCode = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteIdToStoreIds;
+    private ?array $websiteIdToStoreIds = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeCodeToId;
+    private ?array $storeCodeToId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeIdToAdminWebsiteStoreId;
+    private ?array $storeIdToAdminWebsiteStoreId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeIdToWebsiteStoreIds;
+    private ?array $storeIdToWebsiteStoreIds = null;
 
     /**
      * @param ResourceConnection $resourceConnection

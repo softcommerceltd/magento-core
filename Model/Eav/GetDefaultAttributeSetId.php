@@ -19,12 +19,12 @@ class GetDefaultAttributeSetId implements GetDefaultAttributeSetIdInterface
     /**
      * @var array
      */
-    private $attributeSetId;
+    private array $attributeSetId = [];
 
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
      * @param ResourceConnection $resourceConnection

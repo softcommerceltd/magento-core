@@ -19,7 +19,7 @@ class Items extends Template
     /**
      * @var OutputHtmlInterface
      */
-    private $outputHtml;
+    private OutputHtmlInterface $outputHtml;
 
     /**
      * @param OutputHtmlInterface $outputHtml

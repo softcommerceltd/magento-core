@@ -23,7 +23,7 @@ class ModuleList extends Field
     /**
      * @var ModuleListProviderInterface
      */
-    private $moduleListProvider;
+    private ModuleListProviderInterface $moduleListProvider;
 
     /**
      * @param ModuleListProviderInterface $moduleListProvider

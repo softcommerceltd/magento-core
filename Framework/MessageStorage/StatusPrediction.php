@@ -37,7 +37,10 @@ class StatusPrediction implements StatusPredictionInterface
             $status = Status::ERROR;
         } elseif (in_array(Status::NOTICE, $statuses) && !in_array(Status::SUCCESS, $statuses)) {
             $status = Status::NOTICE;
-        } elseif (in_array(Status::SKIPPED, $statuses) && !in_array(Status::ERROR, $statuses)) {
+        } elseif (in_array(Status::SKIPPED, $statuses)
+            && !in_array(Status::ERROR, $statuses)
+            && !in_array(Status::SUCCESS, $statuses)
+        ) {
             $status = Status::SKIPPED;
         } else {
             $status = $fallback;

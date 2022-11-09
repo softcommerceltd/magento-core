@@ -22,12 +22,12 @@ class ServiceManagementAbstract
     /**
      * @var DataStorageInterfaceFactory
      */
-    protected $dataStorageFactory;
+    protected DataStorageInterfaceFactory $dataStorageFactory;
 
     /**
      * @var MessageStorageInterfaceFactory
      */
-    protected $messageStorageFactory;
+    protected MessageStorageInterfaceFactory $messageStorageFactory;
 
     /**
      * @var DataStorageInterface
@@ -52,12 +52,12 @@ class ServiceManagementAbstract
     /**
      * @var array
      */
-    protected $response;
+    protected array $response;
 
     /**
      * @var array
      */
-    protected $request;
+    protected array $request;
 
     /**
      * @param DataStorageInterfaceFactory $dataStorageFactory
@@ -76,7 +76,7 @@ class ServiceManagementAbstract
     }
 
     /**
-     * @return $this
+     * @inheritDoc
      */
     public function initialize()
     {

@@ -20,17 +20,17 @@ class BackButton implements ButtonProviderInterface
     /**
      * @var string
      */
-    private $backUrl;
+    private string $backUrl;
 
     /**
      * @var RequestInterface
      */
-    private $request;
+    private RequestInterface $request;
 
     /**
      * @var UrlInterface
      */
-    private $urlBuilder;
+    private UrlInterface $urlBuilder;
 
     /**
      * @param RequestInterface $request
@@ -42,15 +42,15 @@ class BackButton implements ButtonProviderInterface
         UrlInterface $urlBuilder,
         string $backUrl
     ) {
-        $this->backUrl = $backUrl;
         $this->request = $request;
         $this->urlBuilder = $urlBuilder;
+        $this->backUrl = $backUrl;
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         if ($this->request->getParam('isModal') || $this->request->getParam('popup')) {
             return [];

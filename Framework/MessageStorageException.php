@@ -24,7 +24,7 @@ class MessageStorageException extends LocalizedException
     /**
      * @var array
      */
-    private $messages;
+    private array $messages;
 
     /**
      * @param Phrase $phrase

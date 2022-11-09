@@ -21,12 +21,12 @@ class RotationSteamHandler extends RotatingFileHandler
     /**
      * @var string
      */
-    protected $fileName = '/var/log/softcommerce/core.log';
+    protected string $fileName = '/var/log/softcommerce/core.log';
 
     /**
      * @var DriverInterface
      */
-    protected $filesystem;
+    protected DriverInterface $filesystem;
 
     /**
      * @var int

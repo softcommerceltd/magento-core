@@ -19,12 +19,12 @@ class QueryResultDataTypeConverter implements QueryResultDataTypeConverterInterf
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
      * @var array
      */
-    protected $schemaInMemory;
+    protected array $schemaInMemory = [];
 
     /**
      * @param ResourceConnection $resourceConnection
@@ -75,21 +75,6 @@ class QueryResultDataTypeConverter implements QueryResultDataTypeConverterInterf
         switch ($dataType) {
             case 'bool':
                 return (bool) $data;
-            /*
-            case 'datetime':
-            case 'timestamp':
-            case 'date':
-            case 'tinytext':
-            case 'char':
-            case 'varchar':
-            case 'text':
-            case 'mediumtext':
-            case 'longtext':
-            case 'blob':
-            case 'mediumblob':
-            case 'longblob':
-                return $data;
-            */
             case 'tinyint':
             case 'smallint':
             case 'mediumint':

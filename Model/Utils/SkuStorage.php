@@ -22,17 +22,17 @@ class SkuStorage implements SkuStorageInterface
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
      * @var GetEntityMetadataInterface
      */
-    private $getEntityMetadata;
+    private GetEntityMetadataInterface $getEntityMetadata;
 
     /**
      * @var array
      */
-    private $skuData;
+    private array $skuData = [];
 
     /**
      * @param GetEntityMetadataInterface $getEntityMetadata

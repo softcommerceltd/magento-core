@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.8
+- **Compatibility**: Compatibility with Magento [OS/AC] 2.4.5 and PHP 8
+
 ### Version 1.2.7
 - **Enhancement**: Added option to store multidimensional data to `SoftCommerce\Core\Framework\DataStorageInterface::setData`.
 

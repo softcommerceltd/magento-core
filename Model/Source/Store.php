@@ -19,15 +19,14 @@ class Store implements OptionSourceInterface
     /**
      * @var array
      */
-    private $options;
+    private array $options = [];
 
     /**
      * @var StoreRepositoryInterface
      */
-    private $storeRepository;
+    private StoreRepositoryInterface $storeRepository;
 
     /**
-     * Store constructor.
      * @param StoreRepositoryInterface $storeRepository
      */
     public function __construct(StoreRepositoryInterface $storeRepository)
@@ -44,9 +43,9 @@ class Store implements OptionSourceInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         if (!$this->options) {
             $stores = $this->storeRepository->getList();

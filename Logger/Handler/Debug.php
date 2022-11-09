@@ -16,8 +16,7 @@ use Magento\Framework\Logger\Handler\Debug as DebugHandler;
 class Debug extends DebugHandler
 {
     /**
-     * File Name
-     * @var string
+     * @inheritDoc
      */
     protected $fileName = '/var/log/softcommerce/core.log';
 }

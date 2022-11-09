@@ -19,17 +19,17 @@ class GetEntityMetadata implements GetEntityMetadataInterface
     /**
      * @var MetadataPool
      */
-    private $metadataPool;
+    private MetadataPool $metadataPool;
 
     /**
      * @var string[]
      */
-    private $identifierField;
+    private array $identifierField = [];
 
     /**
      * @var string[]
      */
-    private $linkField;
+    private array $linkField = [];
 
     /**
      * @param MetadataPool $metadataPool

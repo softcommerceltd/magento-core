@@ -22,7 +22,7 @@ class AbstractModel extends \Magento\Framework\Model\AbstractModel
     /**
      * @var SerializerInterface
      */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
     /**
      * @param SerializerInterface $serializer

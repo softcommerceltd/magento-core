@@ -16,12 +16,12 @@ use Psr\Log\LoggerInterface;
  */
 class Logger
 {
-    const DEBUG_KEYS_MASK = '****';
+    public const DEBUG_KEYS_MASK = '****';
 
     /**
      * @var LoggerInterface
      */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param LoggerInterface $logger
