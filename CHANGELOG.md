@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.2.9
+- **Fix**: Applied a fix to license compatibility.
+
 ### Version 1.2.8
 - **Compatibility**: Compatibility with Magento [OS/AC] 2.4.5 and PHP 8
 
