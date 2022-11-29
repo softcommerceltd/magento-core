@@ -48,9 +48,7 @@ class SkuStorage implements SkuStorageInterface
      */
     private array $excludedAttributes = [
         'has_options',
-        'required_options',
-        'created_at',
-        'updated_at'
+        'required_options'
     ];
 
     /**
