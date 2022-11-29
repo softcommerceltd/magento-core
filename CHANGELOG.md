@@ -1,5 +1,9 @@
 ## Changelog
 
+### Version 1.3.0
+- **Enhancement**: Added an option to provide custom database columns in `SoftCommerce\Core\Model\Utils\SkuStorageInterface`
+model that's used to retrieve product entity data in array format.
+
 ### Version 1.2.9
 - **Fix**: Applied a fix to license compatibility.
 
