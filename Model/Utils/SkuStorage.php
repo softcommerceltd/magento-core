@@ -108,6 +108,22 @@ class SkuStorage implements SkuStorageInterface
     /**
      * @inheritDoc
      */
+    public function getDataByEntityId(int $entityId, ?string $index = null)
+    {
+        $result = current(
+            array_filter($this->getData(), function ($item) use ($entityId) {
+                return isset($item['entity_id']) && $item['entity_id'] == $entityId;
+            })
+        ) ?: [];
+
+        return null !== $index
+            ? ($result[$index] ?? null)
+            : $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function isSkuExists(string $sku): bool
     {
         return (bool) $this->getData($sku);
