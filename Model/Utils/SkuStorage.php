@@ -10,6 +10,10 @@ namespace SoftCommerce\Core\Model\Utils;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
+use function array_diff;
+use function array_merge;
+use function array_keys;
+use function array_unique;
 use function explode;
 use function strtolower;
 use function trim;
@@ -19,6 +23,11 @@ use function trim;
  */
 class SkuStorage implements SkuStorageInterface
 {
+    /**
+     * @var string[]
+     */
+    private array $attributes;
+
     /**
      * @var AdapterInterface
      */
@@ -35,15 +44,34 @@ class SkuStorage implements SkuStorageInterface
     private array $skuData = [];
 
     /**
+     * @var string[]
+     */
+    private array $excludedAttributes = [
+        'has_options',
+        'required_options'
+    ];
+
+    /**
      * @param GetEntityMetadataInterface $getEntityMetadata
      * @param ResourceConnection $resourceConnection
+     * @param array $attributes
      */
     public function __construct(
         GetEntityMetadataInterface $getEntityMetadata,
-        ResourceConnection $resourceConnection
+        ResourceConnection $resourceConnection,
+        array $attributes = []
     ) {
         $this->getEntityMetadata = $getEntityMetadata;
         $this->connection = $resourceConnection->getConnection();
+        $this->attributes = $attributes;
+        if ($this->attributes) {
+            $this->excludedAttributes = [];
+            if (array_diff(['entity_id', 'sku'], $this->attributes)) {
+                $this->attributes = array_unique(
+                    array_merge($this->attributes, ['entity_id', 'sku'])
+                );
+            }
+        }
     }
 
     /**
@@ -80,6 +108,22 @@ class SkuStorage implements SkuStorageInterface
     /**
      * @inheritDoc
      */
+    public function getDataByEntityId(int $entityId, ?string $index = null)
+    {
+        $result = current(
+            array_filter($this->getData(), function ($item) use ($entityId) {
+                return isset($item['entity_id']) && $item['entity_id'] == $entityId;
+            })
+        ) ?: [];
+
+        return null !== $index
+            ? ($result[$index] ?? null)
+            : $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function isSkuExists(string $sku): bool
     {
         return (bool) $this->getData($sku);
@@ -108,25 +152,26 @@ class SkuStorage implements SkuStorageInterface
      */
     private function getSkuData(): array
     {
-        $columns = ['entity_id', 'type_id', 'attribute_set_id', 'sku', 'plenty_item_id', 'plenty_variation_id'];
+        $catalogProductEntityTable = $this->connection->getTableName('catalog_product_entity');
+        if (!$this->attributes) {
+            $this->attributes = array_keys($this->connection->describeTable($catalogProductEntityTable));
+            $this->attributes = array_diff($this->attributes, $this->excludedAttributes);
+        }
+
         if ($this->getEntityMetadata->getLinkField() !== $this->getEntityMetadata->getIdentifierField()) {
-            $columns[] = $this->getEntityMetadata->getLinkField();
+            $this->attributes[] = $this->getEntityMetadata->getLinkField();
         }
 
         $select = $this->connection->select()
-            ->from(
-                ['main_tb' => $this->connection->getTableName('catalog_product_entity')],
-                $columns
-            )
+            ->from(['main_tb' => $catalogProductEntityTable], $this->attributes)
             ->joinLeft(
                 ['cpw_tb' => $this->connection->getTableName('catalog_product_website')],
                 'main_tb.entity_id = cpw_tb.product_id',
                 [
                     'website_ids' => new \Zend_Db_Expr('GROUP_CONCAT(DISTINCT cpw_tb.website_id)')
                 ]
-            )->group(
-                'main_tb.entity_id'
-            );
+            )
+            ->group('main_tb.entity_id');
 
         $result = [];
         foreach ($this->connection->fetchAll($select) as $item) {
