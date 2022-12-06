@@ -21,52 +21,52 @@ class DeleteFontawesomeButton implements ButtonProviderInterface
     /**
      * @var string|null
      */
-    protected $aclResource;
+    protected ?string $aclResource;
 
     /**
      * @var string
      */
-    protected $actionRoutePath;
+    protected string $actionRoutePath;
 
     /**
      * @var string|null
      */
-    protected $buttonClass;
+    protected ?string $buttonClass;
 
     /**
      * @var string|null
      */
-    protected $buttonLabel;
+    protected ?string $buttonLabel;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $confirmationMessage;
+    protected ?string $confirmationMessage;
 
     /**
      * @var Escaper
      */
-    protected $escaper;
+    protected Escaper $escaper;
 
     /**
      * @var string
      */
-    protected $idFieldName;
+    protected string $idFieldName;
 
     /**
      * @var RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected $sortOrder;
+    protected ?int $sortOrder;
 
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * @param Escaper $escaper
@@ -107,7 +107,7 @@ class DeleteFontawesomeButton implements ButtonProviderInterface
     /**
      * @inheritDoc
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         if (!$this->request->getParam($this->idFieldName)
             || $this->request->getParam('isModal')

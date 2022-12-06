@@ -18,7 +18,7 @@ class StatusToFaMapping implements StatusToFaMappingInterface
     /**
      * @var string[]
      */
-    private $map = [
+    private array $map = [
         Status::CRITICAL => 'fa-solid fa-octagon-exclamation',
         Status::ERROR => 'fa-solid fa-circle-exclamation',
         Status::FAILED => 'fa-solid fa-circle-exclamation',

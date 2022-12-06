@@ -22,26 +22,26 @@ class Actions extends Column
     /**
      * @var Escaper
      */
-    protected $escaper;
+    protected Escaper $escaper;
 
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * @param Escaper $escaper
+     * @param UrlInterface $urlBuilder
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
      */
     public function __construct(
         Escaper $escaper,
+        UrlInterface $urlBuilder,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
@@ -53,7 +53,7 @@ class Actions extends Column
     /**
      * @inheritDoc
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if (!isset($dataSource['data']['items'])) {
             return $dataSource;

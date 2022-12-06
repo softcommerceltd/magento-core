@@ -17,24 +17,25 @@ use Magento\Framework\Serialize\SerializerInterface;
  */
 class ModuleListProvider implements ModuleListProviderInterface
 {
-    private $data;
+    /**
+     * @var array|null
+     */
+    private ?array $data = null;
 
     /**
      * @var ComponentRegistrar
      */
-    private $componentRegistrar;
+    private ComponentRegistrar $componentRegistrar;
 
     /**
-     * Reader of composer.json files
-     *
      * @var Reader
      */
-    private $reader;
+    private Reader $reader;
 
     /**
      * @var SerializerInterface
      */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
     /**
      * @param ComponentRegistrar $componentRegistrar

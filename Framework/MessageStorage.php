@@ -23,7 +23,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @var array
      */
-    private $data = [];
+    private array $data = [];
 
     /**
      * @inheritDoc

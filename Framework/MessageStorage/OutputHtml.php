@@ -27,12 +27,12 @@ class OutputHtml implements OutputHtmlInterface
     /**
      * @var string
      */
-    private $dataHtml;
+    private string $dataHtml = '';
 
     /**
      * @var array
      */
-    private $flag;
+    private array $flag = [];
 
     /**
      * @var string|int|null
@@ -40,9 +40,7 @@ class OutputHtml implements OutputHtmlInterface
     private static $entityGroup;
 
     /**
-     * @param array $data
-     * @param array $format
-     * @return string
+     * @inheritDoc
      */
     public function execute(array $data, array $format = [])
     {

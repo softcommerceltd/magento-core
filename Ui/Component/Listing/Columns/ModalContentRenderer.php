@@ -23,17 +23,17 @@ class ModalContentRenderer extends Column
     /**
      * @var OutputArrayPrintReadableInterface
      */
-    private $outputArrayPrintReadable;
+    private OutputArrayPrintReadableInterface $outputArrayPrintReadable;
 
     /**
      * @var SerializerInterface
      */
-    private $serializer;
+    private SerializerInterface $serializer;
 
     /**
      * @var StatusPredictionInterface
      */
-    private $statusPrediction;
+    private StatusPredictionInterface $statusPrediction;
 
     /**
      * @param OutputArrayPrintReadableInterface $outputArrayPrintReadable

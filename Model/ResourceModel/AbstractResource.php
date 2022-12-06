@@ -24,7 +24,7 @@ abstract class AbstractResource extends AbstractDb
     /**
      * @var array
      */
-    private $metadata;
+    private array $metadata = [];
 
     /**
      * @param SerializerInterface $serializer

@@ -20,22 +20,22 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
     /**
      * @var string|null
      */
-    protected $aclResource;
+    protected ?string $aclResource;
 
     /**
      * @var RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * @var int|null
      */
-    protected $sortOrder;
+    protected ?int $sortOrder;
 
     /**
      * @var string
      */
-    protected $targetName;
+    protected string $targetName;
 
     /**
      * @param RequestInterface $request
@@ -49,10 +49,10 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
         ?string $aclResource = null,
         ?int $sortOrder = null
     ) {
-        $this->aclResource = $aclResource;
         $this->request = $request;
-        $this->sortOrder = $sortOrder;
         $this->targetName = $targetName;
+        $this->aclResource = $aclResource;
+        $this->sortOrder = $sortOrder;
     }
 
     /**

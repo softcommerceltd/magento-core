@@ -24,7 +24,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @var array
      */
-    protected $data;
+    protected array $data;
 
     /**
      * @param array $data

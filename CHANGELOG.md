@@ -1,5 +1,18 @@
 ## Changelog
 
+### Version 1.3.1
+- **Enhancement**: Added an option to SKU storage to retrieve data by `entity_id`.
+
+### Version 1.3.0
+- **Enhancement**: Added an option to provide custom database columns in `SoftCommerce\Core\Model\Utils\SkuStorageInterface`
+model that's used to retrieve product entity data in array format.
+
+### Version 1.2.9
+- **Fix**: Applied a fix to license compatibility.
+
+### Version 1.2.8
+- **Compatibility**: Compatibility with Magento [OS/AC] 2.4.5 and PHP 8
+
 ### Version 1.2.7
 - **Enhancement**: Added option to store multidimensional data to `SoftCommerce\Core\Framework\DataStorageInterface::setData`.
 

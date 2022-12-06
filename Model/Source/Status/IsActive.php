@@ -19,9 +19,9 @@ class IsActive implements OptionSourceInterface
     public const DISABLED = 0;
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $options = [];
         foreach (self::getOptions() as $key => $value) {
@@ -36,7 +36,7 @@ class IsActive implements OptionSourceInterface
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             self::ENABLED => __('Enabled'),

@@ -35,6 +35,14 @@ interface SkuStorageInterface
     public function setData(string $sku, $data, ?string $index = null);
 
     /**
+     * @param int $entityId
+     * @param string|null $index
+     * @return array|mixed|string|null
+     * @throws \Exception
+     */
+    public function getDataByEntityId(int $entityId, ?string $index = null);
+
+    /**
      * @param string $sku
      * @return bool
      * @throws \Exception
