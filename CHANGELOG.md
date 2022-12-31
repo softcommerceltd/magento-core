@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.3.2
+- **Enhancement**: Minor improvements to DataStorage functionality.
+
 ### Version 1.3.1
 - **Enhancement**: Added an option to SKU storage to retrieve data by `entity_id`.
 

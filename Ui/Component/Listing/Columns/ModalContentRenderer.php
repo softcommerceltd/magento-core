@@ -62,7 +62,7 @@ class ModalContentRenderer extends Column
     /**
      * @inheritDoc
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         $componentIndex = $this->getData('name');
         foreach ($dataSource['data']['items'] ?? [] as $index => $item) {
