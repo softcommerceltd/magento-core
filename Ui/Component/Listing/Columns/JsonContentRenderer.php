@@ -12,50 +12,32 @@ use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use SoftCommerce\Core\Framework\DataStorage\OutputArrayPrintReadableInterface;
-use SoftCommerce\Core\Framework\DataStorage\StatusPredictionInterface;
 
 /**
  * @inheritDoc
  */
-class ModalContentRenderer extends Column
+class JsonContentRenderer extends Column
 {
-    /**
-     * @var OutputArrayPrintReadableInterface
-     */
-    private OutputArrayPrintReadableInterface $outputArrayPrintReadable;
-
     /**
      * @var SerializerInterface
      */
     private SerializerInterface $serializer;
 
     /**
-     * @var StatusPredictionInterface
-     */
-    private StatusPredictionInterface $statusPrediction;
-
-    /**
-     * @param OutputArrayPrintReadableInterface $outputArrayPrintReadable
      * @param SerializerInterface $serializer
-     * @param StatusPredictionInterface $statusPrediction
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
      * @param array $components
      * @param array $data
      */
     public function __construct(
-        OutputArrayPrintReadableInterface $outputArrayPrintReadable,
         SerializerInterface $serializer,
-        StatusPredictionInterface $statusPrediction,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
     ) {
-        $this->outputArrayPrintReadable = $outputArrayPrintReadable;
         $this->serializer = $serializer;
-        $this->statusPrediction = $statusPrediction;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -76,12 +58,7 @@ class ModalContentRenderer extends Column
                 $data = [$data];
             }
 
-            $html = $this->outputArrayPrintReadable->execute($data);
-            $dataSource['data']['items'][$index][$componentIndex] = $html;
-
-            if ($status = $this->statusPrediction->execute($data, '')) {
-                $dataSource['data']['items'][$index]['cell_status'] = $status;
-            }
+            $dataSource['data']['items'][$index][$componentIndex] = implode(', ', $data);
         }
 
         return $dataSource;

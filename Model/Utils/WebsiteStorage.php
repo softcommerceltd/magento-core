@@ -62,6 +62,11 @@ class WebsiteStorage implements WebsiteStorageInterface
     /**
      * @var array|null
      */
+    private ?array $storeIdToWebsiteId = null;
+
+    /**
+     * @var array|null
+     */
     private ?array $storeIdToAdminWebsiteStoreId = null;
 
     /**
@@ -167,6 +172,25 @@ class WebsiteStorage implements WebsiteStorageInterface
             ? ($this->storeCodeToId[$storeCode] ?? null)
             : $this->storeCodeToId;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreIdToWebsiteId(?string $storeId = null)
+    {
+        if (null === $this->storeIdToWebsiteId) {
+            $this->storeIdToWebsiteId = [];
+            foreach ($this->getData() as $item) {
+                if (isset($item['store_id'], $item['website_id'])) {
+                    $this->storeIdToWebsiteId[$item['store_id']] = (int) $item['website_id'];
+                }
+            }
+        }
+        return null !== $storeId
+            ? ($this->storeIdToWebsiteId[$storeId] ?? null)
+            : $this->storeIdToWebsiteId;
+    }
+
 
     /**
      * @inheritDoc
