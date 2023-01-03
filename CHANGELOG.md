@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.3.3
+- **Enhancement**: Added json content renderer to UI listing columns component.
+
 ### Version 1.3.2
 - **Enhancement**: Minor improvements to DataStorage functionality.
 

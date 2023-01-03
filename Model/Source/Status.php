@@ -30,6 +30,7 @@ class Status implements StatusInterface
     public const UPDATED = 'updated';
     public const UNKNOWN = 'unknown';
     public const WARNING = 'warning';
+    public const NEW = 'new';
 
     /**
      * @var array
@@ -59,7 +60,8 @@ class Status implements StatusInterface
                 self::CREATED => __('Created'),
                 self::UPDATED => __('Updated'),
                 self::UNKNOWN => __('Unknown'),
-                self::WARNING => __('Warning')
+                self::WARNING => __('Warning'),
+                self::NEW => __('New')
             ];
         }
         return $this->options;

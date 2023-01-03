@@ -33,6 +33,7 @@ class StatusToFaMapping implements StatusToFaMappingInterface
         Status::PROCESSING => 'fas fa-circle-notch fa-spin',
         Status::RUNNING => 'fas fa-circle-notch fa-spin',
         Status::UPDATED => 'fas fa-sync-alt',
+        Status::NEW => 'fa-solid fa-clock-rotate-left',
         Status\IsActive::ENABLED => 'fas fa-toggle-on',
         Status\IsActive::DISABLED => 'fas fa-toggle-off',
     ];
