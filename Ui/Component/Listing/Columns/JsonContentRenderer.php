@@ -8,45 +8,36 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Ui\Component\Listing\Columns;
 
+use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use SoftCommerce\Core\Framework\DataMap\StatusToFaMappingInterface;
-use SoftCommerce\Core\Framework\DataMap\StatusToLabelMappingInterface;
 
 /**
  * @inheritDoc
  */
-class StatusRenderer extends Column
+class JsonContentRenderer extends Column
 {
     /**
-     * @var StatusToFaMappingInterface
+     * @var SerializerInterface
      */
-    private StatusToFaMappingInterface $statusToFaMapping;
+    private SerializerInterface $serializer;
 
     /**
-     * @var StatusToLabelMappingInterface
-     */
-    private StatusToLabelMappingInterface $statusToLabelMapping;
-
-    /**
-     * @param StatusToFaMappingInterface $statusToFaMapping
-     * @param StatusToLabelMappingInterface $statusToLabelMapping
+     * @param SerializerInterface $serializer
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
      * @param array $components
      * @param array $data
      */
     public function __construct(
-        StatusToFaMappingInterface $statusToFaMapping,
-        StatusToLabelMappingInterface $statusToLabelMapping,
+        SerializerInterface $serializer,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
     ) {
-        $this->statusToFaMapping = $statusToFaMapping;
-        $this->statusToLabelMapping = $statusToLabelMapping;
+        $this->serializer = $serializer;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -57,14 +48,17 @@ class StatusRenderer extends Column
     {
         $componentIndex = $this->getData('name');
         foreach ($dataSource['data']['items'] ?? [] as $index => $item) {
-            if (!isset($item[$componentIndex])) {
+            if (!$data = $item[$componentIndex] ?? null) {
                 continue;
             }
 
-            $value = $item[$componentIndex];
-            $dataSource['data']['items'][$index][$componentIndex] = $this->statusToLabelMapping->execute($value);
-            $dataSource['data']['items'][$index]['cell_status'] = $value;
-            $dataSource['data']['items'][$index]['cell_attribute'] = $this->statusToFaMapping->execute($value);
+            try {
+                $data = $this->serializer->unserialize($data);
+            } catch (\InvalidArgumentException $e) {
+                $data = [$data];
+            }
+
+            $dataSource['data']['items'][$index][$componentIndex] = implode(', ', $data);
         }
 
         return $dataSource;

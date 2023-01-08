@@ -16,18 +16,18 @@ use Magento\ImportExport\Model\Import;
  */
 class Behaviour implements OptionSourceInterface
 {
-    const APPEND = 'append';
-    const ADD_UPDATE = 'add_update';
-    const REPLACE = 'replace';
-    const DELETE = 'delete';
-    const CUSTOM = 'custom';
+    public const APPEND = 'append';
+    public const ADD_UPDATE = 'add_update';
+    public const REPLACE = 'replace';
+    public const DELETE = 'delete';
+    public const CUSTOM = 'custom';
 
     /**
      * Options array
      *
      * @var array
      */
-    private $options;
+    private array $options = [];
 
     /**
      * @return array

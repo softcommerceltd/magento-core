@@ -22,7 +22,7 @@ class EntityDataStorage implements EntityDataStorageInterface
     /**
      * @var array
      */
-    protected $data;
+    protected array $data;
 
     /**
      * @param array $data

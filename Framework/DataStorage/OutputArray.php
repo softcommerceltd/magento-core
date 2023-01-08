@@ -24,7 +24,7 @@ class OutputArray implements OutputArrayInterface
     /**
      * @var Status
      */
-    private $statusOptions;
+    private Status $statusOptions;
 
     /**
      * @param Status $statusOptions

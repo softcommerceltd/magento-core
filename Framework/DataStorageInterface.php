@@ -23,10 +23,9 @@ interface DataStorageInterface
     /**
      * @param int|string|array|mixed $data
      * @param int|string|null $key
-     * @param string|null $keySeparator
      * @return $this
      */
-    public function setData($data, $key = null, ?string $keySeparator = null);
+    public function setData($data, $key = null);
 
     /**
      * @param int|string|array|mixed $data

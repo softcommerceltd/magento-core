@@ -24,7 +24,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @var array
      */
-    protected $data;
+    protected array $data;
 
     /**
      * @param array $data
@@ -47,10 +47,10 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function setData($data, $key = null, ?string $keySeparator = null)
+    public function setData($data, $key = null)
     {
-        if (null !== $keySeparator) {
-            return $this->setMultidimensionalData(explode('/', $key), $data);
+        if (is_array($key)) {
+            return $this->setMultidimensionalData($data, $key);
         }
 
         null !== $key
@@ -122,22 +122,22 @@ class DataStorage implements DataStorageInterface
     }
 
     /**
-     * @param array $keys
-     * @param $value
+     * @param $data
+     * @param array $indexes
      * @return $this
      */
-    private function setMultidimensionalData(array $keys, $value)
+    private function setMultidimensionalData($data, array $indexes)
     {
         $result = [];
-        $data = &$result;
-        for ($i = 0; $i < count($keys); $i++) {
-            $data = &$data[$keys[$i]];
+        $value = &$result;
+        for ($i = 0; $i < count($indexes); $i++) {
+            $value = &$value[$indexes[$i]];
         }
-        $data = $value;
+        $value = $data;
 
         if ($result) {
             $index = array_key_first($result);
-            $this->data[$index] = array_merge($this->data[$index], current($result));
+            $this->data[$index] = array_merge_recursive($this->data[$index] ?? [], current($result));
         }
 
         return $this;

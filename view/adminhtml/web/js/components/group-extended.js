@@ -4,12 +4,13 @@
  */
 
 define([
+    'underscore',
+    'jquery',
     'Magento_Ui/js/form/components/group',
-], function (Group) {
+], function (_, $, Group) {
     'use strict';
 
     return Group.extend({
-
         /**
          * Show component.
          */

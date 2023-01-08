@@ -20,17 +20,17 @@ class OutputMessageManager implements OutputMessageManagerInterface
     /**
      * @var ManagerInterface
      */
-    private $messageManager;
+    private ManagerInterface $messageManager;
 
     /**
      * @var OutputHtmlInterface
      */
-    private $outputHtml;
+    private OutputHtmlInterface $outputHtml;
 
     /**
      * @var StatusPredictionInterface
      */
-    private $statusPrediction;
+    private StatusPredictionInterface $statusPrediction;
 
     /**
      * @param ManagerInterface $messageManager

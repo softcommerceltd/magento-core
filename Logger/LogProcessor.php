@@ -19,7 +19,7 @@ class LogProcessor extends Monolog implements LogProcessorInterface
     /**
      * @var ScopeConfigInterface
      */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     /**
      * @param ScopeConfigInterface $scopeConfig

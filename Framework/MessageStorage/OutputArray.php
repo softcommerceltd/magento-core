@@ -16,13 +16,12 @@ use SoftCommerce\Core\Framework\MessageStorageInterface;
 class OutputArray implements OutputArrayInterface
 {
     /**
-     * @var array|string
+     * @var array
      */
-    private $data;
+    private array $data = [];
 
     /**
-     * @param array $data
-     * @return array
+     * @inheritDoc
      */
     public function execute(array $data): array
     {

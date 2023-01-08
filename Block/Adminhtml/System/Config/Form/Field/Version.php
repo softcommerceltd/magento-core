@@ -22,12 +22,12 @@ class Version extends Field
     /**
      * @var PackageInfo
      */
-    private $packageInfo;
+    private PackageInfo $packageInfo;
 
     /**
      * @var string
      */
-    private $moduleName;
+    private string $moduleName;
 
     /**
      * @param PackageInfo $packageInfo

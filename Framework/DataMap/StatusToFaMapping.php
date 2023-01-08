@@ -18,7 +18,7 @@ class StatusToFaMapping implements StatusToFaMappingInterface
     /**
      * @var string[]
      */
-    private $map = [
+    private array $map = [
         Status::CRITICAL => 'fa-solid fa-octagon-exclamation',
         Status::ERROR => 'fa-solid fa-circle-exclamation',
         Status::FAILED => 'fa-solid fa-circle-exclamation',
@@ -33,6 +33,7 @@ class StatusToFaMapping implements StatusToFaMappingInterface
         Status::PROCESSING => 'fas fa-circle-notch fa-spin',
         Status::RUNNING => 'fas fa-circle-notch fa-spin',
         Status::UPDATED => 'fas fa-sync-alt',
+        Status::NEW => 'fa-solid fa-clock-rotate-left',
         Status\IsActive::ENABLED => 'fas fa-toggle-on',
         Status\IsActive::DISABLED => 'fas fa-toggle-off',
     ];

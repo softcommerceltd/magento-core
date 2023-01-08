@@ -31,17 +31,17 @@ class MailStreamHandler extends MailHandler
     /**
      * @var StateInterface
      */
-    protected $inlineTranslation;
+    protected StateInterface $inlineTranslation;
 
     /**
      * @var TransportBuilder
      */
-    private $transportBuilder;
+    private TransportBuilder $transportBuilder;
 
     /**
      * @var ScopeConfigInterface
      */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     /**
      * @param ScopeConfigInterface $scopeConfig

@@ -20,54 +20,59 @@ use function explode;
 class WebsiteStorage implements WebsiteStorageInterface
 {
     /**
-     * @var array
+     * @var array|null
      */
-    private $adminStoreInMemory;
+    private ?array $adminStoreInMemory = null;
 
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $dataInMemory;
+    private ?array $dataInMemory = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteCodeToId;
+    private ?array $websiteCodeToId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteCodeToStoreIds;
+    private ?array $websiteCodeToStoreIds = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteIdToCode;
+    private ?array $websiteIdToCode = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $websiteIdToStoreIds;
+    private ?array $websiteIdToStoreIds = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeCodeToId;
+    private ?array $storeCodeToId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeIdToAdminWebsiteStoreId;
+    private ?array $storeIdToWebsiteId = null;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $storeIdToWebsiteStoreIds;
+    private ?array $storeIdToAdminWebsiteStoreId = null;
+
+    /**
+     * @var array|null
+     */
+    private ?array $storeIdToWebsiteStoreIds = null;
 
     /**
      * @param ResourceConnection $resourceConnection
@@ -167,6 +172,25 @@ class WebsiteStorage implements WebsiteStorageInterface
             ? ($this->storeCodeToId[$storeCode] ?? null)
             : $this->storeCodeToId;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStoreIdToWebsiteId(?string $storeId = null)
+    {
+        if (null === $this->storeIdToWebsiteId) {
+            $this->storeIdToWebsiteId = [];
+            foreach ($this->getData() as $item) {
+                if (isset($item['store_id'], $item['website_id'])) {
+                    $this->storeIdToWebsiteId[$item['store_id']] = (int) $item['website_id'];
+                }
+            }
+        }
+        return null !== $storeId
+            ? ($this->storeIdToWebsiteId[$storeId] ?? null)
+            : $this->storeIdToWebsiteId;
+    }
+
 
     /**
      * @inheritDoc

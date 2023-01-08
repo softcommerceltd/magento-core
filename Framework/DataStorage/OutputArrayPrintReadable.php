@@ -16,7 +16,7 @@ class OutputArrayPrintReadable implements OutputArrayPrintReadableInterface
     /**
      * @var string
      */
-    private $html;
+    private string $html = '';
 
     /**
      * @inheritDoc

@@ -19,10 +19,9 @@ class Classes implements OptionSourceInterface
     /**
      * @var ProductTaxClassSource
      */
-    private $productTaxClassSource;
+    private ProductTaxClassSource $productTaxClassSource;
 
     /**
-     * Classes constructor.
      * @param ProductTaxClassSource $productTaxClassSource
      */
     public function __construct(ProductTaxClassSource $productTaxClassSource)
@@ -31,9 +30,9 @@ class Classes implements OptionSourceInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return $this->productTaxClassSource->getAllOptions();
     }

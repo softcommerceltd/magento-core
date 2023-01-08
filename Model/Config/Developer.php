@@ -18,12 +18,12 @@ class Developer implements DeveloperInterface
     /**
      * @var ScopeConfigInterface
      */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     /**
      * @var string
      */
-    private $entity;
+    private string $entity;
 
     /**
      * Developer constructor.
@@ -32,14 +32,14 @@ class Developer implements DeveloperInterface
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        string $entityType = 'plenty_core'
+        string $entityType = 'softcommerce_core'
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->entity = $entityType;
     }
 
     /**
-     * @return bool
+     * @inheritDoc
      */
     public function isActiveLog(): bool
     {
@@ -47,7 +47,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return bool
+     * @inheritDoc
      */
     public function shouldLogPrintToArray(): bool
     {
@@ -55,7 +55,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return array|string[]
+     * @inheritDoc
      */
     public function getLogLevel(): array
     {
@@ -66,7 +66,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return bool
+     * @inheritDoc
      */
     public function isActiveEmailLog(): bool
     {
@@ -74,7 +74,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getMailLogRecipient(): ?string
     {
@@ -82,7 +82,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getMailLogEmailIdentity(): ?string
     {
@@ -90,7 +90,7 @@ class Developer implements DeveloperInterface
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getMailLogEmailTemplate(): ?string
     {

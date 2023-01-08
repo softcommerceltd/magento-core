@@ -20,12 +20,12 @@ class GetEntityTypeId implements GetEntityTypeIdInterface
     /**
      * @var AdapterInterface
      */
-    private $connection;
+    private AdapterInterface $connection;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $entityTypeId;
+    private array $entityTypeId = [];
 
     /**
      * @param ResourceConnection $resourceConnection
@@ -36,8 +36,7 @@ class GetEntityTypeId implements GetEntityTypeIdInterface
     }
 
     /**
-     * @param string $entityTypeCode
-     * @return int
+     * @inheritDoc
      */
     public function execute(string $entityTypeCode = Product::ENTITY): int
     {

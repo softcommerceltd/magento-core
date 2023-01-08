@@ -19,12 +19,12 @@ class StatusToLabelMapping implements StatusToLabelMappingInterface
     /**
      * @var StatusInterface
      */
-    private $status;
+    private StatusInterface $status;
 
     /**
      * @var IsActive
      */
-    private $isActiveStatus;
+    private IsActive $isActiveStatus;
 
     /**
      * @param StatusInterface $status

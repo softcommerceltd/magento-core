@@ -20,17 +20,17 @@ class DateTimeLocale implements DateTimeLocaleInterface
     /**
      * @var ScopeConfigInterface
      */
-    private $scopeConfig;
+    private ScopeConfigInterface $scopeConfig;
 
     /**
      * @var DateTime
      */
-    private $dateTime;
+    private DateTime $dateTime;
 
     /**
      * @var TimezoneInterface
      */
-    private $timezone;
+    private TimezoneInterface $timezone;
 
     /**
      * DateTimeLocale constructor.
