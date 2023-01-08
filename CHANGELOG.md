@@ -1,51 +1,26 @@
 ## Changelog
 
-### Version 1.3.3
-- **Enhancement**: Added json content renderer to UI listing columns component.
+### Version 1.1.6
+- **Compatibility**: Added compatibility with php 8.0||8.1
 
-### Version 1.3.2
-- **Enhancement**: Minor improvements to DataStorage functionality.
-
-### Version 1.3.1
-- **Enhancement**: Added an option to SKU storage to retrieve data by `entity_id`.
-
-### Version 1.3.0
-- **Enhancement**: Added an option to provide custom database columns in `SoftCommerce\Core\Model\Utils\SkuStorageInterface`
-model that's used to retrieve product entity data in array format.
-
-### Version 1.2.9
-- **Fix**: Applied a fix to license compatibility.
-
-### Version 1.2.8
-- **Compatibility**: Compatibility with Magento [OS/AC] 2.4.5 and PHP 8
-
-### Version 1.2.7
-- **Enhancement**: Added option to store multidimensional data to `SoftCommerce\Core\Framework\DataStorageInterface::setData`.
-
-### Version 1.2.6
+### Version 1.1.5
 - **Enhancement**: Improvements to `SkuStorage` functionality.
-
-### Version 1.2.5
 - **Enhancement**: Improvements to ACL rules.
 
-### Version 1.2.4
+### Version 1.1.4
 - **Compatibility**: Compatibility with Magento Extension Quality Program (EQP).
 
-### Version 1.2.3
+### Version 1.1.3
 - **Fix**: JQMIGRATE: HTML tags must be properly nested and closed.
 
-### Version 1.2.2
+### Version 1.1.2
 - **Enhancement**: Changes to PDT.
 
-### Version 1.2.1
+### Version 1.1.1
 - **Enhancement**: [M2P-7] Add support for sequence entity ID generation to `\SoftCommerce\Core\Model\Utils\GetEntityMetadata`.
 
-### Version 1.2.0
-- **Compatibility**: Compatibility with Magento Open Source 2.4.4 [#4]
-
-### Version 1.0.3
-- **Feature**: New module to handle Log services. [#3]
-- **Compatibility**: Compatibility with Magento Open Source 2.3.5 - 2.4.3 [#2]
+### Version 1.1.0
+- **Compatibility**: Compatibility with Magento Open Source 2.4.3 [#2]
 - **Enhancement**: Integration Tests [#1]
 
 ### Version 1.0.2
