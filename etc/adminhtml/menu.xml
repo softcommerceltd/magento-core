@@ -11,7 +11,7 @@
              title="Soft Commerce"
              translate="title"
              module="SoftCommerce_Core"
-             sortOrder="20"
+             sortOrder="55"
              dependsOnModule="SoftCommerce_Core"
              resource="SoftCommerce_Core::softcommerce_core"/>
         <add id="SoftCommerce_Core::config"
