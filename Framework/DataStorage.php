@@ -13,7 +13,6 @@ use function array_merge_recursive;
 use function array_key_first;
 use function count;
 use function current;
-use function explode;
 use function is_array;
 
 /**
@@ -37,24 +36,24 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData($key = null)
+    public function getData(int|string $index = null)
     {
-        return null !== $key
-            ? ($this->data[$key] ?? null)
+        return null !== $index
+            ? ($this->data[$index] ?? null)
             : ($this->data ?: []);
     }
 
     /**
      * @inheritDoc
      */
-    public function setData($data, $key = null)
+    public function setData($data, int|string|array|null $index = null)
     {
-        if (is_array($key)) {
-            return $this->setMultidimensionalData($data, $key);
+        if (is_array($index)) {
+            return $this->setMultidimensionalData($data, $index);
         }
 
-        null !== $key
-            ? $this->data[$key] = $data
+        null !== $index
+            ? $this->data[$index] = $data
             : $this->data = $data;
         return $this;
     }
@@ -62,10 +61,14 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function addData($data, $key = null)
+    public function addData($data, int|string|array|null $index = null)
     {
-        null !== $key
-            ? $this->data[$key][] = $data
+        if (is_array($index)) {
+            return $this->setMultidimensionalData([$data], $index);
+        }
+
+        null !== $index
+            ? $this->data[$index][] = $data
             : $this->data[] = $data;
         return $this;
     }
@@ -73,10 +76,14 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function mergeData($data, $key = null)
+    public function mergeData($data, int|string|array|null $index = null)
     {
-        null !== $key
-            ? $this->data[$key] = array_merge($this->data[$key] ?? [], is_array($data) ? $data : [$data])
+        if (is_array($index)) {
+            return $this->setMultidimensionalData([$data], $index);
+        }
+
+        null !== $index
+            ? $this->data[$index] = array_merge($this->data[$index] ?? [], is_array($data) ? $data : [$data])
             : $this->data = array_merge($this->data ?: [], is_array($data) ? $data : [$data]);
         return $this;
     }
@@ -84,11 +91,15 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function mergeRecursiveData($data, $key = null)
+    public function mergeRecursiveData($data, int|string|array|null $index = null)
     {
-        null !== $key
-            ? $this->data[$key] = array_merge_recursive(
-                $this->data[$key] ?? [],
+        if (is_array($index)) {
+            return $this->setMultidimensionalData([$data], $index);
+        }
+
+        null !== $index
+            ? $this->data[$index] = array_merge_recursive(
+                $this->data[$index] ?? [],
                 is_array($data) ? $data : [$data]
             )
             : $this->data = array_merge_recursive($this->data ?: [], is_array($data) ? $data : [$data]);
@@ -98,12 +109,16 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function resetData($key = null)
+    public function resetData(int|string|array|null $index = null)
     {
-        if (null === $key) {
+        if (null === $index) {
             $this->data = [];
-        } elseif (isset($this->data[$key])) {
-            unset($this->data[$key]);
+        } elseif (is_array($index)) {
+            foreach ($index as $key) {
+                unset($this->data[$key]);
+            }
+        } elseif (isset($this->data[$index])) {
+            unset($this->data[$index]);
         }
 
         return $this;
@@ -112,10 +127,22 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function hasData($key = null): bool
+    public function hasData(int|string|array|null $index = null): bool
     {
-        if (null !== $key) {
-            return isset($this->data);
+        if (null !== $index) {
+            return isset($this->data[$index]);
+        }
+
+        if (is_array($index)) {
+            $result = false;
+            $keys = array_keys($this->data);
+            foreach ($index as $key) {
+                if (in_array($key, $keys)) {
+                    $result = true;
+                    break;
+                }
+            }
+            return $result;
         }
 
         return !!$this->data;

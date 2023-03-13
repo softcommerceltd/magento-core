@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.3.4
+- **Enhancement**: Added improvements and compatibility with php 8.[0.1] to `SoftCommerce\Core\Framework\DataStorageInterface`.
+
 ### Version 1.3.3
 - **Enhancement**: Added json content renderer to UI listing columns component.
 

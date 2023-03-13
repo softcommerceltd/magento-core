@@ -24,7 +24,7 @@ interface EntityDataStorageInterface
     /**
      * @param array|mixed $data
      * @param int|string $entity
-     * @param int|string|array $index
+     * @param int|string|array|null $index
      * @return $this
      */
     public function setData($data, $entity, $index = null);
@@ -32,7 +32,7 @@ interface EntityDataStorageInterface
     /**
      * @param array|mixed $data
      * @param int|string $entity
-     * @param int|string|array $index
+     * @param int|string|array|null $index
      * @return $this
      */
     public function addData($data, $entity, $index = null);
@@ -40,14 +40,14 @@ interface EntityDataStorageInterface
     /**
      * @param array|mixed $data
      * @param int|string $entity
-     * @param int|string|array $index
+     * @param int|string|array|null $index
      * @return $this
      */
     public function mergeData($data, $entity, $index = null);
 
     /**
      * @param int|string $entity
-     * @param int|string|array $index
+     * @param int|string|array|null $index
      * @return $this
      */
     public function resetData($entity = null, $index = null);

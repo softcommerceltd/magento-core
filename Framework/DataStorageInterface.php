@@ -15,48 +15,48 @@ namespace SoftCommerce\Core\Framework;
 interface DataStorageInterface
 {
     /**
-     * @param int|string|null $key
+     * @param int|string|null $index
      * @return array|int|string|null|mixed
      */
-    public function getData($key = null);
+    public function getData(int|string $index = null);
 
     /**
      * @param int|string|array|mixed $data
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return $this
      */
-    public function setData($data, $key = null);
+    public function setData($data, int|string|array|null $index = null);
 
     /**
      * @param int|string|array|mixed $data
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return $this
      */
-    public function addData($data, $key = null);
+    public function addData($data, int|string|array|null $index = null);
 
     /**
      * @param int|string|array|mixed $data
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return $this
      */
-    public function mergeData($data, $key = null);
+    public function mergeData($data, int|string|array|null $index = null);
 
     /**
      * @param int|string|array|mixed $data
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return $this
      */
-    public function mergeRecursiveData($data, $key = null);
+    public function mergeRecursiveData($data, int|string|array|null $index = null);
 
     /**
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return $this
      */
-    public function resetData($key = null);
+    public function resetData(int|string|array|null $index = null);
 
     /**
-     * @param int|string|null $key
+     * @param int|string|array|null $index
      * @return bool
      */
-    public function hasData($key = null): bool;
+    public function hasData(int|string|array|null $index = null): bool;
 }
