@@ -70,4 +70,12 @@
             </argument>
         </arguments>
     </type>
+    <!-- CLI -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="pub:static:clean" xsi:type="object">SoftCommerce\Core\Console\Command\CleanStaticViewFiles</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
