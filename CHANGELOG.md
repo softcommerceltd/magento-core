@@ -2,6 +2,7 @@
 
 ### Version 1.3.5
 - **Feature**: Added new CLI to clean up the static view files from `pub/static` and `var/vew_processed` directories.
+- **Compatibility**: Compatibility with Magento 2.4.6 [CE|EC|ECE].
 
 ### Version 1.3.4
 - **Enhancement**: Added improvements and compatibility with php 8.[0.1] to `SoftCommerce\Core\Framework\DataStorageInterface`.
