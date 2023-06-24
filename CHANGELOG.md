@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.3.6
+- **Compatibility**: Add compatibility for PHP 8.2 and Magento 2.4.6-p1 #2
+
 ### Version 1.3.5
 - **Feature**: Added new CLI to clean up the static view files from `pub/static` and `var/vew_processed` directories.
 - **Compatibility**: Compatibility with Magento 2.4.6 [CE|EC|ECE].
