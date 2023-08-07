@@ -4,6 +4,8 @@
  * See LICENSE.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace SoftCommerce\Core\Block\Adminhtml\System\Config\Form\Field;
 
 use Magento\Config\Block\System\Config\Form\Field;
@@ -19,7 +21,7 @@ class AdditionalComment extends Field
      * @param AbstractElement $element
      * @return string
      */
-    public function render(AbstractElement $element)
+    public function render(AbstractElement $element): string
     {
         $html = '<div class="config-additional-comment-title">' . $element->getLabel() . '</div>';
         $html .= '<div class="config-additional-comment-content">' . $element->getComment() . '</div>';
@@ -31,7 +33,7 @@ class AdditionalComment extends Field
      * @param string $html
      * @return string
      */
-    private function decorateRowHtml(AbstractElement $element, $html)
+    private function decorateRowHtml(AbstractElement $element, string $html): string
     {
         return sprintf(
             '<tr id="row_%s"><td colspan="3"><div class="config-additional-comment">%s</div></td></tr>',

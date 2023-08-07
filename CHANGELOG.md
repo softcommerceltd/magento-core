@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.3.7
+- **Enhancement**: Add a custom field heading for system configuration. [#1]
+
 ### Version 1.3.6
 - **Compatibility**: Add compatibility for PHP 8.2 and Magento 2.4.6-p1 #2
 
