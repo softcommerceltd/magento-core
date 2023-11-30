@@ -35,7 +35,7 @@ class EntityDataStorage implements EntityDataStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData($entity = null, ?string $index = null)
+    public function getData(int|string|null $entity = null, int|string|null $index = null): array|string|null
     {
         if (null === $entity) {
             return $this->data;
@@ -49,89 +49,90 @@ class EntityDataStorage implements EntityDataStorageInterface
     /**
      * @inheritDoc
      */
-    public function setData($data, $entity, $index = null)
+    public function setData(mixed $data, int|string $entity, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData($data, $entity, $index);
+            $this->setMultidimensionalData($data, $entity, $index);
+            return;
         }
 
         null !== $index
             ? $this->data[$entity][$index] = $data
             : $this->data[$entity] = $data;
-        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function addData($data, $entity, $index = null)
+    public function addData(mixed $data, int|string $entity, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $entity, $index);
+            $this->setMultidimensionalData([$data], $entity, $index);
+            return;
         }
 
         null !== $index
             ? $this->data[$entity][$index][] = $data
             : $this->data[$entity][] = $data;
-        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function mergeData($data, $entity, $index = null)
+    public function mergeData(mixed $data, int|string $entity, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $entity, $index);
+            $this->setMultidimensionalData([$data], $entity, $index);
+            return;
         }
 
         null !== $index
             ? $this->data[$entity][$index] = array_merge($this->data[$entity][$index] ?? [], $data)
             : $this->data[$entity] = array_merge($this->data[$entity] ?? [], $data);
-        return $this;
-    }
-
-    public function mergeRecusiveData($data, $entity, $index = null)
-    {
-        if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $entity, $index);
-        }
-
-        null !== $index
-            ? $this->data[$entity][$index] = array_merge($this->data[$entity][$index] ?? [], $data)
-            : $this->data[$entity] = array_merge($this->data[$entity] ?? [], $data);
-        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function resetData($entity = null, $index = null)
+    public function mergeRecursiveData(mixed $data, int|string $entity, array|int|string|null $index = null): void
+    {
+        if (is_array($index)) {
+            $this->setMultidimensionalData([$data], $entity, $index);
+            return;
+        }
+
+        null !== $index
+            ? $this->data[$entity][$index] = array_merge_recursive($this->data[$entity][$index] ?? [], $data)
+            : $this->data[$entity] = array_merge_recursive($this->data[$entity] ?? [], $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resetData(int|string|null $entity = null, array|int|string|null $index = null): void
     {
         if (null === $entity) {
             $this->data = [];
-            return $this;
+            return;
         }
 
         if (null === $index) {
             unset($this->data[$entity]);
-            return $this;
+            return;
         }
 
         foreach (is_array($index) ? $index : [$index] as $key) {
             unset($this->data[$entity][$key]);
         }
-
-        return $this;
     }
 
     /**
-     * @param $data
-     * @param $entity
+     * @param mixed $data
+     * @param int|string $entity
      * @param array $indexes
-     * @return $this
+     * @return void
      */
-    private function setMultidimensionalData($data, $entity, array $indexes)
+    private function setMultidimensionalData(mixed $data, int|string $entity, array $indexes): void
     {
         $result = [];
         $value = &$result;
@@ -144,7 +145,5 @@ class EntityDataStorage implements EntityDataStorageInterface
             $index = array_key_first($result);
             $this->data[$entity][$index] = array_merge_recursive($this->data[$entity][$index] ?? [], current($result));
         }
-
-        return $this;
     }
 }

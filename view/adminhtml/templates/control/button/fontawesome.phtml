@@ -10,12 +10,12 @@
 ?>
 <?= $block->getBeforeHtml() ?>
 <button <?= /* @noEscape */ $block->getAttributesHtml(), /* @noEscape */ $block->getUiId() ?>>
-    <?php  if ($block->getFontName() && $label = $block->getLabel()) : ?>
+    <?php  if ($block->getFontName() && $label = $block->getLabel()): ?>
         <i class="<?= /* @noEscape */ $block->getFontName() ?>" ></i>
         <span><?= $block->escapeHtml($label) ?></span>
-    <?php  elseif ($fontName = $block->getFontName()) : ?>
+    <?php  elseif ($fontName = $block->getFontName()): ?>
         <i class="<?= /* @noEscape */ $fontName ?>" ></i>
-    <?php elseif ($label = $block->getLabel()) : ?>
+    <?php elseif ($label = $block->getLabel()): ?>
         <span><?= $block->escapeHtml($label) ?></span>
     <?php else : ?>
         <span><?= __('Action') ?></span>

@@ -11,6 +11,8 @@ namespace SoftCommerce\Core\Model\Utils;
 /**
  * Interface SkuStorageInterface
  * used to provide catalog product entity data.
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Catalog\SkuStorageInterface
  */
 interface SkuStorageInterface
 {

@@ -11,6 +11,8 @@ namespace SoftCommerce\Core\Model\Utils;
 /**
  * Interface WebsiteStorageInterface
  * used to provide website & store data.
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Store\WebsiteStorageInterface
  */
 interface WebsiteStorageInterface
 {
@@ -74,6 +76,11 @@ interface WebsiteStorageInterface
     public function getDefaultWebsite(): array;
 
     /**
+     * @return int
+     */
+    public function getDefaultStoreId(): int;
+
+    /**
      * @return array
      */
     public function getDefaultStore(): array;
@@ -83,6 +90,12 @@ interface WebsiteStorageInterface
      * @return array
      */
     public function getDefaultWebsiteStore(int $websiteId): array;
+
+    /**
+     * @param int|null $excludeId
+     * @return array
+     */
+    public function getAllStoreIds(?int $excludeId = null): array;
 
     /**
      * @return array

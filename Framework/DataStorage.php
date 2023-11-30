@@ -36,7 +36,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData(int|string $index = null)
+    public function getData(int|string $index = null): mixed
     {
         return null !== $index
             ? ($this->data[$index] ?? null)
@@ -46,70 +46,139 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function setData($data, int|string|array|null $index = null)
+    public function setData(mixed $data, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData($data, $index);
+            $this->setMultidimensionalData($data, $index);
+            return;
         }
 
-        null !== $index
-            ? $this->data[$index] = $data
-            : $this->data = $data;
-        return $this;
+        if (null !== $index) {
+            $this->data[$index] = $data;
+        } else {
+            $this->data = $data;
+        }
     }
 
     /**
      * @inheritDoc
      */
-    public function addData($data, int|string|array|null $index = null)
+    public function addData(mixed $data, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $index);
+            $this->setMultidimensionalData([$data], $index);
+            return;
         }
 
-        null !== $index
-            ? $this->data[$index][] = $data
-            : $this->data[] = $data;
-        return $this;
+        if (null !== $index) {
+            $this->data[$index][] = $data;
+        } else {
+            $this->data[] = $data;
+        }
     }
 
     /**
      * @inheritDoc
      */
-    public function mergeData($data, int|string|array|null $index = null)
+    public function mergeData(mixed $data, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $index);
+            $this->setMultidimensionalData($data, $index);
+            return;
         }
 
-        null !== $index
-            ? $this->data[$index] = array_merge($this->data[$index] ?? [], is_array($data) ? $data : [$data])
-            : $this->data = array_merge($this->data ?: [], is_array($data) ? $data : [$data]);
-        return $this;
+        if (null !== $index) {
+            $this->data[$index] = array_merge($this->data[$index] ?? [], is_array($data) ? $data : [$data]);
+        } else {
+            $this->data = array_merge($this->data ?: [], is_array($data) ? $data : [$data]);
+        }
     }
 
     /**
      * @inheritDoc
      */
-    public function mergeRecursiveData($data, int|string|array|null $index = null)
+    public function mergeRecursiveData(mixed $data, array|int|string|null $index = null): void
     {
         if (is_array($index)) {
-            return $this->setMultidimensionalData([$data], $index);
+            $this->setMultidimensionalData($data, $index);
+            return;
         }
 
-        null !== $index
-            ? $this->data[$index] = array_merge_recursive(
+        if (null !== $index) {
+            $this->data[$index] = array_merge_recursive(
                 $this->data[$index] ?? [],
                 is_array($data) ? $data : [$data]
-            )
-            : $this->data = array_merge_recursive($this->data ?: [], is_array($data) ? $data : [$data]);
-        return $this;
+            );
+        } else {
+            $this->data = array_merge_recursive($this->data ?: [], is_array($data) ? $data : [$data]);
+        }
     }
 
     /**
      * @inheritDoc
      */
-    public function resetData(int|string|array|null $index = null)
+    public function getDataByIdentifier(int|string $identifier, int|string $index = null): array|int|string|null
+    {
+        return null !== $index
+            ? ($this->data[$identifier][$index] ?? null)
+            : ($this->data[$identifier] ?? []);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void
+    {
+        if (is_array($index)) {
+            $this->setMultidimensionalData($data, $index, $identifier);
+            return;
+        }
+
+        if (null !== $index) {
+            $this->data[$identifier][$index] = $data;
+        } else {
+            $this->data[$identifier] = $data;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void
+    {
+        if (is_array($index)) {
+            $this->setMultidimensionalData([$data], $index, $identifier);
+            return;
+        }
+
+        if (null !== $index) {
+            $this->data[$identifier][$index][] = $data;
+        } else {
+            $this->data[$identifier][] = $data;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function mergeDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void
+    {
+        if (is_array($index)) {
+            $this->setMultidimensionalData($data, $index, $identifier);
+            return;
+        }
+
+        if (null !== $index) {
+            $this->data[$identifier][$index] = array_merge($this->data[$identifier][$index] ?? [], $data);
+        } else {
+            $this->data[$identifier] = array_merge($this->data[$identifier] ?? [], $data);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resetData(array|int|string|null $index = null): void
     {
         if (null === $index) {
             $this->data = [];
@@ -120,14 +189,12 @@ class DataStorage implements DataStorageInterface
         } elseif (isset($this->data[$index])) {
             unset($this->data[$index]);
         }
-
-        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function hasData(int|string|array|null $index = null): bool
+    public function hasData(array|int|string|null $index = null): bool
     {
         if (null !== $index) {
             return isset($this->data[$index]);
@@ -149,11 +216,12 @@ class DataStorage implements DataStorageInterface
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      * @param array $indexes
-     * @return $this
+     * @param int|string|null $identifier
+     * @return void
      */
-    private function setMultidimensionalData($data, array $indexes)
+    private function setMultidimensionalData(mixed $data, array $indexes, int|string|null $identifier = null): void
     {
         $result = [];
         $value = &$result;
@@ -164,9 +232,14 @@ class DataStorage implements DataStorageInterface
 
         if ($result) {
             $index = array_key_first($result);
-            $this->data[$index] = array_merge_recursive($this->data[$index] ?? [], current($result));
+            if (null !== $identifier) {
+                $this->data[$identifier][$index] = array_merge_recursive(
+                    $this->data[$identifier][$index] ?? [],
+                    current($result)
+                );
+            } else {
+                $this->data[$index] = array_merge_recursive($this->data[$index] ?? [], current($result));
+            }
         }
-
-        return $this;
     }
 }

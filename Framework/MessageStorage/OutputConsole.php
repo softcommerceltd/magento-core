@@ -11,7 +11,7 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
 use Magento\Framework\Phrase;
 use SoftCommerce\Core\Framework\IsMultidimensionalArrayInterface;
 use SoftCommerce\Core\Framework\MessageStorageInterface;
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -82,13 +82,13 @@ class OutputConsole implements OutputConsoleInterface
         }
 
         switch ($status) {
-            case Status::CRITICAL:
-            case Status::ERROR:
-            case Status::FAILED:
+            case StatusInterface::CRITICAL:
+            case StatusInterface::ERROR:
+            case StatusInterface::FAILED:
                 $html = "<error> -- $message</error>";
                 break;
-            case Status::NOTICE:
-            case Status::WARNING:
+            case StatusInterface::NOTICE:
+            case StatusInterface::WARNING:
                 $html = "<comment> -- $message</comment>";
                 break;
             default:

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Framework\DataStorage;
 
 use Magento\Framework\Message\ManagerInterface;
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * @inheritDoc
@@ -77,15 +77,15 @@ class OutputMessageManager implements OutputMessageManagerInterface
     private function addMessage($message, string $status): void
     {
         switch ($status) {
-            case Status::CRITICAL:
-            case Status::ERROR:
-            case Status::FAILED:
+            case StatusInterface::CRITICAL:
+            case StatusInterface::ERROR:
+            case StatusInterface::FAILED:
                 $this->messageManager->addErrorMessage($message);
                 break;
-            case Status::WARNING:
+            case StatusInterface::WARNING:
                 $this->messageManager->addWarningMessage($message);
                 break;
-            case Status::NOTICE:
+            case StatusInterface::NOTICE:
                 $this->messageManager->addNoticeMessage($message);
                 break;
             default:

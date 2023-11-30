@@ -16,39 +16,47 @@ interface EntityDataStorageInterface
 {
     /**
      * @param int|string|null $entity
-     * @param string|null $index
-     * @return array|mixed|null
+     * @param int|string|null $index
+     * @return array|string|null
      */
-    public function getData($entity = null, ?string $index = null);
+    public function getData(int|string|null $entity = null, int|string|null $index = null): array|string|null;
 
     /**
-     * @param array|mixed $data
+     * @param mixed $data
      * @param int|string $entity
-     * @param int|string|array|null $index
-     * @return $this
+     * @param array|int|string|null $index
+     * @return void
      */
-    public function setData($data, $entity, $index = null);
+    public function setData(mixed $data, int|string $entity, array|int|string|null $index = null): void;
 
     /**
-     * @param array|mixed $data
+     * @param mixed $data
      * @param int|string $entity
-     * @param int|string|array|null $index
-     * @return $this
+     * @param array|int|string|null $index
+     * @return void
      */
-    public function addData($data, $entity, $index = null);
+    public function addData(mixed $data, int|string $entity, array|int|string|null $index = null): void;
 
     /**
-     * @param array|mixed $data
+     * @param mixed $data
      * @param int|string $entity
-     * @param int|string|array|null $index
-     * @return $this
+     * @param array|int|string|null $index
+     * @return void
      */
-    public function mergeData($data, $entity, $index = null);
+    public function mergeData(mixed $data, int|string $entity, array|int|string|null $index = null): void;
 
     /**
+     * @param mixed $data
      * @param int|string $entity
-     * @param int|string|array|null $index
-     * @return $this
+     * @param array|int|string|null $index
+     * @return void
      */
-    public function resetData($entity = null, $index = null);
+    public function mergeRecursiveData(mixed $data, int|string $entity, array|int|string|null $index = null): void;
+
+    /**
+     * @param int|string|null $entity
+     * @param array|int|string|null $index
+     * @return void
+     */
+    public function resetData(int|string|null $entity = null, array|int|string|null $index = null): void;
 }

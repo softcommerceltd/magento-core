@@ -20,6 +20,7 @@
     <preference for="SoftCommerce\Core\Framework\IsAssociativeArrayInterface" type="SoftCommerce\Core\Framework\IsAssociativeArray"/>
     <preference for="SoftCommerce\Core\Framework\IsMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\IsMultidimensionalArray"/>
     <preference for="SoftCommerce\Core\Framework\SearchMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\SearchMultidimensionalArray"/>
+    <preference for="SoftCommerce\Core\Framework\String\ParseStringInterface" type="SoftCommerce\Core\Framework\String\ParseString"/>
     <!-- global framework interfaces :: DB -->
     <preference for="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverterInterface" type="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverter"/>
     <!-- global framework interfaces :: message storage -->
@@ -32,18 +33,34 @@
     <!-- global config ::: interface | repository | management -->
     <preference for="SoftCommerce\Core\Model\Config\DateTimeLocaleInterface" type="SoftCommerce\Core\Model\Config\DateTimeLocale"/>
     <preference for="SoftCommerce\Core\Model\Config\DeveloperInterface" type="SoftCommerce\Core\Model\Config\Developer"/>
-    <!-- global Eav helper ::: interface | repository -->
+    <!-- Catalog modules ::: interface | repository -->
+    <preference for="SoftCommerce\Core\Model\Catalog\FileImageManagementInterface" type="SoftCommerce\Core\Model\Catalog\FileImageManagement"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\GetCatalogCategoryDataInterface" type="SoftCommerce\Core\Model\Catalog\GetCatalogCategoryData"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\GetConfigurableAttributeOptionsInterface" type="SoftCommerce\Core\Model\Catalog\GetConfigurableAttributeOptions"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\GetProductAttributeDataInterface" type="SoftCommerce\Core\Model\Catalog\GetProductAttributeData"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\IsCatalogProductSuperLinkInterface" type="SoftCommerce\Core\Model\Catalog\IsCatalogProductSuperLink"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\MediaManagementInterface" type="SoftCommerce\Core\Model\Catalog\MediaManagement"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\SkuStorageInterface" type="SoftCommerce\Core\Model\Catalog\SkuStorage"/>
+    <!-- Customer modules :: interface | repository -->
+    <preference for="SoftCommerce\Core\Model\Customer\GetCustomerRawDataInterface" type="SoftCommerce\Core\Model\Customer\GetCustomerRawData"/>
+    <!-- Eav modules ::: interface | repository -->
+    <preference for="SoftCommerce\Core\Model\Eav\AttributeManagementInterface" type="SoftCommerce\Core\Model\Eav\AttributeManagement"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetAttributeBackendTableInterface" type="SoftCommerce\Core\Model\Eav\GetAttributeBackendTable"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetAttributeEntityTypeDataInterface" type="SoftCommerce\Core\Model\Eav\GetAttributeEntityTypeData"/>
     <preference for="SoftCommerce\Core\Model\Eav\GetAttributeEntityTypeIdInterface" type="SoftCommerce\Core\Model\Eav\GetAttributeEntityTypeId"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetAttributeSetByAttributeInterface" type="SoftCommerce\Core\Model\Eav\GetAttributeSetByAttribute"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetAttributeSetDataInterface" type="SoftCommerce\Core\Model\Eav\GetAttributeSetData"/>
     <preference for="SoftCommerce\Core\Model\Eav\GetDefaultAttributeSetIdInterface" type="SoftCommerce\Core\Model\Eav\GetDefaultAttributeSetId"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetEavAttributeOptionValueDataInterface" type="SoftCommerce\Core\Model\Eav\GetEavAttributeOptionValueData"/>
+    <preference for="SoftCommerce\Core\Model\Eav\GetEntityTypeIdInterface" type="SoftCommerce\Core\Model\Eav\GetEntityTypeId"/>
     <!-- vendor module list ::: interface -->
     <preference for="SoftCommerce\Core\Model\ModuleListProviderInterface" type="SoftCommerce\Core\Model\ModuleListProvider"/>
     <!-- model source options ::: interface -->
     <preference for="SoftCommerce\Core\Model\Source\StatusInterface" type="SoftCommerce\Core\Model\Source\Status"/>
     <!-- model utilities -->
     <preference for="SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface" type="SoftCommerce\Core\Model\Utils\GetEntityMetadata"/>
-    <preference for="SoftCommerce\Core\Model\Utils\GetEntityTypeIdInterface" type="SoftCommerce\Core\Model\Utils\GetEntityTypeId"/>
-    <preference for="SoftCommerce\Core\Model\Utils\SkuStorageInterface" type="SoftCommerce\Core\Model\Utils\SkuStorage"/>
-    <preference for="SoftCommerce\Core\Model\Utils\WebsiteStorageInterface" type="SoftCommerce\Core\Model\Utils\WebsiteStorage"/>
+    <!-- Store modules ::: interface | repository -->
+    <preference for="SoftCommerce\Core\Model\Store\WebsiteStorageInterface" type="SoftCommerce\Core\Model\Store\WebsiteStorage"/>
     <!-- Logger -->
     <preference for="SoftCommerce\Core\Logger\LogProcessorInterface" type="SoftCommerce\Core\Logger\LogProcessor"/>
     <type name="SoftCommerce\Core\Logger\Handler\RotationSteamHandler">

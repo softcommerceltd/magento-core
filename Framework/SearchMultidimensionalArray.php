@@ -16,12 +16,15 @@ class SearchMultidimensionalArray implements SearchMultidimensionalArrayInterfac
     /**
      * @inheritDoc
      */
-    public function execute(
-        $needle,
-        array $haystack,
-        string $columnName,
-        $columnId = null
-    ) {
-        return array_search($needle, array_column($haystack, $columnName, $columnId));
+    public function execute(mixed $needle, array $haystack, string $columnName, $columnId = null): bool|int|string
+    {
+        return array_search(
+            $needle,
+            array_column(
+                $haystack,
+                $columnName,
+                $columnId
+            )
+        );
     }
 }

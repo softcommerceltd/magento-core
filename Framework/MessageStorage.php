@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Framework;
 
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 use function array_filter;
 use function array_merge_recursive;
 use function array_keys;
@@ -86,7 +86,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function addData($message, $entity, string $status = Status::SUCCESS)
+    public function addData($message, $entity, string $status = StatusInterface::SUCCESS)
     {
         $this->data[$entity][] = [
             self::ENTITY => $entity,

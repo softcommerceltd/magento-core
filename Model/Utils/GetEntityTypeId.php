@@ -14,6 +14,8 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Eav\GetEntityTypeIdInterface
  */
 class GetEntityTypeId implements GetEntityTypeIdInterface
 {

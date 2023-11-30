@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Framework;
 
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * Interface MessageStorageInterface used to store
@@ -39,7 +39,7 @@ interface MessageStorageInterface
      * @param string $status
      * @return $this
      */
-    public function addData($message, $entity, string $status = Status::SUCCESS);
+    public function addData($message, $entity, string $status = StatusInterface::SUCCESS);
 
     /**
      * @param array $data

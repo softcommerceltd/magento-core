@@ -10,7 +10,7 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
 
 use Magento\Framework\Phrase;
 use SoftCommerce\Core\Framework\MessageStorageInterface;
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * @inheritDoc
@@ -124,7 +124,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param string|null $status
      * @return $this
      */
-    private function setDataOutput(string $data, ?string $status = Status::SUCCESS)
+    private function setDataOutput(string $data, ?string $status = StatusInterface::SUCCESS)
     {
         $htmlTag = $this->format[self::HTML_TAG] ?? '%1';
         $index = explode('%', $htmlTag);

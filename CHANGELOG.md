@@ -1,5 +1,9 @@
 ## Changelog
 
+### Version 1.4.0
+- **Compatibility**: Add compatibility for Magento 2.4.6-p3 and Magento 2.4.7
+- **Feature**: Improvements and new functionality [#2]
+
 ### Version 1.3.7
 - **Enhancement**: Add a custom field heading for system configuration. [#1]
 

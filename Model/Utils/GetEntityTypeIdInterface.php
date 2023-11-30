@@ -13,6 +13,8 @@ use Magento\Catalog\Model\Product;
 /**
  * Interface GetEntityTypeIdInterface
  * used to obtain entity type ID.
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Eav\GetEntityTypeIdInterface
  */
 interface GetEntityTypeIdInterface
 {

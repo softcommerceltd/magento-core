@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Framework\DataMap;
 
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * Interface StatusToFaMappingInterface used to
@@ -21,5 +21,5 @@ interface StatusToFaMappingInterface
      * @param string $fallBack
      * @return string
      */
-    public function execute(?string $status = null, string $fallBack = Status::SUCCESS): string;
+    public function execute(?string $status = null, string $fallBack = StatusInterface::SUCCESS): string;
 }

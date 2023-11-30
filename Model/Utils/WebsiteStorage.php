@@ -16,6 +16,8 @@ use function explode;
 
 /**
  * @inheritDoc
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Store\WebsiteStorageInterface
  */
 class WebsiteStorage implements WebsiteStorageInterface
 {
@@ -262,10 +264,19 @@ class WebsiteStorage implements WebsiteStorageInterface
     /**
      * @inheritDoc
      */
+    public function getDefaultStoreId(): int
+    {
+        return (int) ($this->getDefaultWebsite()['default_store_id'] ?? 0);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getDefaultStore(): array
     {
-        $defaultStoreId = $this->getDefaultWebsite()['default_store_id'] ?? 0;
-        return $this->getStoreById((int) $defaultStoreId);
+        return $this->getStoreById(
+            $this->getDefaultStoreId()
+        );
     }
 
     /**
@@ -275,6 +286,14 @@ class WebsiteStorage implements WebsiteStorageInterface
     {
         $defaultStoreId = $this->getWebsiteById($websiteId)['default_store_id'] ?? 0;
         return $this->getStoreById((int) $defaultStoreId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAllStoreIds(?int $excludeId = null): array
+    {
+        return array_values($this->getStoreCodeToId());
     }
 
     /**

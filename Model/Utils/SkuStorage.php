@@ -20,6 +20,8 @@ use function trim;
 
 /**
  * @inheritDoc
+ * @deprecated in favour
+ * @see \SoftCommerce\Core\Model\Catalog\SkuStorageInterface
  */
 class SkuStorage implements SkuStorageInterface
 {

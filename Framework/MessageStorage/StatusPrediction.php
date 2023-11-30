@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Framework\MessageStorage;
 
 use SoftCommerce\Core\Framework\MessageStorageInterface;
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 use function array_column;
 use function array_merge;
 use function in_array;
@@ -23,25 +23,25 @@ class StatusPrediction implements StatusPredictionInterface
     /**
      * @inheritDoc
      */
-    public function execute(array $data, string $fallback = Status::SUCCESS): string
+    public function execute(array $data, string $fallback = StatusInterface::SUCCESS): string
     {
         if (!$statuses = $this->getStatuses($data)) {
             return $fallback;
         }
 
-        if ((in_array(Status::SUCCESS, $statuses) && in_array(Status::ERROR, $statuses))
-            || in_array(Status::WARNING, $statuses)
+        if ((in_array(StatusInterface::SUCCESS, $statuses) && in_array(StatusInterface::ERROR, $statuses))
+            || in_array(StatusInterface::WARNING, $statuses)
         ) {
-            $status = Status::WARNING;
-        } elseif (in_array(Status::CRITICAL, $statuses) || in_array(Status::ERROR, $statuses)) {
-            $status = Status::ERROR;
-        } elseif (in_array(Status::NOTICE, $statuses) && !in_array(Status::SUCCESS, $statuses)) {
-            $status = Status::NOTICE;
-        } elseif (in_array(Status::SKIPPED, $statuses)
-            && !in_array(Status::ERROR, $statuses)
-            && !in_array(Status::SUCCESS, $statuses)
+            $status = StatusInterface::WARNING;
+        } elseif (in_array(StatusInterface::CRITICAL, $statuses) || in_array(StatusInterface::ERROR, $statuses)) {
+            $status = StatusInterface::ERROR;
+        } elseif (in_array(StatusInterface::NOTICE, $statuses) && !in_array(StatusInterface::SUCCESS, $statuses)) {
+            $status = StatusInterface::NOTICE;
+        } elseif (in_array(StatusInterface::SKIPPED, $statuses)
+            && !in_array(StatusInterface::ERROR, $statuses)
+            && !in_array(StatusInterface::SUCCESS, $statuses)
         ) {
-            $status = Status::SKIPPED;
+            $status = StatusInterface::SKIPPED;
         } else {
             $status = $fallback;
         }

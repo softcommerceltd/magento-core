@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SoftCommerce\Core\Framework\DataStorage;
 
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * Interface StatusPredictionInterface used to
@@ -21,5 +21,5 @@ interface StatusPredictionInterface
      * @param array|string $fallback
      * @return string
      */
-    public function execute(array $data, $fallback = Status::SUCCESS): string;
+    public function execute(array $data, $fallback = StatusInterface::SUCCESS): string;
 }

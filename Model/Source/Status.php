@@ -13,29 +13,10 @@ namespace SoftCommerce\Core\Model\Source;
  */
 class Status implements StatusInterface
 {
-    public const CRITICAL = 'critical';
-    public const ERROR = 'error';
-    public const FAILED = 'failed';
-    public const MISSED = 'missed';
-    public const PENDING = 'pending';
-    public const PENDING_COLLECT = 'pending_collect';
-    public const COMPLETE = 'complete';
-    public const RUNNING = 'running';
-    public const PROCESSING = 'processing';
-    public const SUCCESS = 'success';
-    public const NOTICE = 'notice';
-    public const SKIPPED = 'skipped';
-    public const STOPPED = 'stopped';
-    public const CREATED = 'created';
-    public const UPDATED = 'updated';
-    public const UNKNOWN = 'unknown';
-    public const WARNING = 'warning';
-    public const NEW = 'new';
-
     /**
-     * @var array
+     * @var array|null
      */
-    private $options;
+    private ?array $options = null;
 
     /**
      * @inheritDoc
