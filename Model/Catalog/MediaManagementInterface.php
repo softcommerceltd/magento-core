@@ -76,5 +76,5 @@ interface MediaManagementInterface
      * @param int $entityId
      * @return int
      */
-    public function deleteMediaGalleryImageLabel(int $entityId);
+    public function deleteMediaGalleryImageLabel(int $entityId): int;
 }

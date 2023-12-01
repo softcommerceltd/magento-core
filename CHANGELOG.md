@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.4.1
+- **Enhancement**: Add new methods to `\SoftCommerce\Core\Model\Catalog\MediaManagementInterface`
+
 ### Version 1.4.0
 - **Compatibility**: Add compatibility for Magento 2.4.6-p3 and Magento 2.4.7
 - **Feature**: Improvements and new functionality [#2]

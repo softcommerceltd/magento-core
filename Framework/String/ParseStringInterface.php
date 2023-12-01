@@ -13,6 +13,7 @@ namespace SoftCommerce\Core\Framework\String;
 interface ParseStringInterface
 {
     public const SPACE_TO_UNDERSCORE_ARG = [[' '], ['_']];
+    public const SPACE_TO_HYPHEN_ARG = [[' '], ['-']];
 
     /**
      * @param string $subject

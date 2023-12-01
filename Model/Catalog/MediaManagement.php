@@ -177,6 +177,7 @@ class MediaManagement implements MediaManagementInterface
             )
             ->where("mgvte.$linkFieldName = ?", $productId);
 
+        $md5ChecksumSaveRequest = [];
         $mediaGalleryValueTableName = $this->connection->getTableName('catalog_product_entity_media_gallery_value');
         foreach ($this->connection->fetchAll($select) as $item) {
             $value = $item['value'] ?? null;
@@ -194,7 +195,12 @@ class MediaManagement implements MediaManagementInterface
                 }
 
                 $imageMd5Checksum = md5_file($filePath);
-                $item['md5_checksum'] = null;
+                $item['md5_checksum'] = $imageMd5Checksum;
+                $item['md5_checksum_original'] = null;
+                $md5ChecksumSaveRequest[$valueId] = [
+                    'value_id' => $valueId,
+                    'md5_checksum' => $imageMd5Checksum
+                ];
             }
 
             if (!$imageMd5Checksum) {
@@ -207,6 +213,10 @@ class MediaManagement implements MediaManagementInterface
             $item['values'] = $this->connection->fetchAll($select) ?: [];
 
             $this->mediaGalleryData[$productId][$imageMd5Checksum] = $item;
+        }
+
+        if ($md5ChecksumSaveRequest) {
+            $this->updateMediaGalleryMd5Checksum($md5ChecksumSaveRequest);
         }
 
         return null !== $md5Checksum
@@ -244,6 +254,7 @@ class MediaManagement implements MediaManagementInterface
             )
             ->where('mgvv.url = ?', $videoUrl);
 
+        $md5ChecksumSaveRequest = [];
         foreach ($this->connection->fetchAll($select) as $item) {
             $entityId = $item[$linkFieldName] ?? null;
             if (!$entityId || !$value = $item['value'] ?? null) {
@@ -260,7 +271,11 @@ class MediaManagement implements MediaManagementInterface
                 }
 
                 $imageMd5Checksum = md5_file($filePath);
-                $item['md5_checksum'] = null;
+                $item['md5_checksum'] = $imageMd5Checksum;
+                $md5ChecksumSaveRequest[$item['value_id']] = [
+                    'value_id' => $item['value_id'],
+                    'md5_checksum' => $imageMd5Checksum
+                ];
             }
 
             if (!$imageMd5Checksum) {
@@ -268,6 +283,10 @@ class MediaManagement implements MediaManagementInterface
             }
 
             $this->mediaVideoGalleryData[$videoUrl][$entityId][$imageMd5Checksum] = $item;
+        }
+
+        if ($md5ChecksumSaveRequest) {
+            $this->updateMediaGalleryMd5Checksum($md5ChecksumSaveRequest);
         }
 
         return null !== $productId
@@ -289,6 +308,19 @@ class MediaManagement implements MediaManagementInterface
         }
 
         return $position;
+    }
+
+    /**
+     * @param array $data
+     * @return int
+     */
+    public function updateMediaGalleryMd5Checksum(array $data): int
+    {
+        return (int) $this->connection->insertOnDuplicate(
+            $this->connection->getTableName('catalog_product_entity_media_gallery'),
+            $data,
+            ['md5_checksum']
+        );
     }
 
     /**
@@ -337,7 +369,7 @@ class MediaManagement implements MediaManagementInterface
     /**
      * @inheritDoc
      */
-    public function deleteMediaGalleryImageLabel(int $entityId)
+    public function deleteMediaGalleryImageLabel(int $entityId): int
     {
         return (int) $this->connection->delete(
             $this->connection->getTableName('catalog_product_entity_varchar'),
