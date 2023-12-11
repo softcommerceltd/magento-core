@@ -39,20 +39,20 @@ interface MessageStorageInterface
      * @param string $status
      * @return $this
      */
-    public function addData($message, $entity, string $status = StatusInterface::SUCCESS);
+    public function addData($message, $entity, string $status = StatusInterface::SUCCESS): static;
 
     /**
      * @param array $data
      * @return $this
      */
-    public function setData(array $data);
+    public function setData(array $data): static;
 
     /**
      * @param array $data
      * @param int|string|null $key
      * @return $this
      */
-    public function mergeData(array $data, $key = null);
+    public function mergeData(array $data, $key = null): static;
 
     /**
      * @return array
@@ -63,5 +63,5 @@ interface MessageStorageInterface
      * @param  int|string|null $key
      * @return $this
      */
-    public function resetData($key = null);
+    public function resetData($key = null): static;
 }

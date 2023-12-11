@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.4.2
+- **Enhancement**: Improvements to data storage framework [#3]
+
 ### Version 1.4.1
 - **Enhancement**: Add new methods to `\SoftCommerce\Core\Model\Catalog\MediaManagementInterface`
 

@@ -23,30 +23,36 @@ interface DataStorageInterface
     /**
      * @param mixed $data
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function setData(mixed $data, array|int|string|null $index = null): void;
+    public function setData(mixed $data, array|int|string|null $index = null): static;
 
     /**
      * @param mixed $data
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function addData(mixed $data, array|int|string|null $index = null): void;
+    public function addData(mixed $data, array|int|string|null $index = null): static;
 
     /**
      * @param mixed $data
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function mergeData(mixed $data, array|int|string|null $index = null): void;
+    public function mergeData(mixed $data, array|int|string|null $index = null): static;
 
     /**
      * @param mixed $data
+     * @param array|int|string|null $index
+     * @return DataStorageInterface
+     */
+    public function mergeRecursiveData(mixed $data, array|int|string|null $index = null): static;
+
+    /**
      * @param array|int|string|null $index
      * @return $this
      */
-    public function mergeRecursiveData(mixed $data, array|int|string|null $index = null);
+    public function unsetData(array|int|string|null $index = null): static;
 
     /**
      * @param int|string $identifier
@@ -59,31 +65,38 @@ interface DataStorageInterface
      * @param mixed $data
      * @param int|string $identifier
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function setDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void;
+    public function setDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): static;
 
     /**
      * @param mixed $data
      * @param int|string $identifier
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function addDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void;
+    public function addDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): static;
 
     /**
      * @param mixed $data
      * @param int|string $identifier
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function mergeDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): void;
+    public function mergeDataByIdentifier(mixed $data, int|string $identifier, array|int|string|null $index = null): static;
+
+    /**
+     * @param int|string $identifier
+     * @param array|int|string|null $index
+     * @return $this
+     */
+    public function unsetDataByIdentifier(int|string $identifier, array|int|string|null $index = null): static;
 
     /**
      * @param array|int|string|null $index
-     * @return void
+     * @return DataStorageInterface
      */
-    public function resetData(array|int|string|null $index = null): void;
+    public function resetData(array|int|string|null $index = null): static;
 
     /**
      * @param array|int|string|null $index

@@ -45,9 +45,13 @@ class GetEntityMetadata implements GetEntityMetadataInterface
     public function getLinkField(string $entityType = ProductInterface::class): string
     {
         if (!isset($this->linkField[$entityType])) {
-            $this->linkField[$entityType] = $this->metadataPool
-                ->getMetadata($entityType)
-                ->getLinkField();
+            try {
+                $this->linkField[$entityType] = $this->metadataPool
+                    ->getMetadata($entityType)
+                    ->getLinkField();
+            } catch (\Exception $e) {
+                $this->linkField[$entityType] = 'entity_id';
+            }
         }
         return $this->linkField[$entityType];
     }

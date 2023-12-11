@@ -19,7 +19,6 @@ interface GetEntityMetadataInterface
     /**
      * @param string $entityType
      * @return string
-     * @throws \Exception
      */
     public function getLinkField(string $entityType = ProductInterface::class): string;
 

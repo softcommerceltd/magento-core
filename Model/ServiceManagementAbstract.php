@@ -78,7 +78,7 @@ class ServiceManagementAbstract
     /**
      * @inheritDoc
      */
-    public function initialize()
+    public function initialize(): static
     {
         $this->request =
         $this->response =
@@ -93,7 +93,7 @@ class ServiceManagementAbstract
     /**
      * @return $this
      */
-    public function finalize()
+    public function finalize(): static
     {
         return $this;
     }

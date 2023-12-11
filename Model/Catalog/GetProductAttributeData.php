@@ -292,7 +292,7 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
                 );
             }
 
-            foreach (array_filter($this->connection->fetchPairs($select, $bind)) as $attributeId => $value) {
+            foreach ($this->connection->fetchPairs($select, $bind) as $attributeId => $value) {
                 if ($attributeCode = $item[$attributeId] ?? null) {
                     $resultData[$attributeCode] = $value;
                 }
