@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.4.3
+- **Enhancement**: An option to retrieve attribute source options in \SoftCommerce\Core\Model\Eav\GetEavAttributeOptionValueData [#4]
+
 ### Version 1.4.2
 - **Enhancement**: Improvements to data storage framework [#3]
 
