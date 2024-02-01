@@ -203,6 +203,20 @@ abstract class AbstractResource extends AbstractDb
     }
 
     /**
+     * @param array $items
+     * @return array
+     * @throws LocalizedException
+     */
+    public function buildBatchDataForSave(array $items): array
+    {
+        $result = [];
+        foreach ($items as $item) {
+            $result[] = $this->buildDataForSave($item);
+        }
+        return $result;
+    }
+
+    /**
      * @param string $prefix
      * @param string $tableName
      * @return array

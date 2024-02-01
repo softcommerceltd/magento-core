@@ -1,5 +1,8 @@
 ## Changelog
 
+### version 1.4.4
+- **Enhancement**: New method to build DB metadata for insert request. [#5]
+
 ### Version 1.4.3
 - **Enhancement**: An option to retrieve attribute source options in \SoftCommerce\Core\Model\Eav\GetEavAttributeOptionValueData [#4]
 
