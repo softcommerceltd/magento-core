@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.4.5
+- **Enhancement**: Compatibility with magento commerce staging [#6]
+
 ### version 1.4.4
 - **Enhancement**: New method to build DB metadata for insert request. [#5]
 

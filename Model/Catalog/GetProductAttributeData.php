@@ -248,9 +248,10 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
                     implode(' AND ', $defaultJoinCondition),
                     null
                 )
-                ->where("e.entity_id = :entity_id");
+                // ->where("e.entity_id = :entity_id")
+                ->where("e.$entityLinkField = :$entityLinkField");
 
-            $bind = ['entity_id' => $this->entityIdInMemory];
+            $bind = [$entityLinkField => $this->entityIdInMemory];
 
             if ($this->storeIdInMemory !== Store::DEFAULT_STORE_ID) {
                 $valueFragmentExpression = $this->connection->getCheckSql(

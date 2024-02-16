@@ -165,6 +165,7 @@ class MediaManagement implements MediaManagementInterface
 
         $this->mediaGalleryData[$productId] = [];
         $linkFieldName = $this->getEntityMetadata->getLinkField();
+
         $select = $this->connection->select()
             ->from(
                 ['mg' => $this->connection->getTableName('catalog_product_entity_media_gallery')],
