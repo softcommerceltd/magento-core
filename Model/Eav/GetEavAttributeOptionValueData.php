@@ -159,9 +159,9 @@ class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataIn
     /**
      * @param int $attributeId
      * @param string $sourceModel
-     * @return AbstractSource|null
+     * @return AbstractSource|mixed|null
      */
-    private function getSourceModelObject(int $attributeId, string $sourceModel): ?AbstractSource
+    private function getSourceModelObject(int $attributeId, string $sourceModel)
     {
         if (!isset($this->sourceModelObjectInMemory[$attributeId])) {
             $this->sourceModelObjectInMemory[$attributeId] = $this->objectFactory->get($sourceModel);

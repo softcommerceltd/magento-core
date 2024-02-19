@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.4.6
+- **Fix**: TypeError returned at vendor/softcommerce/module-core/Model/Eav/GetEavAttributeOptionValueData.php:170. https://github.com/softcommerceltd/mage2plenty-os/issues/13: [#13]
+
 ### Version 1.4.5
 - **Enhancement**: Compatibility with magento commerce staging [#6]
 
