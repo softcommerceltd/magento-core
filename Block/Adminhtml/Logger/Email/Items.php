@@ -38,10 +38,10 @@ class Items extends Template
     /**
      * @return array
      */
-    public function getItems()
+    public function getItems(): array
     {
         $items = [];
-        foreach ($this->getData('items') as $item) {
+        foreach ($this->getData('items') ?: [] as $item) {
             if (!isset($item['message'], $item['context'])) {
                 continue;
             }

@@ -1,12 +1,17 @@
 ## Changelog
 
+### Version 1.5.0
+- **Compatibility**: Introduced compatibility with PHP type declaration [#9]
+- **Compatibility**: Introduced support for PHP 8.3 [#8]
+- **Feature**: Implement functionality to support UI form scope data [#7]
+
 ### Version 1.4.6
 - **Fix**: TypeError returned at vendor/softcommerce/module-core/Model/Eav/GetEavAttributeOptionValueData.php:170. https://github.com/softcommerceltd/mage2plenty-os/issues/13: [#13]
 
 ### Version 1.4.5
 - **Enhancement**: Compatibility with magento commerce staging [#6]
 
-### version 1.4.4
+### Version 1.4.4
 - **Enhancement**: New method to build DB metadata for insert request. [#5]
 
 ### Version 1.4.3

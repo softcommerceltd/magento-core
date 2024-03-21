@@ -11,7 +11,6 @@ namespace SoftCommerce\Core\Logger\Handler;
 use Magento\Framework\Filesystem\DriverInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
 
 /**
  * @inheritDoc
@@ -27,11 +26,6 @@ class RotationSteamHandler extends RotatingFileHandler
      * @var DriverInterface
      */
     protected DriverInterface $filesystem;
-
-    /**
-     * @var int
-     */
-    protected $loggerType = Logger::ERROR;
 
     /**
      * @param DriverInterface $filesystem

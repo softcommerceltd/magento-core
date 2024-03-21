@@ -1,0 +1,27 @@
+name: Automated Release
+on:
+  push:
+    branches:
+      - "main"
+      - "master"
+    paths-ignore:
+      - '.github/*'
+      - '.gitignore'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: 1.5.0 [CE|EE|ECE 2.4.0-2.4.7] 21 Mar 2024
+          tag_name: 1.5.0
+          body: |-
+            ### softcommerce/module-core [1.5.0]
+            - **Compatibility**: Introduced compatibility with PHP type declaration [#9]
+            - **Compatibility**: Introduced support for PHP 8.3 [#8]
+            - **Feature**: Implement functionality to support UI form scope data [#7]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

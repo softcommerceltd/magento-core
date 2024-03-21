@@ -43,7 +43,7 @@ class CleanStaticViewFiles extends Command
     /**
      * @inheritDoc
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME)
             ->setDescription('Clean static files from pub/static directory');
@@ -55,9 +55,6 @@ class CleanStaticViewFiles extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->cleanupStaticView();
-        $this->cleanupViewProcessed();
-
         try {
             $this->cleanupStaticView();
             $this->cleanupViewProcessed();

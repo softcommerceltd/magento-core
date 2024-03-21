@@ -46,7 +46,8 @@ class LogProcessor extends Monolog implements LogProcessorInterface
         array $context = [],
         int $level = self::DEBUG,
         bool $printToArray = false
-    ): void {
+    ): void
+    {
         /** @todo $printToArray - implement json formatPrettyPrint $printToArray */
         $this->addRecord($level, $message, $context);
     }

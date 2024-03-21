@@ -4,7 +4,7 @@
  */
 
 define([
-    'Magento_Ui/js/form/element/ui-select',
+    'SoftCommerce_Core/js/ui/form/element/ui-select',
     'underscore',
 ], function (Select, _) {
     'use strict';
