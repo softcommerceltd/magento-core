@@ -2,11 +2,7 @@ name: Automated Release
 on:
   push:
     branches:
-      - "main"
       - "master"
-    paths-ignore:
-      - '.github/*'
-      - '.gitignore'
 jobs:
   build:
     runs-on: ubuntu-latest
