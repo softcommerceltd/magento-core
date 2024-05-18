@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.1
+- **Feature**: Added service & processor interface wrapper for dependant modules that use data processing.
+
 ### Version 1.5.0
 - **Compatibility**: Introduced compatibility with PHP type declaration [#9]
 - **Compatibility**: Introduced support for PHP 8.3 [#8]
