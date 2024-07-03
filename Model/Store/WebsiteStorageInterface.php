@@ -45,14 +45,14 @@ interface WebsiteStorageInterface
     public function getStoreCodeToId(?string $storeCode = null);
 
     /**
-     * @param string|null $storeId
+     * @param int|null $storeId
      * @return int[]|int|null
      */
-    public function getStoreIdToWebsiteId(?string $storeId = null);
+    public function getStoreIdToWebsiteId(?int $storeId = null);
 
     /**
      * @param int|null $storeId
-     * @return array|int|null
+     * @return array
      */
     public function getStoreIdToWebsiteStoreIds(?int $storeId = null): array;
 
@@ -72,6 +72,11 @@ interface WebsiteStorageInterface
      * @return array
      */
     public function getDefaultWebsite(): array;
+
+    /**
+     * @return int
+     */
+    public function getDefaultWebsiteId(): int;
 
     /**
      * @return int

@@ -176,7 +176,7 @@ class WebsiteStorage implements WebsiteStorageInterface
     /**
      * @inheritDoc
      */
-    public function getStoreIdToWebsiteId(?string $storeId = null)
+    public function getStoreIdToWebsiteId(?int $storeId = null)
     {
         if (null === $this->storeIdToWebsiteId) {
             $this->storeIdToWebsiteId = [];
@@ -257,6 +257,14 @@ class WebsiteStorage implements WebsiteStorageInterface
                 return isset($item['is_default_website']) && $item['is_default_website'];
             })
         ) ?: [];
+    }
+
+    /**
+     * @inhertiDoc
+     */
+    public function getDefaultWebsiteId(): int
+    {
+        return (int) ($this->getDefaultWebsite()['website_id'] ?? 0);
     }
 
     /**
