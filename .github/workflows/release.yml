@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "master"
+      - "main"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +15,8 @@ jobs:
         with:
           name: 1.5.2 [CE|EE|ECE 2.4.0-2.4.7] 03 Jul 2024
           tag_name: 1.5.2
-          body: "### softcommerce/module-core [1.5.2]
-            - **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10]. "
+          body: |
+            - ### softcommerce/module-core [1.5.2]
+            - **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10].
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

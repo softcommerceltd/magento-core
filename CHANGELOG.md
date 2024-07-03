@@ -1,7 +1,7 @@
 ## Changelog
 
 ### Version 1.5.2
-- **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10]. 
+- **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10].
 
 ### Version 1.5.1
 - **Feature**: Added service & processor interface wrapper for dependant modules that use data processing.
