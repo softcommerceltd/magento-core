@@ -15,7 +15,7 @@ define([
 
     return Column.extend({
         defaults: {
-            bodyTmpl: 'SoftCommerce_Core/grid/cells/html-status'
+            bodyTmpl: 'SoftCommerce_Core/grid/cells/html-tooltip'
         },
 
         /**
@@ -23,16 +23,7 @@ define([
          * @returns {*}
          */
         getCellContent: function (record) {
-            let elementClass = this.getElementClass(record),
-                elementStatus = this.getLabel(record);
-
-            if (elementStatus) {
-                elementClass += ' status-' + elementStatus;
-            }
-
-            console.log('elementStatus', elementStatus);
-            console.log('elementClass', elementClass);
-
+            let elementClass = this.getElementClass(record);
             return '<i class="' + elementClass + '"></i>';
         },
 
@@ -41,18 +32,6 @@ define([
          * @returns {string}
          */
         getElementClass: function (record) {
-            let attribute = '';
-            if (record['cell_attribute']) {
-                attribute = record['cell_attribute'];
-            }
-            return attribute;
-        },
-
-        /**
-         * @param {Object} record
-         * @returns {string}
-         */
-        getElementStatus: function (record) {
             let attribute = '';
             if (record['cell_attribute']) {
                 attribute = record['cell_attribute'];

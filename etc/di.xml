@@ -20,6 +20,7 @@
     <preference for="SoftCommerce\Core\Framework\IsAssociativeArrayInterface" type="SoftCommerce\Core\Framework\IsAssociativeArray"/>
     <preference for="SoftCommerce\Core\Framework\IsMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\IsMultidimensionalArray"/>
     <preference for="SoftCommerce\Core\Framework\SearchMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\SearchMultidimensionalArray"/>
+    <preference for="SoftCommerce\Core\Framework\Array\FlattenArrayInterface" type="SoftCommerce\Core\Framework\Array\FlattenArray"/>
     <preference for="SoftCommerce\Core\Framework\String\ParseStringInterface" type="SoftCommerce\Core\Framework\String\ParseString"/>
     <!-- global framework interfaces :: DB -->
     <preference for="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverterInterface" type="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverter"/>

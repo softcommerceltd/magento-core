@@ -13,10 +13,11 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.2 [CE|EE|ECE 2.4.0-2.4.7] 03 Jul 2024
-          tag_name: 1.5.2
-          body: |
-            - ### softcommerce/module-core [1.5.2]
-            - **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10].
+          name: 1.5.3 [CE|EE|ECE 2.4.0-2.4.7] 13 Sep 2024
+          tag_name: 1.5.3
+          body: |-
+            ### softcommerce/module-core [1.5.3]
+            - **Enhancement**: Introduce tooltip renderer for UI columns [#12]
+            - **Enhancement**: Introduce flattening array interface [#11]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

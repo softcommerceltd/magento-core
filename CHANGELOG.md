@@ -1,5 +1,9 @@
 ## Changelog
 
+### Version 1.5.3
+- **Enhancement**: Introduce tooltip renderer for UI columns [#12]
+- **Enhancement**: Introduce flattening array interface [#11]
+
 ### Version 1.5.2
 - **Fix**: Applied a fix to \SoftCommerce\Core\Model\Store\WebsiteStorage::getStoreIdToWebsiteId method where argument data type for $storeId was changed from string to an integer [#10].
 
