@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace SoftCommerce\Core\Framework\String;
+namespace SoftCommerce\Core\Framework\Filter;
 
 use function mb_strtolower;
 use function str_replace;

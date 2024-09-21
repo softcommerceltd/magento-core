@@ -13,11 +13,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.3 [CE|EE|ECE 2.4.0-2.4.7] 13 Sep 2024
-          tag_name: 1.5.3
+          name: 1.5.4 [CE|EE|ECE 2.4.0-2.4.7] 21 Sep 2024
+          tag_name: 1.5.4
           body: |-
-            ### softcommerce/module-core [1.5.3]
-            - **Enhancement**: Introduce tooltip renderer for UI columns [#12]
-            - **Enhancement**: Introduce flattening array interface [#11]
+            ### softcommerce/module-core [1.5.4]
+            - **Fix**: Cannot use "String" in namespace as it is reserved since PHP 7 [#13]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

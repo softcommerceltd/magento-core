@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.4
+- **Fix**: Cannot use "String" in namespace as it is reserved since PHP 7 [#13]
+
 ### Version 1.5.3
 - **Enhancement**: Introduce tooltip renderer for UI columns [#12]
 - **Enhancement**: Introduce flattening array interface [#11]

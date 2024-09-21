@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace SoftCommerce\Core\Framework\String;
+namespace SoftCommerce\Core\Framework\Filter;
 
 /**
  * Interface ParseStringInterface used to

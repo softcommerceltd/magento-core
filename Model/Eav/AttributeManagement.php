@@ -23,7 +23,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Phrase;
 use Magento\Swatches\Model\Swatch;
 use Magento\Swatches\Model\SwatchAttributeType;
-use SoftCommerce\Core\Framework\String\ParseStringInterface;
+use SoftCommerce\Core\Framework\Filter\ParseStringInterface;
 use function array_filter;
 use function array_flip;
 use function array_keys;

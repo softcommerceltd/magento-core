@@ -21,7 +21,7 @@
     <preference for="SoftCommerce\Core\Framework\IsMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\IsMultidimensionalArray"/>
     <preference for="SoftCommerce\Core\Framework\SearchMultidimensionalArrayInterface" type="SoftCommerce\Core\Framework\SearchMultidimensionalArray"/>
     <preference for="SoftCommerce\Core\Framework\Array\FlattenArrayInterface" type="SoftCommerce\Core\Framework\Array\FlattenArray"/>
-    <preference for="SoftCommerce\Core\Framework\String\ParseStringInterface" type="SoftCommerce\Core\Framework\String\ParseString"/>
+    <preference for="SoftCommerce\Core\Framework\Filter\ParseStringInterface" type="SoftCommerce\Core\Framework\Filter\ParseString"/>
     <!-- global framework interfaces :: DB -->
     <preference for="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverterInterface" type="SoftCommerce\Core\Framework\DB\QueryResultDataTypeConverter"/>
     <!-- global framework interfaces :: message storage -->
