@@ -41,17 +41,17 @@ abstract class AbstractResource extends AbstractDb
     }
 
     /**
-     * @param $entityId
-     * @param string|array $cols
+     * @param string|int $entityId
+     * @param string $cols
      * @return array
      * @throws LocalizedException
      */
-    public function getByEntityId($entityId, $cols = '*')
+    public function getByEntityId(string|int $entityId, $cols = '*')
     {
         $connection = $this->getConnection();
         $select = $connection->select()
-            ->from($this->getMainTable(), $cols)
-            ->where($this->getIdFieldName() . ' = ?', $entityId);
+            ->from($this->getMainTable(), $cols);
+            $select->where($this->getIdFieldName() . ' = ?', $entityId);
 
         return $connection->fetchRow($select);
     }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.5
+- **Compatibility**: Add compatibility for Magento 2.4.7-p2
+
 ### Version 1.5.4
 - **Fix**: Cannot use "String" in namespace as it is reserved since PHP 7 [#13]
 
