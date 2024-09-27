@@ -35,6 +35,11 @@ class FlattenArray implements FlattenArrayInterface
     private int $flattenValueSize;
 
     /**
+     * @var int|null
+     */
+    private ?int $maxLevel = null;
+
+    /**
      * @param RemoveTags $removeTags
      * @param StringUtils $string
      * @param int $flattenValueSize
@@ -54,10 +59,12 @@ class FlattenArray implements FlattenArrayInterface
     public function execute(
         array $array,
         bool $shouldStripTags = false,
+        int $maxLevel = 0,
         string $path = '',
         string $separator = '/'
     ): array
     {
+        $this->maxLevel = $maxLevel ?: null;
         return $this->flattenArray($array, $shouldStripTags, $path, $separator);
     }
 
@@ -70,6 +77,14 @@ class FlattenArray implements FlattenArrayInterface
      */
     public function flattenArray(array $data, bool $shouldStripTags, string $path, string $separator): array
     {
+        if (null !== $this->maxLevel) {
+            if ($this->maxLevel === 0) {
+                return [$path => $data];
+            }
+
+            $this->maxLevel -= 1;
+        }
+
         $result = [];
         $path = $path ? $path . $separator : '';
 

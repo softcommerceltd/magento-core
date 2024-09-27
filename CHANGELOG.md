@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.6
+- **Enhancement**: Added an option to display installed metapackages for the bundled modules
+
 ### Version 1.5.5
 - **Compatibility**: Add compatibility for Magento 2.4.7-p2
 

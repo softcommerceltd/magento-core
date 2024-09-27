@@ -17,6 +17,7 @@ interface FlattenArrayInterface
     /**
      * @param array $array
      * @param bool $shouldStripTags
+     * @param int $maxLevel
      * @param string $path
      * @param string $separator
      * @return array
@@ -24,6 +25,7 @@ interface FlattenArrayInterface
     public function execute(
         array $array,
         bool $shouldStripTags = false,
+        int $maxLevel = 0,
         string $path = '',
         string $separator = '/'
     ): array;

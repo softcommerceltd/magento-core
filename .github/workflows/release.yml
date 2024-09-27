@@ -13,10 +13,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.5 [CE|EE|ECE 2.4.0-2.4.7] 24 Sep 2024
-          tag_name: 1.5.5
+          name: 1.5.6 [CE|EE|ECE 2.4.0-2.4.7] 27 Sep 2024
+          tag_name: 1.5.6
           body: |-
-            ### softcommerce/module-core [1.5.5]
-            - **Compatibility**: Add compatibility for Magento 2.4.7-p2
+            ### softcommerce/module-core [1.5.6]
+            - **Enhancement**: Added an option to display installed metapackages for the bundled modules
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
