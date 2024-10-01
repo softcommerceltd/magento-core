@@ -13,10 +13,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.6 [CE|EE|ECE 2.4.0-2.4.7] 27 Sep 2024
-          tag_name: 1.5.6
+          name: 1.5.7 [CE|EE|ECE 2.4.0-2.4.7] 01 Oct 2024
+          tag_name: 1.5.7
           body: |-
-            ### softcommerce/module-core [1.5.6]
-            - **Enhancement**: Added an option to display installed metapackages for the bundled modules
+            ### softcommerce/module-core [1.5.7]
+            - **Enhancement**: Added console log debugging in admin area for JS modules
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

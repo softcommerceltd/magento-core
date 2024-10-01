@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.7
+- **Enhancement**: Added console log debugging in admin area for JS modules
+
 ### Version 1.5.6
 - **Enhancement**: Added an option to display installed metapackages for the bundled modules
 

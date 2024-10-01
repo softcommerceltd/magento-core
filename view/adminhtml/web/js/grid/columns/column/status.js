@@ -30,9 +30,6 @@ define([
                 elementClass += ' status-' + elementStatus;
             }
 
-            console.log('elementStatus', elementStatus);
-            console.log('elementClass', elementClass);
-
             return '<i class="' + elementClass + '"></i>';
         },
 
