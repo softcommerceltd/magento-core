@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.5.8
+- **Compatibility**: Added compatibility for PHP 8.4 and Magento 2.4.8-beta
+
 ### Version 1.5.7
 - **Enhancement**: Added console log debugging in admin area for JS modules
 

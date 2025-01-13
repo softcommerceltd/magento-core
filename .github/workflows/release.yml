@@ -13,10 +13,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.7 [CE|EE|ECE 2.4.0-2.4.7] 01 Oct 2024
-          tag_name: 1.5.7
+          name: 1.5.8 [CE|EE|ECE 2.4.0-2.4.7] 13 Jan 2025
+          tag_name: 1.5.8
           body: |-
-            ### softcommerce/module-core [1.5.7]
-            - **Enhancement**: Added console log debugging in admin area for JS modules
+            ### softcommerce/module-core [1.5.8]
+            - **Compatibility**: Added compatibility for PHP 8.4 and Magento 2.4.8-beta
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
