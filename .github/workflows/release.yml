@@ -13,10 +13,11 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.5.8 [CE|EE|ECE 2.4.0-2.4.7] 13 Jan 2025
-          tag_name: 1.5.8
+          name: 1.5.9 [CE|EE|ECE 2.4.0-2.4.7] 01 Apr 2025
+          tag_name: 1.5.9
           body: |-
-            ### softcommerce/module-core [1.5.8]
-            - **Compatibility**: Added compatibility for PHP 8.4 and Magento 2.4.8-beta
+            ### softcommerce/module-core [1.5.9]
+            - **Enhancement**: Add Method to FileImageManagement Interface for Deleting Downloaded Images from pub/media/import Directory
+            - **Enhancement**: Add Weight Unit Source Options to Enable Configuration via UI Profiles
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -71,6 +71,12 @@ interface FileImageManagementInterface
     public function uploadImageFile(string $filePath, bool $renameFileOff = false): string;
 
     /**
+     * @param string $filename
+     * @return bool
+     */
+    public function removeImportFile(string $filename): bool;
+
+    /**
      * @param string $filePath
      * @return bool
      */

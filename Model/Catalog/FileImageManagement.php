@@ -108,7 +108,7 @@ class FileImageManagement implements FileImageManagementInterface
             $directory = $this->getImportDirectory();
         }
 
-        $filePath = $directory . DIRECTORY_SEPARATOR . $fileName;
+        $filePath = $directory . DIRECTORY_SEPARATOR . trim($fileName, '/');
         return $this->isFileSourceable($filePath) ? $filePath : null;
     }
 
@@ -173,7 +173,7 @@ class FileImageManagement implements FileImageManagementInterface
     {
         $directory = $this->getImportDirectory();
         $this->ioFile->checkAndCreateFolder($directory);
-        $filePath = $directory . DIRECTORY_SEPARATOR . $imageName;
+        $filePath = $directory . DIRECTORY_SEPARATOR . trim($imageName, '/');
 
         if (!$this->ioFile->fileExists($filePath)) {
             $this->ioFile->read($url, $filePath);
@@ -195,6 +195,22 @@ class FileImageManagement implements FileImageManagementInterface
     {
         $res = $this->getFileUploader()->move($filePath, $renameFileOff);
         return $res['file'] ?? '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeImportFile(string $filename): bool
+    {
+        $directory = $this->getImportDirectory();
+        $filePath = $directory . DIRECTORY_SEPARATOR . trim($filename, '/');
+
+        if ($this->ioFile->fileExists($filePath)) {
+            $this->ioFile->rm($filePath);
+            return true;
+        }
+
+        return false;
     }
 
     /**
