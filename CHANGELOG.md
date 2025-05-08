@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.6.0
+- **Compatibility**: Added compatibility for Magento 2.4.8
+
 ### Version 1.5.9
 - **Enhancement**: Add Method to FileImageManagement Interface for Deleting Downloaded Images from pub/media/import Directory
 - **Enhancement**: Add Weight Unit Source Options to Enable Configuration via UI Profiles

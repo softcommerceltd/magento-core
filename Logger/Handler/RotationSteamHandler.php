@@ -11,6 +11,7 @@ namespace SoftCommerce\Core\Logger\Handler;
 use Magento\Framework\Filesystem\DriverInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
+use Monolog\LogRecord;
 
 /**
  * @inheritDoc
@@ -51,7 +52,7 @@ class RotationSteamHandler extends RotatingFileHandler
     /**
      * @inheritDoc
      */
-    protected function write(array $record): void
+    protected function write(array|LogRecord $record): void
     {
         $logDirectory = $this->filesystem->getParentDirectory($this->url);
         if (!$this->filesystem->isDirectory($logDirectory)) {
