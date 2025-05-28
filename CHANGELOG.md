@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.6.1
+- **Enhancement**: Enhanced Configurable-Product Detection in Export/Import Interface [#64]
+
 ### Version 1.6.0
 - **Compatibility**: Added compatibility for Magento 2.4.8
 

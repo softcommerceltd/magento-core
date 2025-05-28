@@ -21,5 +21,18 @@ interface IsCatalogProductSuperLinkInterface
      * @return bool
      * @throws LocalizedException
      */
-    public function execute(string $sku): bool;
+    public function executeAllBySku(string $sku): bool;
+
+    /**
+     * Returns true if $productId is a simple child of at least one configurable.
+     * @param int $productId
+     * @return bool
+     */
+    public function executeSingle(int $productId): bool;
+
+    /**
+     * @param int[] $productIds
+     * @return array [ id => bool, … ]
+     */
+    public function executeBatch(array $productIds): array;
 }
