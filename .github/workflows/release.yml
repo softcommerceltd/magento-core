@@ -1,22 +1,39 @@
-name: Automated Release
+name: Automated Release on Tag
+
 on:
   push:
-    branches:
-      - "master"
-      - "main"
+    tags:
+      - '*' # Triggers when any tag is pushed
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Release
+        # Fetch all history for all branches and tags
+        with:
+          fetch-depth: 0
+
+      - name: Generate Changelog
+        id: changelog
+        # This action compares the latest tag with the one before it
+        # and generates release notes from the commit messages.
+        uses: metcalfc/changelog-generator@v4.3.1
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: 1.6.1 [CE|EE|ECE 2.4.0-2.4.7] 28 May 2025
-          tag_name: 1.6.1
-          body: |-
-            ### softcommerce/module-core [1.6.1]
-            - **Enhancement**: Enhanced Configurable-Product Detection in Export/Import Interface [#64]
+          # The release name will be the tag name (e.g., "1.14.0")
+          name: Release ${{ github.ref_name }}
+          # The body will be the auto-generated changelog
+          body: ${{ steps.changelog.outputs.changelog }}
+          # The tag will be the one that triggered the workflow
+          tag_name: ${{ github.ref_name }}
+          # This allows the action to create a draft release first
+          # for review, or set to 'false' to publish immediately.
+          draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
