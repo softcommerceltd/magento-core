@@ -4,11 +4,38 @@
  * See LICENSE.txt for license details.
  */
 -->
-<!--@subject {{trans "SoftCommerce Module Alert"}} @-->
+<!--@subject {{trans "Critical Alert: System Event"}} @-->
 <!--@vars {
-"var content":"SoftCommerce Module Alert",
-"layout handle=\"softcommerce_logger_email_items\" items=$items area=\"adminhtml\"",
+"var content":"Log Message Content",
+"var items":"Log Items Array"
 } @-->
-
-{{trans "Connector schedule runtime alert."}}
-{{layout handle="logger_email_log_items" items=$items area="adminhtml"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 20px;">
+    <h2 style="color: #dc3545;">{{trans "Critical System Alert"}}</h2>
+    
+    <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 10px 0;">
+        <strong>{{trans "Alert Type:"}} {{trans "System Event Notification"}}</strong>
+    </div>
+    
+    {{if content}}
+    <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; margin: 10px 0;">
+        <h3>{{trans "Message:"}}</h3>
+        <pre style="white-space: pre-wrap; margin: 0;">{{var content|raw}}</pre>
+    </div>
+    {{/if}}
+    
+    <div style="background-color: #e9ecef; padding: 15px; margin: 20px 0 10px 0; border-left: 4px solid #dc3545;">
+        <strong>{{trans "Action Required:"}}</strong><br/>
+        {{trans "Please review this alert and take appropriate action. Check the system logs for more details."}}
+    </div>
+    
+    <hr style="margin: 20px 0;"/>
+    <p style="font-size: 12px; color: #6c757d;">
+        {{trans "This is an automated system alert. To modify email alert settings, please check your system configuration."}}
+    </p>
+</body>
+</html>

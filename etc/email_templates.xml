@@ -11,7 +11,7 @@
         id="softcommerce_core_dev_mail_log_email_template"
         label="Email Log Template"
         file="log-to-email.html"
-        type="text"
+        type="html"
         module="SoftCommerce_Core"
         area="adminhtml"/>
 </config>
