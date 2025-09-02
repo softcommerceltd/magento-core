@@ -39,6 +39,10 @@ define([
          * @returns {String}
          */
         getIconClass: function (record) {
+            if (!record) {
+                return 'far fa-comment empty';
+            }
+            
             var hasMessages = record[this.index + '_has_messages'],
                 status = record[this.index + '_status'] || 'info',
                 iconClass;
@@ -72,6 +76,9 @@ define([
          * @returns {String}
          */
         getTooltipContent: function (record) {
+            if (!record) {
+                return '';
+            }
             return record[this.index + '_tooltip'] || '';
         },
 
@@ -82,7 +89,10 @@ define([
          * @returns {String}
          */
         getModalContent: function (record) {
-            return record[this.index + '_modal'] || this.getCellContent(record);
+            if (!record) {
+                return '<div class="message-modal-empty">No data available</div>';
+            }
+            return record[this.index + '_modal'] || '';
         },
 
         /**
@@ -102,6 +112,9 @@ define([
          * @returns {Boolean}
          */
         hasMessages: function (record) {
+            if (!record) {
+                return false;
+            }
             return record[this.index + '_has_messages'] || false;
         },
 
@@ -225,7 +238,7 @@ define([
         getFieldClass: function (record) {
             var classes = [this._super()];
 
-            if (this.hasMessages(record)) {
+            if (record && this.hasMessages(record)) {
                 classes.push('has-messages');
                 classes.push('clickable');
             }
