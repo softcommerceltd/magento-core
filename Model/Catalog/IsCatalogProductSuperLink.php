@@ -18,14 +18,9 @@ use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
 class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
 {
     /**
-     * @var AdapterInterface
+     * @var AdapterInterface|null
      */
-    private AdapterInterface $connection;
-
-    /**
-     * @var GetEntityMetadataInterface
-     */
-    private GetEntityMetadataInterface $getEntityMetadata;
+    private ?AdapterInterface $connection = null;
 
     /**
      * @var string[]|null
@@ -37,12 +32,9 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
      * @param GetEntityMetadataInterface $getEntityMetadata
      */
     public function __construct(
-        ResourceConnection $resourceConnection,
-        GetEntityMetadataInterface $getEntityMetadata,
-    ) {
-        $this->connection = $resourceConnection->getConnection();
-        $this->getEntityMetadata = $getEntityMetadata;
-    }
+        private readonly ResourceConnection $resourceConnection,
+        private GetEntityMetadataInterface $getEntityMetadata,
+    ) {}
 
     /**
      * @inheritDoc
@@ -50,18 +42,18 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
     public function executeAllBySku(string $sku): bool
     {
         if (null === $this->dataInMemory) {
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    ['cpsl' => $this->connection->getTableName('catalog_product_super_link')],
+                    ['cpsl' => $this->getConnection()->getTableName('catalog_product_super_link')],
                     null
                 )
                 ->joinLeft(
-                    ['cpe' => $this->connection->getTableName('catalog_product_entity')],
+                    ['cpe' => $this->getConnection()->getTableName('catalog_product_entity')],
                     'cpsl.product_id = cpe.entity_id',
                     ['cpe.sku', 'cpe.entity_id']
                 );
 
-            $this->dataInMemory = $this->connection->fetchPairs($select);
+            $this->dataInMemory = $this->getConnection()->fetchPairs($select);
         }
 
         return isset($this->dataInMemory[$sku]);
@@ -72,11 +64,11 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
      */
     public function executeSingle(int $productId): bool
     {
-        $linkTable = $this->connection->getTableName('catalog_product_super_link');
-        $entityTable = $this->connection->getTableName('catalog_product_entity');
+        $linkTable = $this->getConnection()->getTableName('catalog_product_super_link');
+        $entityTable = $this->getConnection()->getTableName('catalog_product_entity');
         $entityLinkField = $this->getEntityMetadata->getLinkField();
 
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from([], ['is_child' => new \Zend_Db_Expr(
                 "EXISTS(
                     SELECT 1
@@ -88,7 +80,7 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
                 )"
             )]);
 
-        return (bool) $this->connection->fetchOne($select);
+        return (bool) $this->getConnection()->fetchOne($select);
     }
 
     /**
@@ -100,11 +92,11 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
             return [];
         }
 
-        $linkTable = $this->connection->getTableName('catalog_product_super_link');
-        $entityTable = $this->connection->getTableName('catalog_product_entity');
+        $linkTable = $this->getConnection()->getTableName('catalog_product_super_link');
+        $entityTable = $this->getConnection()->getTableName('catalog_product_entity');
         $entityLinkField = $this->getEntityMetadata->getLinkField();
 
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->distinct()
             ->from(['sl' => $linkTable], ['child_id' => 'sl.product_id'])
             ->join(
@@ -115,7 +107,7 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
             ->where('sl.product_id IN (?)', $productIds);
 
         /** @var string[] $childIds */
-        $childIds = $this->connection->fetchCol($select);
+        $childIds = $this->getConnection()->fetchCol($select);
 
         $result = array_fill_keys($productIds, false);
         foreach ($childIds as $id) {
@@ -124,5 +116,16 @@ class IsCatalogProductSuperLink implements IsCatalogProductSuperLinkInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
     }
 }

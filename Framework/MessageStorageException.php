@@ -37,7 +37,7 @@ class MessageStorageException extends LocalizedException
         Phrase $phrase,
         $entity = null,
         array $messages = [],
-        \Exception $cause = null,
+        ?\Exception $cause = null,
         int $code = 0
     ) {
         $this->entity = $entity;

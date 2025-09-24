@@ -151,14 +151,14 @@ interface AttributeManagementInterface
      * @param int|string|null $index
      * @return array|string|int|null
      */
-    public function getAttributeDataByCode(string $attributeCode = null, int|string|null $index = null): array|string|int|null;
+    public function getAttributeDataByCode(?string $attributeCode = null, int|string|null $index = null): array|string|int|null;
 
     /**
      * @param string|null $backendType
      * @param int|null $attributeId
      * @return array
      */
-    public function getAttributeDataByType(string $backendType = null, ?int $attributeId = null): array;
+    public function getAttributeDataByType(?string $backendType = null, ?int $attributeId = null): array;
 
     /**
      * @param int $attributeSetId

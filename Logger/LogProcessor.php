@@ -17,23 +17,17 @@ use Magento\Framework\Logger\Monolog;
 class LogProcessor extends Monolog implements LogProcessorInterface
 {
     /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
-
-    /**
      * @param ScopeConfigInterface $scopeConfig
      * @param string $name
      * @param array $handlers
      * @param array $processors
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
+        private ScopeConfigInterface $scopeConfig,
         string $name,
         array $handlers = [],
         array $processors = []
     ) {
-        $this->scopeConfig = $scopeConfig;
         $handlers = $this->filterHandlers($handlers);
         parent::__construct($name, $handlers, $processors);
     }

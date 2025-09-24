@@ -26,19 +26,14 @@ use function trim;
 class SkuStorage implements SkuStorageInterface
 {
     /**
+     * @var AdapterInterface|null
+     */
+    private ?AdapterInterface $connection = null;
+
+    /**
      * @var string[]
      */
     private array $attributes;
-
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
-     * @var GetEntityMetadataInterface
-     */
-    private GetEntityMetadataInterface $getEntityMetadata;
 
     /**
      * @var array
@@ -59,12 +54,10 @@ class SkuStorage implements SkuStorageInterface
      * @param array $attributes
      */
     public function __construct(
-        GetEntityMetadataInterface $getEntityMetadata,
-        ResourceConnection $resourceConnection,
+        private GetEntityMetadataInterface $getEntityMetadata,
+        private ResourceConnection $resourceConnection,
         array $attributes = []
     ) {
-        $this->getEntityMetadata = $getEntityMetadata;
-        $this->connection = $resourceConnection->getConnection();
         $this->attributes = $attributes;
         if ($this->attributes) {
             $this->excludedAttributes = [];
@@ -154,9 +147,11 @@ class SkuStorage implements SkuStorageInterface
      */
     private function getSkuData(): array
     {
-        $catalogProductEntityTable = $this->connection->getTableName('catalog_product_entity');
+        $connection = $this->getConnection();
+        $catalogProductEntityTable = $connection->getTableName('catalog_product_entity');
+
         if (!$this->attributes) {
-            $this->attributes = array_keys($this->connection->describeTable($catalogProductEntityTable));
+            $this->attributes = array_keys($connection->describeTable($catalogProductEntityTable));
             $this->attributes = array_diff($this->attributes, $this->excludedAttributes);
         }
 
@@ -164,10 +159,10 @@ class SkuStorage implements SkuStorageInterface
             $this->attributes[] = $this->getEntityMetadata->getLinkField();
         }
 
-        $select = $this->connection->select()
+        $select = $connection->select()
             ->from(['main_tb' => $catalogProductEntityTable], $this->attributes)
             ->joinLeft(
-                ['cpw_tb' => $this->connection->getTableName('catalog_product_website')],
+                ['cpw_tb' => $connection->getTableName('catalog_product_website')],
                 'main_tb.entity_id = cpw_tb.product_id',
                 [
                     'website_ids' => new \Zend_Db_Expr('GROUP_CONCAT(DISTINCT cpw_tb.website_id)')
@@ -176,7 +171,7 @@ class SkuStorage implements SkuStorageInterface
             ->group('main_tb.entity_id');
 
         $result = [];
-        foreach ($this->connection->fetchAll($select) as $item) {
+        foreach ($connection->fetchAll($select) as $item) {
             $sku = $this->parseSku($item['sku'] ?? '');
             $item['website_ids'] = isset($item['website_ids']) ? explode(',', $item['website_ids']) : [];
             $item[self::IS_NEW_SKU] = false;
@@ -193,5 +188,16 @@ class SkuStorage implements SkuStorageInterface
     private function parseSku(string $sku): string
     {
         return strtolower(trim($sku));
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
     }
 }

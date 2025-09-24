@@ -41,11 +41,6 @@ use function trim;
 class AttributeManagement implements AttributeManagementInterface
 {
     /**
-     * @var AttributeRepositoryInterface
-     */
-    private AttributeRepositoryInterface $eavAttributeRepository;
-
-    /**
      * @var array|Attribute|Attribute[]
      */
     private array $attributeEntity = [];
@@ -81,9 +76,9 @@ class AttributeManagement implements AttributeManagementInterface
     private array $attributeSetIdToNameData = [];
 
     /**
-     * @var AdapterInterface
+     * @var AdapterInterface|null
      */
-    private AdapterInterface $connection;
+    private ?AdapterInterface $connection = null;
 
     /**
      * @var array
@@ -94,31 +89,6 @@ class AttributeManagement implements AttributeManagementInterface
      * @var string
      */
     private string $entityTypeCode;
-
-    /**
-     * @var GetAttributeEntityTypeDataInterface
-     */
-    private GetAttributeEntityTypeDataInterface $getAttributeEntityTypeData;
-
-    /**
-     * @var int[]
-     */
-    private array $attributeSortOrderData = [];
-
-    /**
-     * @var ParseStringInterface
-     */
-    private ParseStringInterface $parseString;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private SearchCriteriaBuilder $searchCriteriaBuilder;
-
-    /**
-     * @var SwatchAttributeType
-     */
-    private SwatchAttributeType $swatchTypeChecker;
 
     /**
      * @var string
@@ -140,29 +110,23 @@ class AttributeManagement implements AttributeManagementInterface
      * @param ParseStringInterface $parseString
      * @param ResourceConnection $resourceConnection
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param SwatchAttributeType $swatchAttributeType
+     * @param SwatchAttributeType $swatchTypeChecker
      * @param string $entityTypeCode
      * @param string $valueIndex
      * @param array $forcedVisibleAttributes
      * @throws LocalizedException
      */
     public function __construct(
-        AttributeRepositoryInterface $eavAttributeRepository,
-        GetAttributeEntityTypeDataInterface $getAttributeEntityTypeData,
-        ParseStringInterface $parseString,
-        ResourceConnection $resourceConnection,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        SwatchAttributeType $swatchAttributeType,
+        private AttributeRepositoryInterface $eavAttributeRepository,
+        private GetAttributeEntityTypeDataInterface $getAttributeEntityTypeData,
+        private ParseStringInterface $parseString,
+        private ResourceConnection $resourceConnection,
+        private SearchCriteriaBuilder $searchCriteriaBuilder,
+        private SwatchAttributeType $swatchTypeChecker,
         string $entityTypeCode = ProductAttributeInterface::ENTITY_TYPE_CODE,
         string $valueIndex = self::OPTION_INDEX_TYPE_VALUE,
         array $forcedVisibleAttributes = []
     ) {
-        $this->eavAttributeRepository = $eavAttributeRepository;
-        $this->getAttributeEntityTypeData = $getAttributeEntityTypeData;
-        $this->parseString = $parseString;
-        $this->connection = $resourceConnection->getConnection();
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->swatchTypeChecker = $swatchAttributeType;
         $this->entityTypeCode = $entityTypeCode;
         $this->valueIndex = $valueIndex;
         $this->forcedVisibleAttributes = array_merge($this->forcedVisibleAttributes, $forcedVisibleAttributes);
@@ -383,15 +347,15 @@ class AttributeManagement implements AttributeManagementInterface
     public function getDefaultAttributeSetGroupId(int $attributeSetId): ?int
     {
         if (!isset($this->defaultAttributeSetGroupId[$attributeSetId])) {
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_attribute_group'),
+                    $this->getConnection()->getTableName('eav_attribute_group'),
                     'attribute_group_id'
                 )
                 ->where('attribute_set_id = ?', $attributeSetId)
                 ->where('default_id = 1')
                 ->limit(1);
-            $this->defaultAttributeSetGroupId[$attributeSetId] = (int) $this->connection->fetchOne($select);
+            $this->defaultAttributeSetGroupId[$attributeSetId] = (int) $this->getConnection()->fetchOne($select);
         }
 
         return $this->defaultAttributeSetGroupId[$attributeSetId] ?? null;
@@ -400,7 +364,7 @@ class AttributeManagement implements AttributeManagementInterface
     /**
      * @inheritDoc
      */
-    public function getAttributeDataByCode(string $attributeCode = null, int|string|null $index = null): array|string|int|null
+    public function getAttributeDataByCode(?string $attributeCode = null, int|string|null $index = null): array|string|int|null
     {
         if ($attributeId = $this->getAttributeCodeToIdMapping($attributeCode)) {
             $result = $this->getAttributeData($attributeId);
@@ -420,7 +384,7 @@ class AttributeManagement implements AttributeManagementInterface
     /**
      * @inheritDoc
      */
-    public function getAttributeDataByType(string $backendType = null, ?int $attributeId = null): array
+    public function getAttributeDataByType(?string $backendType = null, ?int $attributeId = null): array
     {
         $result = array_filter($this->attributeData, function ($item) use ($backendType) {
             return isset($item['backend_type']) && $backendType === $item['backend_type'];
@@ -484,15 +448,15 @@ class AttributeManagement implements AttributeManagementInterface
     public function getAttributeSortOrder(int $attributeSetId, int $attributeGroupId): int
     {
         if (!isset($this->attributeSortOrderData[$attributeSetId][$attributeGroupId])) {
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_entity_attribute'),
+                    $this->getConnection()->getTableName('eav_entity_attribute'),
                     new \Zend_Db_Expr("MAX(sort_order)")
                 )
                 ->where('attribute_set_id = ?', $attributeSetId)
                 ->where('attribute_group_id = ?', $attributeGroupId);
 
-            $this->attributeSortOrderData[$attributeSetId][$attributeGroupId] = (int) $this->connection->fetchOne(
+            $this->attributeSortOrderData[$attributeSetId][$attributeGroupId] = (int) $this->getConnection()->fetchOne(
                 $select
             );
         }
@@ -506,12 +470,12 @@ class AttributeManagement implements AttributeManagementInterface
     public function getAttributeOptionSortOrder(int $attributeId): int
     {
         if (!isset($this->attributeOptionSortOrderData[$attributeId])) {
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('eav_attribute_option'), 'sort_order')
+            $select = $this->getConnection()->select()
+                ->from($this->getConnection()->getTableName('eav_attribute_option'), 'sort_order')
                 ->where('attribute_id = ?', $attributeId)
                 ->order('sort_order ' . Select::SQL_DESC);
 
-            $this->attributeOptionSortOrderData[$attributeId] = (int) $this->connection->fetchOne($select);
+            $this->attributeOptionSortOrderData[$attributeId] = (int) $this->getConnection()->fetchOne($select);
         }
 
         return $this->attributeOptionSortOrderData[$attributeId];
@@ -557,9 +521,9 @@ class AttributeManagement implements AttributeManagementInterface
         $swatchType = $isSwatchAttribute && isset($attribute['is_swatch_text'])
             ? Swatch::SWATCH_TYPE_TEXTUAL
             : Swatch::SWATCH_TYPE_VISUAL_COLOR;
-        $optionTable = $this->connection->getTableName('eav_attribute_option');
-        $optionValueTable = $this->connection->getTableName('eav_attribute_option_value');
-        $optionSwatchTable = $this->connection->getTableName('eav_attribute_option_swatch');
+        $optionTable = $this->getConnection()->getTableName('eav_attribute_option');
+        $optionValueTable = $this->getConnection()->getTableName('eav_attribute_option_value');
+        $optionSwatchTable = $this->getConnection()->getTableName('eav_attribute_option_swatch');
 
         $result = [];
         $sortOrder = $this->getAttributeOptionSortOrder($attributeId);
@@ -570,7 +534,7 @@ class AttributeManagement implements AttributeManagementInterface
             }
 
             $sortOrder++;
-            $this->connection->insert(
+            $this->getConnection()->insert(
                 $optionTable,
                 [
                     'attribute_id' => $attributeId,
@@ -578,11 +542,11 @@ class AttributeManagement implements AttributeManagementInterface
                 ]
             );
 
-            if (!$optionId = $this->connection->lastInsertId($optionTable)) {
+            if (!$optionId = $this->getConnection()->lastInsertId($optionTable)) {
                 throw new LocalizedException(__('Could not retrieve option ID.'));
             }
 
-            $insert = $this->connection->insert(
+            $insert = $this->getConnection()->insert(
                 $optionValueTable,
                 [
                     'option_id' => $optionId,
@@ -592,7 +556,7 @@ class AttributeManagement implements AttributeManagementInterface
             );
 
             if ($isSwatchAttribute) {
-                $this->connection->insert(
+                $this->getConnection()->insert(
                     $optionSwatchTable,
                     [
                         'option_id' => $optionId,
@@ -634,8 +598,8 @@ class AttributeManagement implements AttributeManagementInterface
         }
 
         $sortOrder = $this->getAttributeSortOrder($attributeSetId, $attributeGroupId) + 1;
-        $result = $this->connection->insertOnDuplicate(
-            $this->connection->getTableName('eav_entity_attribute'),
+        $result = $this->getConnection()->insertOnDuplicate(
+            $this->getConnection()->getTableName('eav_entity_attribute'),
             [
                 'entity_type_id' => $this->getEntityTypeId(),
                 'attribute_set_id' => $attributeSetId,
@@ -821,19 +785,19 @@ class AttributeManagement implements AttributeManagementInterface
      */
     private function initAttributes(): void
     {
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                ['eea' => $this->connection->getTableName('eav_entity_attribute')],
+                ['eea' => $this->getConnection()->getTableName('eav_entity_attribute')],
                 ['eea.attribute_id']
             )
             ->joinInner(
-                ['eas' => $this->connection->getTableName('eav_attribute_set')],
+                ['eas' => $this->getConnection()->getTableName('eav_attribute_set')],
                 'eas.attribute_set_id = eea.attribute_set_id',
                 ['eas.attribute_set_id', 'eas.attribute_set_name']
             )
             ->where('eea.entity_type_id = ?', $this->getEntityTypeId());
 
-        foreach ($this->connection->fetchAll($select) as $item) {
+        foreach ($this->getConnection()->fetchAll($select) as $item) {
             $attributeId = (int) ($item['attribute_id'] ?? null);
             if ($attributeId && $attributeSetId = (int) ($item['attribute_set_id'] ?? null)) {
                 $this->attributeSetAttributeIdData[$attributeSetId][$attributeId] = $attributeId;
@@ -890,5 +854,16 @@ class AttributeManagement implements AttributeManagementInterface
                 ]
             );
         }
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
     }
 }

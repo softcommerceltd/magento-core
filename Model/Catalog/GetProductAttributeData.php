@@ -14,6 +14,7 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Store\Model\Store;
 use SoftCommerce\Core\Model\Eav\AttributeManagementInterface;
+use SoftCommerce\Core\Model\Eav\AttributeManagementInterfaceFactory;
 use SoftCommerce\Core\Model\Eav\GetAttributeBackendTableInterface;
 use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
 
@@ -23,9 +24,9 @@ use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
 class GetProductAttributeData implements GetProductAttributeDataInterface
 {
     /**
-     * @var AttributeManagementInterface
+     * @var AttributeManagementInterface|null
      */
-    private AttributeManagementInterface $attributeManagement;
+    private ?AttributeManagementInterface $attributeManagement = null;
 
     /**
      * @var array
@@ -33,9 +34,9 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
     private array $attributeSetIdInMemory = [];
 
     /**
-     * @var AdapterInterface
+     * @var AdapterInterface|null
      */
-    private AdapterInterface $connection;
+    private ?AdapterInterface $connection = null;
 
     /**
      * @var array
@@ -48,16 +49,6 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
     private ?int $entityIdInMemory = null;
 
     /**
-     * @var GetAttributeBackendTableInterface
-     */
-    private GetAttributeBackendTableInterface $getAttributeBackendTable;
-
-    /**
-     * @var GetEntityMetadataInterface
-     */
-    private GetEntityMetadataInterface $getEntityMetadata;
-
-    /**
      * @var int|null
      */
     private ?int $storeIdInMemory = null;
@@ -68,22 +59,17 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
     private array $tableDescriptionInMemory = [];
 
     /**
-     * @param AttributeManagementInterface $attributeManagement
+     * @param AttributeManagementInterfaceFactory $attributeManagementFactory
      * @param GetAttributeBackendTableInterface $getAttributeBackendTable
      * @param GetEntityMetadataInterface $getEntityMetadata
      * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        AttributeManagementInterface $attributeManagement,
-        GetAttributeBackendTableInterface $getAttributeBackendTable,
-        GetEntityMetadataInterface $getEntityMetadata,
-        ResourceConnection $resourceConnection
-    ) {
-        $this->attributeManagement = $attributeManagement;
-        $this->getAttributeBackendTable = $getAttributeBackendTable;
-        $this->getEntityMetadata = $getEntityMetadata;
-        $this->connection = $resourceConnection->getConnection();
-    }
+        private AttributeManagementInterfaceFactory $attributeManagementFactory,
+        private GetAttributeBackendTableInterface $getAttributeBackendTable,
+        private GetEntityMetadataInterface $getEntityMetadata,
+        private ResourceConnection $resourceConnection
+    ) {}
 
     /**
      * @inheritDoc
@@ -146,7 +132,7 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
         $attributeCodes = [];
 
         foreach (array_map('intval', $attributeIds) as $id) {
-            if ($attributeCode = $this->attributeManagement->getAttributeToIdToCodeMapping($id)) {
+            if ($attributeCode = $this->getAttributeManagement()->getAttributeToIdToCodeMapping($id)) {
                 $attributeCodes[$id] = $attributeCode;
             }
         }
@@ -189,8 +175,8 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
         $dynamicEntityAttributes = [];
         $staticTable = null;
 
-        foreach ($this->attributeManagement->getAttributeIdsByAttributeSet($attributeSetId) as $attributeId) {
-            $attribute = $this->attributeManagement->getAttributeData($attributeId);
+        foreach ($this->getAttributeManagement()->getAttributeIdsByAttributeSet($attributeSetId) as $attributeId) {
+            $attribute = $this->getAttributeManagement()->getAttributeData($attributeId);
 
             if (!$attributeCode = $attribute['attribute_code'] ?? null) {
                 continue;
@@ -201,7 +187,7 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
                 ProductAttributeInterface::ENTITY_TYPE_CODE
             );
 
-            if ($this->attributeManagement->isAttributeStatic($attributeId)) {
+            if ($this->getAttributeManagement()->isAttributeStatic($attributeId)) {
                 if ($shouldIncludeStaticAttributes
                     && in_array($attributeCode, $this->getTableDescription($attributeTable))
                 ) {
@@ -214,25 +200,25 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
         }
 
         if ($staticEntityAttributes && $staticTable) {
-            $select = $this->connection->select()->from($staticTable, $staticEntityAttributes);
+            $select = $this->getConnection()->select()->from($staticTable, $staticEntityAttributes);
 
             if ($staticTable !== 'catalog_product_entity') {
                 $select->join(
-                    ['cpe' => $this->connection->getTableName('catalog_product_entity')],
+                    ['cpe' => $this->getConnection()->getTableName('catalog_product_entity')],
                     "cpe.$entityLinkField = $staticTable.$entityLinkField"
                 )->where('e.entity_id = ?', $this->entityIdInMemory);
             } else {
                 $select->where("$staticTable.$entityLinkField = ?", $this->entityIdInMemory);
             }
 
-            $resultData = $this->connection->fetchRow($select);
+            $resultData = $this->getConnection()->fetchRow($select);
         }
 
         foreach ($dynamicEntityAttributes as $table => $item) {
             $attributeIds = array_keys($item);
 
             $defaultJoinCondition = [
-                $this->connection->quoteInto(
+                $this->getConnection()->quoteInto(
                     'default_value.attribute_id IN (?)',
                     $attributeIds,
                     \Zend_Db::INT_TYPE
@@ -241,8 +227,8 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
                 'default_value.store_id = 0',
             ];
 
-            $select = $this->connection->select()
-                ->from(['e' => $this->connection->getTableName('catalog_product_entity')], [])
+            $select = $this->getConnection()->select()
+                ->from(['e' => $this->getConnection()->getTableName('catalog_product_entity')], [])
                 ->joinLeft(
                     ['default_value' => $table],
                     implode(' AND ', $defaultJoinCondition),
@@ -254,20 +240,20 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
             $bind = [$entityLinkField => $this->entityIdInMemory];
 
             if ($this->storeIdInMemory !== Store::DEFAULT_STORE_ID) {
-                $valueFragmentExpression = $this->connection->getCheckSql(
+                $valueFragmentExpression = $this->getConnection()->getCheckSql(
                     'store_value.value IS NULL',
                     'default_value.value',
                     'store_value.value'
                 );
 
-                $attributeIdFragmentExpression = $this->connection->getCheckSql(
+                $attributeIdFragmentExpression = $this->getConnection()->getCheckSql(
                     'store_value.attribute_id IS NULL',
                     'default_value.attribute_id',
                     'store_value.attribute_id'
                 );
 
                 $quoteCondition = [
-                    $this->connection->quoteInto(
+                    $this->getConnection()->quoteInto(
                         'store_value.attribute_id IN (?)',
                         $attributeIds,
                         \Zend_Db::INT_TYPE
@@ -293,7 +279,7 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
                 );
             }
 
-            foreach ($this->connection->fetchPairs($select, $bind) as $attributeId => $value) {
+            foreach ($this->getConnection()->fetchPairs($select, $bind) as $attributeId => $value) {
                 if ($attributeCode = $item[$attributeId] ?? null) {
                     $resultData[$attributeCode] = $value;
                 }
@@ -311,11 +297,11 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
     {
         if (!isset($this->attributeSetIdInMemory[$this->entityIdInMemory])) {
             $entityLinkField = $this->getEntityMetadata->getLinkField();
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('catalog_product_entity'), 'attribute_set_id')
+            $select = $this->getConnection()->select()
+                ->from($this->getConnection()->getTableName('catalog_product_entity'), 'attribute_set_id')
                 ->where("$entityLinkField = ?", $this->entityIdInMemory);
 
-            $this->attributeSetIdInMemory[$this->entityIdInMemory] = (int) $this->connection->fetchOne($select);
+            $this->attributeSetIdInMemory[$this->entityIdInMemory] = (int) $this->getConnection()->fetchOne($select);
         }
 
         return $this->attributeSetIdInMemory[$this->entityIdInMemory];
@@ -328,9 +314,31 @@ class GetProductAttributeData implements GetProductAttributeDataInterface
     private function getTableDescription(string $tableName): array
     {
         if (!isset($this->tableDescriptionInMemory[$tableName])) {
-            $this->tableDescriptionInMemory[$tableName] = array_keys($this->connection->describeTable($tableName));
+            $this->tableDescriptionInMemory[$tableName] = array_keys($this->getConnection()->describeTable($tableName));
         }
 
         return $this->tableDescriptionInMemory[$tableName];
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
+    }
+
+    /**
+     * @return AttributeManagementInterface
+     */
+    private function getAttributeManagement(): AttributeManagementInterface
+    {
+        if (null === $this->attributeManagement) {
+            $this->attributeManagement = $this->attributeManagementFactory->create();
+        }
+        return $this->attributeManagement;
     }
 }

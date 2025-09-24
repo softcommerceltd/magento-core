@@ -18,22 +18,21 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 class GetEntityTypeId implements GetEntityTypeIdInterface
 {
     /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
      * @var array
      */
     private array $entityTypeId = [];
 
     /**
+     * @var AdapterInterface|null
+     */
+    private ?AdapterInterface $connection = null;
+
+    /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
-    }
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {}
 
     /**
      * @inheritDoc
@@ -41,11 +40,23 @@ class GetEntityTypeId implements GetEntityTypeIdInterface
     public function execute(string $entityTypeCode = Product::ENTITY): int
     {
         if (!isset($this->entityTypeId[$entityTypeCode])) {
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('eav_entity_type'), ['entity_type_id'])
+            $connection = $this->getConnection();
+            $select = $connection->select()
+                ->from($connection->getTableName('eav_entity_type'), ['entity_type_id'])
                 ->where('entity_type_code = ?', $entityTypeCode);
-            $this->entityTypeId[$entityTypeCode] = (int) $this->connection->fetchOne($select);
+            $this->entityTypeId[$entityTypeCode] = (int) $connection->fetchOne($select);
         }
         return $this->entityTypeId[$entityTypeCode];
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
     }
 }

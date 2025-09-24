@@ -86,13 +86,19 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function addData($message, $entity, string $status = StatusInterface::SUCCESS): static
+    public function addData($message, $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static
     {
-        $this->data[$entity][] = [
+        $data = [
             self::ENTITY => $entity,
             self::STATUS => $status,
             self::MESSAGE => $message
         ];
+        
+        if (!empty($metadata)) {
+            $data[self::METADATA] = $metadata;
+        }
+        
+        $this->data[$entity][] = $data;
         return $this;
     }
 

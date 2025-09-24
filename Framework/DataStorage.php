@@ -36,7 +36,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData(int|string $index = null): mixed
+    public function getData(int|string|null $index = null): mixed
     {
         return null !== $index
             ? ($this->data[$index] ?? null)
@@ -144,7 +144,7 @@ class DataStorage implements DataStorageInterface
     /**
      * @inheritDoc
      */
-    public function getDataByIdentifier(int|string $identifier, int|string $index = null): array|int|string|null
+    public function getDataByIdentifier(int|string $identifier, int|string|null $index = null): mixed
     {
         return null !== $index
             ? ($this->data[$identifier][$index] ?? null)

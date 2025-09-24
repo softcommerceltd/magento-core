@@ -10,7 +10,6 @@ namespace SoftCommerce\Core\Model\Eav;
 
 use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
@@ -19,11 +18,6 @@ use Magento\Framework\Exception\LocalizedException;
 class GetAttributeBackendTable implements GetAttributeBackendTableInterface
 {
     /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
      * @var array
      */
     private array $dataInMemory = [];
@@ -31,10 +25,9 @@ class GetAttributeBackendTable implements GetAttributeBackendTableInterface
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
-    }
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {}
 
     /**
      * @inheritDoc
@@ -55,22 +48,23 @@ class GetAttributeBackendTable implements GetAttributeBackendTableInterface
      */
     private function getData(int $attributeId, string $entityTypeCode): string
     {
-        $select = $this->connection->select()
-            ->from($this->connection->getTableName('eav_entity_type'), 'entity_table')
+        $connection = $this->resourceConnection->getConnection();
+        $select = $connection->select()
+            ->from($connection->getTableName('eav_entity_type'), 'entity_table')
             ->where('entity_type_code = ?', $entityTypeCode);
 
-        if (!$entityTable = $this->connection->fetchOne($select)) {
+        if (!$entityTable = $connection->fetchOne($select)) {
             throw new LocalizedException(__('Entity "%1" dos\'nt exist', $entityTypeCode));
         }
 
-        $select = $this->connection->select()
+        $select = $connection->select()
             ->from(
-                $this->connection->getTableName('eav_attribute'),
+                $connection->getTableName('eav_attribute'),
                 ['backend_type', 'backend_table']
             )
             ->where('attribute_id = ?', $attributeId);
 
-        $attributeData = $this->connection->fetchRow($select);
+        $attributeData = $connection->fetchRow($select);
 
         if (!isset($attributeData['backend_type'])
             || $attributeData['backend_type'] === AbstractAttribute::TYPE_STATIC
@@ -84,8 +78,8 @@ class GetAttributeBackendTable implements GetAttributeBackendTableInterface
 
         $entityTable .= "_{$attributeData['backend_type']}";
 
-        if (!$this->connection->isTableExists(
-            $this->connection->getTableName($entityTable)
+        if (!$connection->isTableExists(
+            $connection->getTableName($entityTable)
         )) {
             throw new LocalizedException(
                 __('Table with the name "%1" does\'nt exist.', $entityTable)

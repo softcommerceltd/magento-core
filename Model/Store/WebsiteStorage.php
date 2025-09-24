@@ -25,9 +25,9 @@ class WebsiteStorage implements WebsiteStorageInterface
     private ?array $adminStoreInMemory = null;
 
     /**
-     * @var AdapterInterface
+     * @var AdapterInterface|null
      */
-    private AdapterInterface $connection;
+    private ?AdapterInterface $connection = null;
 
     /**
      * @var array|null
@@ -77,10 +77,9 @@ class WebsiteStorage implements WebsiteStorageInterface
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
-    }
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {}
 
     /**
      * @inheritDoc
@@ -368,9 +367,9 @@ class WebsiteStorage implements WebsiteStorageInterface
             return $this->dataInMemory;
         }
 
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                ['sw_tb' => $this->connection->getTableName('store_website')],
+                ['sw_tb' => $this->getConnection()->getTableName('store_website')],
                 [
                     'website_id',
                     'website_code' => 'sw_tb.code',
@@ -380,7 +379,7 @@ class WebsiteStorage implements WebsiteStorageInterface
                 ]
             )
             ->joinLeft(
-                ['s_tb' => $this->connection->getTableName('store')],
+                ['s_tb' => $this->getConnection()->getTableName('store')],
                 'sw_tb.website_id = s_tb.website_id',
                 [
                     'store_id',
@@ -389,14 +388,14 @@ class WebsiteStorage implements WebsiteStorageInterface
                 ]
             )
             ->joinLeft(
-                ['sid_tb' => $this->connection->getTableName('store')],
+                ['sid_tb' => $this->getConnection()->getTableName('store')],
                 'sw_tb.website_id = sid_tb.website_id',
                 [
                     'store_ids' => new \Zend_Db_Expr('GROUP_CONCAT(DISTINCT sid_tb.store_id)')
                 ]
             )
             ->joinLeft(
-                ['sg_tb' => $this->connection->getTableName('store_group')],
+                ['sg_tb' => $this->getConnection()->getTableName('store_group')],
                 'sw_tb.website_id = sg_tb.website_id',
                 [
                     'group_id',
@@ -410,8 +409,19 @@ class WebsiteStorage implements WebsiteStorageInterface
                 's_tb.store_id'
             );
 
-        $this->dataInMemory = $this->connection->fetchAll($select);
+        $this->dataInMemory = $this->getConnection()->fetchAll($select);
 
         return $this->dataInMemory;
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    private function getConnection(): AdapterInterface
+    {
+        if ($this->connection === null) {
+            $this->connection = $this->resourceConnection->getConnection();
+        }
+        return $this->connection;
     }
 }

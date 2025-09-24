@@ -19,6 +19,7 @@ interface StatusInterface extends OptionSourceInterface
     public const CRITICAL = 'critical';
     public const ERROR = 'error';
     public const FAILED = 'failed';
+    public const INFO = 'info';
     public const MISSED = 'missed';
     public const PENDING = 'pending';
     public const PENDING_COLLECT = 'pending_collect';

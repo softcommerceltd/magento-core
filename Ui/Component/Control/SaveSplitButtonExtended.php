@@ -38,21 +38,29 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
     protected string $targetName;
 
     /**
+     * @var array
+     */
+    protected array $customOptions;
+
+    /**
      * @param RequestInterface $request
      * @param string $targetName
      * @param string|null $aclResource
      * @param int|null $sortOrder
+     * @param array $customOptions
      */
     public function __construct(
         RequestInterface $request,
         string $targetName,
         ?string $aclResource = null,
-        ?int $sortOrder = null
+        ?int $sortOrder = null,
+        array $customOptions = []
     ) {
         $this->request = $request;
         $this->targetName = $targetName;
         $this->aclResource = $aclResource;
         $this->sortOrder = $sortOrder;
+        $this->customOptions = $customOptions;
     }
 
     /**
@@ -116,7 +124,7 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
             return [];
         }
 
-        return [
+        $options = [
             [
                 'label' => __('Save &amp; Close'),
                 'data_attribute' => [
@@ -157,6 +165,13 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
                 'sort_order' => 20,
             ],
         ];
+
+        // Merge custom options if provided
+        if (!empty($this->customOptions)) {
+            $options = array_merge($options, $this->customOptions);
+        }
+
+        return $options;
     }
 
     /**

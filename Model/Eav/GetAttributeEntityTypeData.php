@@ -9,18 +9,12 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Eav;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
  */
 class GetAttributeEntityTypeData implements GetAttributeEntityTypeDataInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
     /**
      * @var array
      */
@@ -29,10 +23,9 @@ class GetAttributeEntityTypeData implements GetAttributeEntityTypeDataInterface
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
-    }
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {}
 
     /**
      * @inheritDoc
@@ -40,9 +33,10 @@ class GetAttributeEntityTypeData implements GetAttributeEntityTypeDataInterface
     public function execute(string $entityTypeCode, int|string|null $index = null): array|string|null
     {
         if (!isset($this->dataInMemory[$entityTypeCode])) {
-            $select = $this->connection->select()
+            $connection = $this->resourceConnection->getConnection();
+            $select = $connection->select()
                 ->from(
-                    $this->connection->getTableName('eav_entity_type'),
+                    $connection->getTableName('eav_entity_type'),
                     [
                         'entity_type_id',
                         'entity_type_code',
@@ -57,7 +51,7 @@ class GetAttributeEntityTypeData implements GetAttributeEntityTypeDataInterface
                 )
                 ->where('entity_type_code = ?', $entityTypeCode);
 
-            $this->dataInMemory[$entityTypeCode] = $this->connection->fetchRow($select);
+            $this->dataInMemory[$entityTypeCode] = $connection->fetchRow($select);
         }
 
         return null !== $index
