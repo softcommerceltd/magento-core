@@ -17,6 +17,8 @@ use function is_array;
 
 /**
  * @inheritDoc
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 class StatusPrediction implements StatusPredictionInterface
 {

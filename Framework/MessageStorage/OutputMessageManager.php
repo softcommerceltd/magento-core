@@ -14,37 +14,21 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * @inheritDoc
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 class OutputMessageManager implements OutputMessageManagerInterface
 {
-    /**
-     * @var ManagerInterface
-     */
-    private ManagerInterface $messageManager;
-
-    /**
-     * @var OutputHtmlInterface
-     */
-    private OutputHtmlInterface $outputHtml;
-
-    /**
-     * @var StatusPredictionInterface
-     */
-    private StatusPredictionInterface $statusPrediction;
-
     /**
      * @param ManagerInterface $messageManager
      * @param OutputHtmlInterface $outputHtml
      * @param StatusPredictionInterface $statusPrediction
      */
     public function __construct(
-        ManagerInterface $messageManager,
-        OutputHtmlInterface $outputHtml,
-        StatusPredictionInterface $statusPrediction
+        private readonly ManagerInterface $messageManager,
+        private readonly OutputHtmlInterface $outputHtml,
+        private readonly StatusPredictionInterface $statusPrediction
     ) {
-        $this->messageManager = $messageManager;
-        $this->outputHtml = $outputHtml;
-        $this->statusPrediction = $statusPrediction;
     }
 
     /**

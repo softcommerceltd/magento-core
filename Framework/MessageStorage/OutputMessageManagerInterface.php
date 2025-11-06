@@ -10,6 +10,8 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
  * Interface OutputMessageManagerInterface used to output
  * data to message manager
  * @see \Magento\Framework\Message\ManagerInterface
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 interface OutputMessageManagerInterface
 {

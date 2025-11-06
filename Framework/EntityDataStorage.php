@@ -20,16 +20,11 @@ use function is_array;
 class EntityDataStorage implements EntityDataStorageInterface
 {
     /**
-     * @var array
-     */
-    protected array $data;
-
-    /**
      * @param array $data
      */
-    public function __construct(array $data = [])
-    {
-        $this->data = $data;
+    public function __construct(
+        protected array $data = []
+    ) {
     }
 
     /**

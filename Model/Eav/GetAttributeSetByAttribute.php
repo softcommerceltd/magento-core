@@ -9,17 +9,14 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Eav;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
+use SoftCommerce\Core\Model\Trait\ConnectionTrait;
 
 /**
  * @inheritDoc
  */
 class GetAttributeSetByAttribute implements GetAttributeSetByAttributeInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
+    use ConnectionTrait;
 
     /**
      * @var array|null
@@ -27,20 +24,13 @@ class GetAttributeSetByAttribute implements GetAttributeSetByAttributeInterface
     private ?array $data = null;
 
     /**
-     * @var GetEntityTypeIdInterface
-     */
-    private GetEntityTypeIdInterface $getEntityTypeId;
-
-    /**
      * @param GetEntityTypeIdInterface $getEntityTypeId
-     * @param ResourceConnection $resource
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        GetEntityTypeIdInterface $getEntityTypeId,
-        ResourceConnection $resource
+        private readonly GetEntityTypeIdInterface $getEntityTypeId,
+        private readonly ResourceConnection $resourceConnection
     ) {
-        $this->getEntityTypeId = $getEntityTypeId;
-        $this->connection = $resource->getConnection();
     }
 
     /**
@@ -72,13 +62,13 @@ class GetAttributeSetByAttribute implements GetAttributeSetByAttributeInterface
      */
     private function getData(?int $attributeId = null): array
     {
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                ['eea' => $this->connection->getTableName('eav_entity_attribute')],
+                ['eea' => $this->getConnection()->getTableName('eav_entity_attribute')],
                 ['eea.attribute_id']
             )
             ->joinLeft(
-                ['eas' => $this->connection->getTableName('eav_attribute_set')],
+                ['eas' => $this->getConnection()->getTableName('eav_attribute_set')],
                 'eas.attribute_set_id = eea.attribute_set_id',
                 ['eas.attribute_set_id', 'eas.attribute_set_name']
             )
@@ -89,7 +79,7 @@ class GetAttributeSetByAttribute implements GetAttributeSetByAttributeInterface
         }
 
         $result = [];
-        foreach ($this->connection->fetchAll($select) as $item) {
+        foreach ($this->getConnection()->fetchAll($select) as $item) {
             if (isset($item['attribute_id'], $item['attribute_set_id'])) {
                 $result[$item['attribute_id']][$item['attribute_set_id']] = $item;
             }

@@ -22,16 +22,11 @@ class Store implements OptionSourceInterface
     private array $options = [];
 
     /**
-     * @var StoreRepositoryInterface
-     */
-    private StoreRepositoryInterface $storeRepository;
-
-    /**
      * @param StoreRepositoryInterface $storeRepository
      */
-    public function __construct(StoreRepositoryInterface $storeRepository)
-    {
-        $this->storeRepository = $storeRepository;
+    public function __construct(
+        private readonly StoreRepositoryInterface $storeRepository
+    ) {
     }
 
     /**

@@ -10,10 +10,10 @@ namespace SoftCommerce\Core\Model\Catalog;
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\LocalizedException;
 use SoftCommerce\Core\Model\Eav\GetAttributeBackendTableInterface;
 use SoftCommerce\Core\Model\Eav\GetEavAttributeOptionValueDataInterface;
+use SoftCommerce\Core\Model\Trait\ConnectionTrait;
 use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
 
 /**
@@ -21,25 +21,7 @@ use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
  */
 class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptionsInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
-     * @var GetAttributeBackendTableInterface
-     */
-    private GetAttributeBackendTableInterface $getAttributeBackendTable;
-
-    /**
-     * @var GetEavAttributeOptionValueDataInterface
-     */
-    private GetEavAttributeOptionValueDataInterface $getEavAttributeOptionValueData;
-
-    /**
-     * @var GetEntityMetadataInterface
-     */
-    private GetEntityMetadataInterface $getEntityMetadata;
+    use ConnectionTrait;
 
     /**
      * @var array|string[]
@@ -53,15 +35,11 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
      * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        GetAttributeBackendTableInterface $getAttributeBackendTable,
-        GetEavAttributeOptionValueDataInterface $getEavAttributeOptionValueData,
-        GetEntityMetadataInterface $getEntityMetadata,
-        ResourceConnection $resourceConnection
+        private readonly GetAttributeBackendTableInterface $getAttributeBackendTable,
+        private readonly GetEavAttributeOptionValueDataInterface $getEavAttributeOptionValueData,
+        private readonly GetEntityMetadataInterface $getEntityMetadata,
+        private readonly ResourceConnection $resourceConnection
     ) {
-        $this->getAttributeBackendTable = $getAttributeBackendTable;
-        $this->getEavAttributeOptionValueData = $getEavAttributeOptionValueData;
-        $this->getEntityMetadata = $getEntityMetadata;
-        $this->connection = $resourceConnection->getConnection();
     }
 
     /**
@@ -83,15 +61,15 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
      */
     private function getData(int $productId): array
     {
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                $this->connection->getTableName('catalog_product_super_attribute'),
+                $this->getConnection()->getTableName('catalog_product_super_attribute'),
                 'attribute_id'
             )
             ->where('product_id = ?', $productId);
 
         $result = [];
-        foreach (array_map('intval', $this->connection->fetchCol($select)) as $attributeId) {
+        foreach (array_map('intval', $this->getConnection()->fetchCol($select)) as $attributeId) {
             if (!$attributeData = $this->getAttributeData($productId, $attributeId)) {
                 continue;
             }
@@ -130,9 +108,9 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
             ProductAttributeInterface::ENTITY_TYPE_CODE
         );
 
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                ['cpsa' => $this->connection->getTableName('catalog_product_super_attribute')],
+                ['cpsa' => $this->getConnection()->getTableName('catalog_product_super_attribute')],
                 [
                     'sku' => 'cpe_child.sku',
                     'entity_id' => 'cpe_child.entity_id',
@@ -147,22 +125,22 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
                 ]
             )
             ->joinInner(
-                ['cpe' => $this->connection->getTableName('catalog_product_entity')],
+                ['cpe' => $this->getConnection()->getTableName('catalog_product_entity')],
                 "cpe.$entityLinkField = cpsa.product_id",
                 null
             )
             ->joinInner(
-                ['cpsl' => $this->connection->getTableName('catalog_product_super_link')],
+                ['cpsl' => $this->getConnection()->getTableName('catalog_product_super_link')],
                 'cpsl.parent_id = cpsa.product_id',
                 null
             )
             ->joinInner(
-                ['ea' => $this->connection->getTableName('eav_attribute')],
+                ['ea' => $this->getConnection()->getTableName('eav_attribute')],
                 'ea.attribute_id = cpsa.attribute_id',
                 null
             )
             ->joinInner(
-                ['cpe_child' => $this->connection->getTableName('catalog_product_entity')],
+                ['cpe_child' => $this->getConnection()->getTableName('catalog_product_entity')],
                 'cpe_child.entity_id = cpsl.product_id',
                 null
             )
@@ -174,7 +152,7 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
                 null
             )
             ->joinLeft(
-                ['eao' => $this->connection->getTableName('eav_attribute_option')],
+                ['eao' => $this->getConnection()->getTableName('eav_attribute_option')],
                 'eao.option_id = cpev.value',
                 null
             )
@@ -182,6 +160,6 @@ class GetConfigurableAttributeOptions implements GetConfigurableAttributeOptions
             ->where('cpsa.product_id = ?', $productId)
             ->where('ea.attribute_id = ?', $attributeId);
 
-        return $this->connection->fetchAll($select);
+        return $this->getConnection()->fetchAll($select);
     }
 }

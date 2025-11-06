@@ -22,16 +22,11 @@ class GetCustomerRawData implements GetCustomerRawDataInterface
     private array $data = [];
 
     /**
-     * @var ResourceConnection
+     * @param ResourceConnection $resourceConnection
      */
-    private ResourceConnection $connection;
-
-    /**
-     * @param ResourceConnection $connection
-     */
-    public function __construct(ResourceConnection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {
     }
 
     /**
@@ -59,7 +54,7 @@ class GetCustomerRawData implements GetCustomerRawDataInterface
             $cols[] = CustomerInterface::WEBSITE_ID;
         }
 
-        $connection = $this->connection->getConnection();
+        $connection = $this->resourceConnection->getConnection();
         $select = $connection->select()
             ->from($connection->getTableName('customer_entity'), $cols)
             ->where(CustomerInterface::EMAIL . ' = ?', $email);

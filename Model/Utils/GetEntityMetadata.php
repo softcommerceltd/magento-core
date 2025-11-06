@@ -17,11 +17,6 @@ use Magento\Framework\EntityManager\MetadataPool;
 class GetEntityMetadata implements GetEntityMetadataInterface
 {
     /**
-     * @var MetadataPool
-     */
-    private MetadataPool $metadataPool;
-
-    /**
      * @var string[]
      */
     private array $identifierField = [];
@@ -34,9 +29,9 @@ class GetEntityMetadata implements GetEntityMetadataInterface
     /**
      * @param MetadataPool $metadataPool
      */
-    public function __construct(MetadataPool $metadataPool)
-    {
-        $this->metadataPool = $metadataPool;
+    public function __construct(
+        private readonly MetadataPool $metadataPool
+    ) {
     }
 
     /**
@@ -75,5 +70,13 @@ class GetEntityMetadata implements GetEntityMetadataInterface
     public function generateIdentifier(string $entityType = ProductInterface::class): int
     {
         return (int) $this->metadataPool->getMetadata($entityType)->generateIdentifier();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isStagingEnabled(): bool
+    {
+        return $this->getLinkField() !== 'entity_id';
     }
 }

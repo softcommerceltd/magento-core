@@ -10,8 +10,8 @@ namespace SoftCommerce\Core\Model;
 
 use SoftCommerce\Core\Framework\DataStorageInterface;
 use SoftCommerce\Core\Framework\DataStorageInterfaceFactory;
-use SoftCommerce\Core\Framework\MessageStorageInterface;
-use SoftCommerce\Core\Framework\MessageStorageInterfaceFactory;
+use SoftCommerce\Core\Framework\MessageCollectorInterface;
+use SoftCommerce\Core\Framework\MessageCollectorInterfaceFactory;
 
 /**
  * Class ServiceManagementAbstract used as a
@@ -20,34 +20,27 @@ use SoftCommerce\Core\Framework\MessageStorageInterfaceFactory;
 class ServiceManagementAbstract
 {
     /**
-     * @var DataStorageInterfaceFactory
+     * New message collector for structured message handling
+     * Replaces MessageStorage with format-agnostic collection
+     *
+     * @var MessageCollectorInterface
      */
-    protected DataStorageInterfaceFactory $dataStorageFactory;
-
-    /**
-     * @var MessageStorageInterfaceFactory
-     */
-    protected MessageStorageInterfaceFactory $messageStorageFactory;
-
-    /**
-     * @var DataStorageInterface
-     */
-    private $dataStorage;
+    protected MessageCollectorInterface $messageCollector;
 
     /**
      * @var DataStorageInterface
      */
-    private $responseStorage;
+    private DataStorageInterface $dataStorage;
 
     /**
      * @var DataStorageInterface
      */
-    protected $requestStorage;
+    private DataStorageInterface $responseStorage;
 
     /**
-     * @var MessageStorageInterface
+     * @var DataStorageInterface
      */
-    protected $messageStorage;
+    protected DataStorageInterface $requestStorage;
 
     /**
      * @var array
@@ -61,18 +54,16 @@ class ServiceManagementAbstract
 
     /**
      * @param DataStorageInterfaceFactory $dataStorageFactory
-     * @param MessageStorageInterfaceFactory $messageStorageFactory
+     * @param MessageCollectorInterfaceFactory $messageCollectorFactory
      */
     public function __construct(
-        DataStorageInterfaceFactory $dataStorageFactory,
-        MessageStorageInterfaceFactory $messageStorageFactory
+        protected readonly DataStorageInterfaceFactory $dataStorageFactory,
+        protected readonly MessageCollectorInterfaceFactory $messageCollectorFactory,
     ) {
-        $this->dataStorageFactory = $dataStorageFactory;
-        $this->messageStorageFactory = $messageStorageFactory;
+        $this->messageCollector = $this->messageCollectorFactory->create();
         $this->dataStorage = $this->dataStorageFactory->create();
         $this->requestStorage = $this->dataStorageFactory->create();
         $this->responseStorage = $this->dataStorageFactory->create();
-        $this->messageStorage = $this->messageStorageFactory->create();
     }
 
     /**
@@ -85,8 +76,8 @@ class ServiceManagementAbstract
             [];
         $this->dataStorage->resetData();
         $this->requestStorage->resetData();
+        $this->messageCollector->reset();
         $this->responseStorage->resetData();
-        $this->messageStorage->resetData();
         return $this;
     }
 
@@ -123,10 +114,13 @@ class ServiceManagementAbstract
     }
 
     /**
-     * @return MessageStorageInterface
+     * Get message collector for structured message handling
+     * Use this for new code instead of getMessageStorage()
+     *
+     * @return MessageCollectorInterface
      */
-    public function getMessageStorage(): MessageStorageInterface
+    public function getMessageCollector(): MessageCollectorInterface
     {
-        return $this->messageStorage;
+        return $this->messageCollector;
     }
 }

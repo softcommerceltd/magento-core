@@ -9,18 +9,12 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Eav;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
  */
 class GetAttributeSetData implements GetAttributeSetDataInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
     /**
      * @var array|string[]
      */
@@ -29,9 +23,9 @@ class GetAttributeSetData implements GetAttributeSetDataInterface
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {
     }
 
     /**
@@ -52,11 +46,12 @@ class GetAttributeSetData implements GetAttributeSetDataInterface
      */
     public function getData(string $entityTypeCode): array
     {
-        return $this->connection->fetchAssoc(
-            $this->connection->select()
-                ->from(['eas_tb' => $this->connection->getTableName('eav_attribute_set')])
+        $connection = $this->resourceConnection->getConnection();
+        return $connection->fetchAssoc(
+            $connection->select()
+                ->from(['eas_tb' => $connection->getTableName('eav_attribute_set')])
                 ->joinLeft(
-                    ['eat_tb' => $this->connection->getTableName('eav_entity_type')],
+                    ['eat_tb' => $connection->getTableName('eav_entity_type')],
                     'eat_tb.entity_type_id = eas_tb.entity_type_id',
                     null
                 )

@@ -11,6 +11,7 @@ namespace SoftCommerce\Core\Ui\Component\Control;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Magento\Ui\Component\Control\Container;
+use Magento\Framework\UrlInterface;
 
 /**
  * @inheritDoc
@@ -18,42 +19,21 @@ use Magento\Ui\Component\Control\Container;
 class SaveSplitButtonExtended implements ButtonProviderInterface
 {
     /**
-     * @var string|null
-     */
-    protected ?string $aclResource;
-
-    /**
-     * @var RequestInterface
-     */
-    protected RequestInterface $request;
-
-    /**
-     * @var int|null
-     */
-    protected ?int $sortOrder;
-
-    /**
-     * @var string
-     */
-    protected string $targetName;
-
-    /**
      * @param RequestInterface $request
+     * @param UrlInterface $urlBuilder
      * @param string $targetName
      * @param string|null $aclResource
      * @param int|null $sortOrder
+     * @param array $customOptions
      */
     public function __construct(
-        RequestInterface $request,
-        string $targetName,
-        ?string $aclResource = null,
-        ?int $sortOrder = null
-    ) {
-        $this->request = $request;
-        $this->targetName = $targetName;
-        $this->aclResource = $aclResource;
-        $this->sortOrder = $sortOrder;
-    }
+        protected readonly RequestInterface $request,
+        protected readonly UrlInterface $urlBuilder,
+        protected string $targetName,
+        protected ?string $aclResource = null,
+        protected ?int $sortOrder = null,
+        protected array $customOptions = []
+    ) {}
 
     /**
      * @return array
@@ -116,7 +96,7 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
             return [];
         }
 
-        return [
+        $options = [
             [
                 'label' => __('Save &amp; Close'),
                 'data_attribute' => [
@@ -157,6 +137,67 @@ class SaveSplitButtonExtended implements ButtonProviderInterface
                 'sort_order' => 20,
             ],
         ];
+
+        // Merge custom options if provided
+        if (!empty($this->customOptions)) {
+            // Process custom options for URL support
+            $processedOptions = [];
+            foreach ($this->customOptions as $key => $option) {
+                if (isset($option['url'])) {
+                    // Generate the full URL
+                    $url = $this->urlBuilder->getUrl($option['url']);
+
+                    // For URL-based actions, we need to use the redirect action
+                    if (isset($option['confirm'])) {
+                        // For confirmations, we'll need to use the form's custom method
+                        $option['data_attribute'] = [
+                            'mage-init' => [
+                                'buttonAdapter' => [
+                                    'actions' => [
+                                        [
+                                            'targetName' => $this->targetName,
+                                            'actionName' => 'redirect',
+                                            'params' => [
+                                                'url' => $url,
+                                                'confirm' => [
+                                                    'title' => __('Confirm'),
+                                                    'message' => __($option['confirm'])
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ];
+                    } else {
+                        // For simple redirects
+                        $option['data_attribute'] = [
+                            'mage-init' => [
+                                'buttonAdapter' => [
+                                    'actions' => [
+                                        [
+                                            'targetName' => $this->targetName,
+                                            'actionName' => 'redirect',
+                                            'params' => [
+                                                'url' => $url
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ];
+                    }
+
+                    // Clean up
+                    unset($option['url']);
+                    unset($option['confirm']);
+                }
+                $processedOptions[] = $option;
+            }
+            $options = array_merge($options, $processedOptions);
+        }
+
+        return $options;
     }
 
     /**

@@ -20,16 +20,6 @@ use SoftCommerce\Core\Framework\DataMap\StatusToLabelMappingInterface;
 class StatusRenderer extends Column
 {
     /**
-     * @var StatusToFaMappingInterface
-     */
-    private StatusToFaMappingInterface $statusToFaMapping;
-
-    /**
-     * @var StatusToLabelMappingInterface
-     */
-    private StatusToLabelMappingInterface $statusToLabelMapping;
-
-    /**
      * @param StatusToFaMappingInterface $statusToFaMapping
      * @param StatusToLabelMappingInterface $statusToLabelMapping
      * @param ContextInterface $context
@@ -38,15 +28,13 @@ class StatusRenderer extends Column
      * @param array $data
      */
     public function __construct(
-        StatusToFaMappingInterface $statusToFaMapping,
-        StatusToLabelMappingInterface $statusToLabelMapping,
+        private readonly StatusToFaMappingInterface $statusToFaMapping,
+        private readonly StatusToLabelMappingInterface $statusToLabelMapping,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
     ) {
-        $this->statusToFaMapping = $statusToFaMapping;
-        $this->statusToLabelMapping = $statusToLabelMapping;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 

@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Catalog;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use SoftCommerce\Core\Model\Eav\GetEntityTypeIdInterface;
+use SoftCommerce\Core\Model\Trait\ConnectionTrait;
 use SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface;
 use function array_keys;
 use function array_merge;
@@ -22,25 +22,7 @@ use function md5_file;
  */
 class MediaManagement implements MediaManagementInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
-     * @var FileImageManagementInterface
-     */
-    private FileImageManagementInterface $fileImageManagement;
-
-    /**
-     * @var GetEntityMetadataInterface
-     */
-    private GetEntityMetadataInterface $getEntityMetadata;
-
-    /**
-     * @var GetEntityTypeIdInterface
-     */
-    private GetEntityTypeIdInterface $getEntityTypeId;
+    use ConnectionTrait;
 
     /**
      * @var string[]|null
@@ -74,15 +56,11 @@ class MediaManagement implements MediaManagementInterface
      * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        FileImageManagementInterface $fileImageManagement,
-        GetEntityMetadataInterface $getEntityMetadata,
-        GetEntityTypeIdInterface $getEntityTypeId,
-        ResourceConnection $resourceConnection
+        private readonly FileImageManagementInterface $fileImageManagement,
+        private readonly GetEntityMetadataInterface $getEntityMetadata,
+        private readonly GetEntityTypeIdInterface $getEntityTypeId,
+        private readonly ResourceConnection $resourceConnection
     ) {
-        $this->fileImageManagement = $fileImageManagement;
-        $this->getEntityMetadata = $getEntityMetadata;
-        $this->getEntityTypeId = $getEntityTypeId;
-        $this->connection = $resourceConnection->getConnection();
     }
 
     /**
@@ -91,15 +69,15 @@ class MediaManagement implements MediaManagementInterface
     public function getMediaGalleryAttributeId(): int
     {
         if (null === $this->mediaGalleryAttributeId) {
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_attribute'),
+                    $this->getConnection()->getTableName('eav_attribute'),
                     ['attribute_id']
                 )
                 ->where('attribute_code = ?', 'media_gallery')
                 ->where('entity_type_id = ?', $this->getEntityTypeId->execute());
 
-            $this->mediaGalleryAttributeId = (int) $this->connection->fetchOne($select);
+            $this->mediaGalleryAttributeId = (int) $this->getConnection()->fetchOne($select);
         }
         return $this->mediaGalleryAttributeId;
     }
@@ -110,9 +88,9 @@ class MediaManagement implements MediaManagementInterface
     public function getImageTypes(): array
     {
         if (null === $this->imageTypes) {
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_attribute'),
+                    $this->getConnection()->getTableName('eav_attribute'),
                     [
                         'attribute_id',
                         'attribute_code'
@@ -120,7 +98,7 @@ class MediaManagement implements MediaManagementInterface
                 )
                 ->where('frontend_input = ?', 'media_image');
 
-            $this->imageTypes = $this->connection->fetchPairs($select) ?: [];
+            $this->imageTypes = $this->getConnection()->fetchPairs($select) ?: [];
         }
 
         return $this->imageTypes;
@@ -136,9 +114,9 @@ class MediaManagement implements MediaManagementInterface
             foreach ($this->getImageTypes() as $imageType) {
                 $attributeCodes[] = "{$imageType}_label";
             }
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_attribute'),
+                    $this->getConnection()->getTableName('eav_attribute'),
                     [
                         'attribute_id',
                         'attribute_code'
@@ -146,7 +124,7 @@ class MediaManagement implements MediaManagementInterface
                 )
                 ->where('attribute_code IN (?)', $attributeCodes);
 
-            $this->imageTypeLabels = $this->connection->fetchPairs($select) ?: [];
+            $this->imageTypeLabels = $this->getConnection()->fetchPairs($select) ?: [];
         }
 
         return $this->imageTypeLabels;
@@ -166,21 +144,21 @@ class MediaManagement implements MediaManagementInterface
         $this->mediaGalleryData[$productId] = [];
         $linkFieldName = $this->getEntityMetadata->getLinkField();
 
-        $select = $this->connection->select()
+        $select = $this->getConnection()->select()
             ->from(
-                ['mg' => $this->connection->getTableName('catalog_product_entity_media_gallery')],
+                ['mg' => $this->getConnection()->getTableName('catalog_product_entity_media_gallery')],
                 ['mg.value_id', 'mg.value', 'mg.media_type', 'mg.disabled', 'mg.md5_checksum']
             )
             ->joinInner(
-                ['mgvte' => $this->connection->getTableName('catalog_product_entity_media_gallery_value_to_entity')],
+                ['mgvte' => $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value_to_entity')],
                 '(mg.value_id = mgvte.value_id)',
                 null
             )
             ->where("mgvte.$linkFieldName = ?", $productId);
 
         $md5ChecksumSaveRequest = [];
-        $mediaGalleryValueTableName = $this->connection->getTableName('catalog_product_entity_media_gallery_value');
-        foreach ($this->connection->fetchAll($select) as $item) {
+        $mediaGalleryValueTableName = $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value');
+        foreach ($this->getConnection()->fetchAll($select) as $item) {
             $value = $item['value'] ?? null;
             if (!$value || !$valueId = $item['value_id'] ?? null) {
                 continue;
@@ -208,10 +186,10 @@ class MediaManagement implements MediaManagementInterface
                 continue;
             }
 
-            $select = $this->connection->select()
+            $select = $this->getConnection()->select()
                 ->from($mediaGalleryValueTableName)
                 ->where('value_id = ?', $valueId);
-            $item['values'] = $this->connection->fetchAll($select) ?: [];
+            $item['values'] = $this->getConnection()->fetchAll($select) ?: [];
 
             $this->mediaGalleryData[$productId][$imageMd5Checksum] = $item;
         }
@@ -238,25 +216,26 @@ class MediaManagement implements MediaManagementInterface
 
         $this->mediaVideoGalleryData[$videoUrl] = [];
         $linkFieldName = $this->getEntityMetadata->getLinkField();
-        $select = $this->connection->select()
+
+        $select = $this->getConnection()->select()
             ->from(
-                ['mgvv' => $this->connection->getTableName('catalog_product_entity_media_gallery_value_video')],
+                ['mgvv' => $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value_video')],
                 ['mgvv.value_id', 'mgvv.provider', 'mgvv.url', 'mgvv.title', 'mgvv.description']
             )
             ->joinLeft(
-                ['mg' => $this->connection->getTableName('catalog_product_entity_media_gallery')],
+                ['mg' => $this->getConnection()->getTableName('catalog_product_entity_media_gallery')],
                 'mgvv.value_id = mg.value_id AND mg.media_type = \'external-video\'',
                 ['mg.value', 'mg.disabled', 'mg.md5_checksum']
             )
             ->joinLeft(
-                ['mgvte' => $this->connection->getTableName('catalog_product_entity_media_gallery_value_to_entity')],
+                ['mgvte' => $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value_to_entity')],
                 '(mgvv.value_id = mgvte.value_id)',
                 ["mgvte.$linkFieldName"]
             )
             ->where('mgvv.url = ?', $videoUrl);
 
         $md5ChecksumSaveRequest = [];
-        foreach ($this->connection->fetchAll($select) as $item) {
+        foreach ($this->getConnection()->fetchAll($select) as $item) {
             $entityId = $item[$linkFieldName] ?? null;
             if (!$entityId || !$value = $item['value'] ?? null) {
                 continue;
@@ -317,8 +296,8 @@ class MediaManagement implements MediaManagementInterface
      */
     public function updateMediaGalleryMd5Checksum(array $data): int
     {
-        return (int) $this->connection->insertOnDuplicate(
-            $this->connection->getTableName('catalog_product_entity_media_gallery'),
+        return (int) $this->getConnection()->insertOnDuplicate(
+            $this->getConnection()->getTableName('catalog_product_entity_media_gallery'),
             $data,
             ['md5_checksum']
         );
@@ -329,8 +308,8 @@ class MediaManagement implements MediaManagementInterface
      */
     public function deleteMediaGallery($valueId): int
     {
-        return (int) $this->connection->delete(
-            $this->connection->getTableName('catalog_product_entity_media_gallery'),
+        return (int) $this->getConnection()->delete(
+            $this->getConnection()->getTableName('catalog_product_entity_media_gallery'),
             [
                 'value_id IN (?)' => is_array($valueId) ? $valueId : [$valueId]
             ]
@@ -342,8 +321,8 @@ class MediaManagement implements MediaManagementInterface
      */
     public function deleteMediaGalleryValue($valueId, string $fieldId = 'record_id'): int
     {
-        return (int) $this->connection->delete(
-            $this->connection->getTableName('catalog_product_entity_media_gallery_value'),
+        return (int) $this->getConnection()->delete(
+            $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value'),
             [
                 "$fieldId IN (?)" => is_array($valueId) ? $valueId : [$valueId]
             ]
@@ -355,8 +334,8 @@ class MediaManagement implements MediaManagementInterface
      */
     public function deleteMediaGalleryImage($entityId, array $value = []): int
     {
-        return (int) $this->connection->delete(
-            $this->connection->getTableName('catalog_product_entity_varchar'),
+        return (int) $this->getConnection()->delete(
+            $this->getConnection()->getTableName('catalog_product_entity_varchar'),
             array_merge(
                 [
                     $this->getEntityMetadata->getLinkField() . ' = ?' => $entityId,
@@ -372,8 +351,8 @@ class MediaManagement implements MediaManagementInterface
      */
     public function deleteMediaGalleryImageLabel(int $entityId): int
     {
-        return (int) $this->connection->delete(
-            $this->connection->getTableName('catalog_product_entity_varchar'),
+        return (int) $this->getConnection()->delete(
+            $this->getConnection()->getTableName('catalog_product_entity_varchar'),
             [
                 $this->getEntityMetadata->getLinkField() . ' = ?' => $entityId,
                 'attribute_id IN (?)' => array_keys($this->getImageTypesLabels())

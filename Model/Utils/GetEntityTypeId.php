@@ -10,7 +10,6 @@ namespace SoftCommerce\Core\Model\Utils;
 
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
@@ -20,11 +19,6 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 class GetEntityTypeId implements GetEntityTypeIdInterface
 {
     /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
      * @var array
      */
     private array $entityTypeId = [];
@@ -32,9 +26,9 @@ class GetEntityTypeId implements GetEntityTypeIdInterface
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {
     }
 
     /**
@@ -43,10 +37,11 @@ class GetEntityTypeId implements GetEntityTypeIdInterface
     public function execute(string $entityTypeCode = Product::ENTITY): int
     {
         if (!isset($this->entityTypeId[$entityTypeCode])) {
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('eav_entity_type'), ['entity_type_id'])
+            $connection = $this->resourceConnection->getConnection();
+            $select = $connection->select()
+                ->from($connection->getTableName('eav_entity_type'), ['entity_type_id'])
                 ->where('entity_type_code = ?', $entityTypeCode);
-            $this->entityTypeId[$entityTypeCode] = (int) $this->connection->fetchOne($select);
+            $this->entityTypeId[$entityTypeCode] = (int) $connection->fetchOne($select);
         }
         return $this->entityTypeId[$entityTypeCode];
     }

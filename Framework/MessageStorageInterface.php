@@ -13,12 +13,15 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 /**
  * Interface MessageStorageInterface used to store
  * and retrieve messages in array format.
+ * @deprecated in favour of
+ * @see MessageCollectorInterface
  */
 interface MessageStorageInterface
 {
     public const ENTITY = 'entity';
     public const STATUS = 'status';
     public const MESSAGE = 'message';
+    public const METADATA = 'metadata';
 
     /**
      * @param int|string|null $entity
@@ -37,9 +40,10 @@ interface MessageStorageInterface
      * @param string|array|mixed $message
      * @param int|string $entity
      * @param string $status
+     * @param array $metadata
      * @return $this
      */
-    public function addData($message, $entity, string $status = StatusInterface::SUCCESS): static;
+    public function addData($message, $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static;
 
     /**
      * @param array $data

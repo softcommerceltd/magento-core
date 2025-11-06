@@ -29,11 +29,6 @@ class FileImageManagement implements FileImageManagementInterface
     private ?string $catalogProductDirectory = null;
 
     /**
-     * @var DirectoryList
-     */
-    private DirectoryList $directoryList;
-
-    /**
      * @var Uploader|null
      */
     private ?Uploader $fileUploader = null;
@@ -44,19 +39,9 @@ class FileImageManagement implements FileImageManagementInterface
     private ?string $importDirectory = null;
 
     /**
-     * @var File
-     */
-    private File $ioFile;
-
-    /**
      * @var WriteInterface
      */
     private WriteInterface $mediaDirectory;
-
-    /**
-     * @var UploaderFactory
-     */
-    private UploaderFactory $uploaderFactory;
 
     /**
      * @param DirectoryList $directoryList
@@ -66,15 +51,12 @@ class FileImageManagement implements FileImageManagementInterface
      * @throws FileSystemException
      */
     public function __construct(
-        DirectoryList $directoryList,
-        File $ioFile,
-        Filesystem $filesystem,
-        UploaderFactory $uploaderFactory
+        private readonly DirectoryList $directoryList,
+        private readonly File $ioFile,
+        private readonly Filesystem $filesystem,
+        private readonly UploaderFactory $uploaderFactory
     ) {
-        $this->directoryList = $directoryList;
-        $this->ioFile = $ioFile;
         $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
-        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**

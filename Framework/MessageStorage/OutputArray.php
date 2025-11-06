@@ -12,6 +12,8 @@ use SoftCommerce\Core\Framework\MessageStorageInterface;
 
 /**
  * @inheritDoc
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 class OutputArray implements OutputArrayInterface
 {

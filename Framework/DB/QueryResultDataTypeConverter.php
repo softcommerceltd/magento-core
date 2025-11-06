@@ -9,18 +9,12 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Framework\DB;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
  */
 class QueryResultDataTypeConverter implements QueryResultDataTypeConverterInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
     /**
      * @var array
      */
@@ -29,9 +23,9 @@ class QueryResultDataTypeConverter implements QueryResultDataTypeConverterInterf
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {
     }
 
     /**
@@ -57,8 +51,9 @@ class QueryResultDataTypeConverter implements QueryResultDataTypeConverterInterf
     private function getSchema(string $dbTableName): array
     {
         if (!isset($this->schemaInMemory[$dbTableName])) {
-            $this->schemaInMemory[$dbTableName] = $this->connection->describeTable(
-                $this->connection->getTableName($dbTableName)
+            $connection = $this->resourceConnection->getConnection();
+            $this->schemaInMemory[$dbTableName] = $connection->describeTable(
+                $connection->getTableName($dbTableName)
             );
         }
 

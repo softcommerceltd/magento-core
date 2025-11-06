@@ -20,27 +20,22 @@ use Magento\Framework\Serialize\SerializerInterface;
 class AbstractModel extends \Magento\Framework\Model\AbstractModel
 {
     /**
-     * @var SerializerInterface
-     */
-    protected SerializerInterface $serializer;
-
-    /**
      * @param SerializerInterface $serializer
      * @param Context $context
      * @param Registry $registry
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function __construct(
-        SerializerInterface $serializer,
+        protected readonly SerializerInterface $serializer,
         Context $context,
         Registry $registry,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->serializer = $serializer;
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
 

@@ -16,26 +16,13 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class Developer implements DeveloperInterface
 {
     /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
-
-    /**
-     * @var string
-     */
-    private string $entity;
-
-    /**
-     * Developer constructor.
      * @param ScopeConfigInterface $scopeConfig
-     * @param string $entityType
+     * @param string $entity
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        string $entityType = 'softcommerce_core'
+        private readonly ScopeConfigInterface $scopeConfig,
+        private string $entity = 'softcommerce_core'
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->entity = $entityType;
     }
 
     /**

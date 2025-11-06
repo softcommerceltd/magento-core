@@ -12,31 +12,21 @@ use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Magento\Eav\Model\Entity\Attribute\Source\Table;
 use Magento\Framework\Api\ObjectFactory;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Phrase;
 use Magento\Store\Model\Store;
+use SoftCommerce\Core\Model\Trait\ConnectionTrait;
 
 /**
  * @inheritDoc
  */
 class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataInterface
 {
-    /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
+    use ConnectionTrait;
 
     /**
      * @var array
      */
     private array $data = [];
-
-    /**
-     * @var GetEntityTypeIdInterface
-     */
-    private GetEntityTypeIdInterface $getEntityTypeId;
-
-    private ObjectFactory $objectFactory;
 
     /**
      * @var array|null
@@ -51,16 +41,13 @@ class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataIn
     /**
      * @param GetEntityTypeIdInterface $getEntityTypeId
      * @param ObjectFactory $objectFactory
-     * @param ResourceConnection $resource
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        GetEntityTypeIdInterface $getEntityTypeId,
-        ObjectFactory $objectFactory,
-        ResourceConnection $resource
+        private readonly GetEntityTypeIdInterface $getEntityTypeId,
+        private readonly ObjectFactory $objectFactory,
+        private readonly ResourceConnection $resourceConnection
     ) {
-        $this->getEntityTypeId = $getEntityTypeId;
-        $this->objectFactory = $objectFactory;
-        $this->connection = $resource->getConnection();
     }
 
     /**
@@ -96,19 +83,19 @@ class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataIn
             return $this->getAttributeSourceOptions($attributeId, $sourceModel);
         }
 
-        $select = $this->connection->select()
-            ->from($this->connection->getTableName('eav_attribute_option'))
+        $select = $this->getConnection()->select()
+            ->from($this->getConnection()->getTableName('eav_attribute_option'))
             ->where('attribute_id = ?', $attributeId);
 
         $result = [];
-        foreach ($this->connection->fetchAll($select) as $item) {
+        foreach ($this->getConnection()->fetchAll($select) as $item) {
             if (!$optionId = (int) ($item['option_id'] ?? null)) {
                 continue;
             }
 
-            $selectValue = $this->connection->select()
+            $selectValue = $this->getConnection()->select()
                 ->from(
-                    $this->connection->getTableName('eav_attribute_option_value'),
+                    $this->getConnection()->getTableName('eav_attribute_option_value'),
                     [
                         'store_id',
                         'value'
@@ -117,7 +104,7 @@ class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataIn
                 ->where('option_id = ?', $optionId);
 
             $values = [];
-            foreach ($this->connection->fetchAll($selectValue) as $value) {
+            foreach ($this->getConnection()->fetchAll($selectValue) as $value) {
                 if (!isset($value['store_id'], $value['value'])) {
                     continue;
                 }
@@ -144,13 +131,13 @@ class GetEavAttributeOptionValueData implements GetEavAttributeOptionValueDataIn
     private function getSourceModel(int $attributeId): ?string
     {
         if (null === $this->sourceModelInMemory) {
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('eav_attribute'), ['attribute_id', 'source_model'])
+            $select = $this->getConnection()->select()
+                ->from($this->getConnection()->getTableName('eav_attribute'), ['attribute_id', 'source_model'])
                 ->where('entity_type_id = ?', $this->getEntityTypeId->execute())
                 ->where('source_model IS NOT NULL')
                 ->where('source_model != ?', Table::class);
 
-            $this->sourceModelInMemory = $this->connection->fetchPairs($select);
+            $this->sourceModelInMemory = $this->getConnection()->fetchPairs($select);
         }
 
         return $this->sourceModelInMemory[$attributeId] ?? null;

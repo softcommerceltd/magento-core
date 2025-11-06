@@ -20,11 +20,6 @@ use Magento\Framework\Module\PackageInfo;
 class Version extends Field
 {
     /**
-     * @var PackageInfo
-     */
-    private PackageInfo $packageInfo;
-
-    /**
      * @var string
      */
     private string $moduleName;
@@ -36,12 +31,11 @@ class Version extends Field
      * @param array $data
      */
     public function __construct(
-        PackageInfo $packageInfo,
+        private readonly PackageInfo $packageInfo,
         Context $context,
         ?string $moduleName = null,
         array $data = []
     ) {
-        $this->packageInfo = $packageInfo;
         $this->moduleName = $moduleName ?: 'SoftCommerce_Core';
         parent::__construct($context, $data);
     }

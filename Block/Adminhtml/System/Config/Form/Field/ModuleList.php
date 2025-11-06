@@ -21,21 +21,15 @@ class ModuleList extends Field
     protected $_template = 'SoftCommerce_Core::module-list.phtml';
 
     /**
-     * @var ModuleListProviderInterface
-     */
-    private ModuleListProviderInterface $moduleListProvider;
-
-    /**
      * @param ModuleListProviderInterface $moduleListProvider
      * @param Template\Context $context
      * @param array $data
      */
     public function __construct(
-        ModuleListProviderInterface $moduleListProvider,
+        private readonly ModuleListProviderInterface $moduleListProvider,
         Template\Context $context,
         array $data = []
     ) {
-        $this->moduleListProvider = $moduleListProvider;
         parent::__construct($context, $data);
     }
 

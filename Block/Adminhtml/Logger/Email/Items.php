@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Block\Adminhtml\Logger\Email;
 
 use Magento\Framework\View\Element\Template;
+use SoftCommerce\Core\Framework\MessageStorage\OutputHtml;
 use SoftCommerce\Core\Framework\MessageStorage\OutputHtmlInterface;
 
 /**
@@ -17,21 +18,15 @@ use SoftCommerce\Core\Framework\MessageStorage\OutputHtmlInterface;
 class Items extends Template
 {
     /**
-     * @var OutputHtmlInterface
-     */
-    private OutputHtmlInterface $outputHtml;
-
-    /**
-     * @param OutputHtmlInterface $outputHtml
+     * @param OutputHtml $outputHtml
      * @param Template\Context $context
      * @param array $data
      */
     public function __construct(
-        OutputHtmlInterface $outputHtml,
+        private readonly OutputHtml $outputHtml,
         Template\Context $context,
         array $data = []
     ) {
-        $this->outputHtml = $outputHtml;
         parent::__construct($context, $data);
     }
 

@@ -20,16 +20,6 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class Actions extends Column
 {
     /**
-     * @var Escaper
-     */
-    protected Escaper $escaper;
-
-    /**
-     * @var UrlInterface
-     */
-    protected UrlInterface $urlBuilder;
-
-    /**
      * @param Escaper $escaper
      * @param UrlInterface $urlBuilder
      * @param ContextInterface $context
@@ -38,15 +28,13 @@ class Actions extends Column
      * @param array $data
      */
     public function __construct(
-        Escaper $escaper,
-        UrlInterface $urlBuilder,
+        protected readonly Escaper $escaper,
+        protected readonly UrlInterface $urlBuilder,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
     ) {
-        $this->escaper = $escaper;
-        $this->urlBuilder = $urlBuilder;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 

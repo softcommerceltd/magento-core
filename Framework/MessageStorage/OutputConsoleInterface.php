@@ -13,6 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Interface OutputConsoleInterface used to output
  * data to console log.
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 interface OutputConsoleInterface
 {

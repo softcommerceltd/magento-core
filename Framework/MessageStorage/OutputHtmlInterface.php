@@ -11,6 +11,8 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
 /**
  * Interface OutputHtmlInterface used to output
  * data to html.
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 interface OutputHtmlInterface
 {

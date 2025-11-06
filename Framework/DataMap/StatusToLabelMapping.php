@@ -17,25 +17,13 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 class StatusToLabelMapping implements StatusToLabelMappingInterface
 {
     /**
-     * @var StatusInterface
-     */
-    private StatusInterface $status;
-
-    /**
-     * @var IsActive
-     */
-    private IsActive $isActiveStatus;
-
-    /**
      * @param StatusInterface $status
      * @param IsActive $isActiveStatus
      */
     public function __construct(
-        StatusInterface $status,
-        IsActive $isActiveStatus
+        private readonly StatusInterface $status,
+        private readonly IsActive $isActiveStatus
     ) {
-        $this->status = $status;
-        $this->isActiveStatus = $isActiveStatus;
     }
 
     /**

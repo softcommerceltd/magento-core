@@ -19,11 +19,6 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class JsonContentRenderer extends Column
 {
     /**
-     * @var SerializerInterface
-     */
-    private SerializerInterface $serializer;
-
-    /**
      * @param SerializerInterface $serializer
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
@@ -31,13 +26,12 @@ class JsonContentRenderer extends Column
      * @param array $data
      */
     public function __construct(
-        SerializerInterface $serializer,
+        private readonly SerializerInterface $serializer,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         array $components = [],
         array $data = []
     ) {
-        $this->serializer = $serializer;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 

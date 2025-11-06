@@ -24,21 +24,15 @@ class RotationSteamHandler extends RotatingFileHandler
     protected string $fileName = '/var/log/softcommerce/core.log';
 
     /**
-     * @var DriverInterface
-     */
-    protected DriverInterface $filesystem;
-
-    /**
      * @param DriverInterface $filesystem
      * @param string $fileName
      * @param int $maxFiles
      */
     public function __construct(
-        DriverInterface $filesystem,
+        protected readonly DriverInterface $filesystem,
         string $fileName,
         int $maxFiles = 5
     ) {
-        $this->filesystem = $filesystem;
         if (!empty($fileName)) {
             $this->fileName = $fileName;
         }

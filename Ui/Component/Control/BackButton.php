@@ -18,33 +18,15 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class BackButton implements ButtonProviderInterface
 {
     /**
-     * @var string
-     */
-    private string $backUrl;
-
-    /**
-     * @var RequestInterface
-     */
-    private RequestInterface $request;
-
-    /**
-     * @var UrlInterface
-     */
-    private UrlInterface $urlBuilder;
-
-    /**
      * @param RequestInterface $request
      * @param UrlInterface $urlBuilder
      * @param string $backUrl
      */
     public function __construct(
-        RequestInterface $request,
-        UrlInterface $urlBuilder,
-        string $backUrl
+        private readonly RequestInterface $request,
+        private readonly UrlInterface $urlBuilder,
+        private string $backUrl
     ) {
-        $this->request = $request;
-        $this->urlBuilder = $urlBuilder;
-        $this->backUrl = $backUrl;
     }
 
     /**

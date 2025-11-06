@@ -18,7 +18,7 @@ interface DataStorageInterface
      * @param int|string|null $index
      * @return array|int|string|null|mixed
      */
-    public function getData(int|string $index = null);
+    public function getData(int|string|null $index = null);
 
     /**
      * @param mixed $data
@@ -59,7 +59,7 @@ interface DataStorageInterface
      * @param int|string|null $index
      * @return array|int|string|null
      */
-    public function getDataByIdentifier(int|string $identifier, int|string $index = null): array|int|string|null;
+    public function getDataByIdentifier(int|string $identifier, int|string|null $index = null): mixed;
 
     /**
      * @param mixed $data

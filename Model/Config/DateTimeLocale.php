@@ -18,34 +18,16 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 class DateTimeLocale implements DateTimeLocaleInterface
 {
     /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
-
-    /**
-     * @var DateTime
-     */
-    private DateTime $dateTime;
-
-    /**
-     * @var TimezoneInterface
-     */
-    private TimezoneInterface $timezone;
-
-    /**
      * DateTimeLocale constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param DateTime $dateTime
      * @param TimezoneInterface $timezone
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        DateTime $dateTime,
-        TimezoneInterface $timezone
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly DateTime $dateTime,
+        private readonly TimezoneInterface $timezone
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->dateTime = $dateTime;
-        $this->timezone = $timezone;
     }
 
     /**

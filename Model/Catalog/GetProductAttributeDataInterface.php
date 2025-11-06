@@ -35,19 +35,19 @@ interface GetProductAttributeDataInterface
     /**
      * @return array
      */
-    public function getData(): array;
+    public function getLoadedData(): array;
 
     /**
      * @param array|string $attributeCode
      * @return array|string|null
      */
-    public function getDataByAttributeCode(array|string $attributeCode): array|string|null;
+    public function filterByAttributeCode(array|string $attributeCode): array|string|null;
 
     /**
      * @param array|int $attributeId
      * @return array
      */
-    public function getDataByAttributeId(array|int $attributeId): array;
+    public function filterByAttributeId(array|int $attributeId): array;
 
     /**
      * @param int|null $entityId

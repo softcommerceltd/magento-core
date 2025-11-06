@@ -29,21 +29,6 @@ class MailStreamHandler extends MailHandler
     private const XML_PATH_EMAIL_TEMPLATE = 'softcommerce_core/dev/mail_log_email_template';
 
     /**
-     * @var StateInterface
-     */
-    protected StateInterface $inlineTranslation;
-
-    /**
-     * @var TransportBuilder
-     */
-    private TransportBuilder $transportBuilder;
-
-    /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
-
-    /**
      * @param ScopeConfigInterface $scopeConfig
      * @param StateInterface $inlineTranslation
      * @param TransportBuilder $transportBuilder
@@ -51,15 +36,12 @@ class MailStreamHandler extends MailHandler
      * @param bool $bubble
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        StateInterface $inlineTranslation,
-        TransportBuilder $transportBuilder,
+        protected readonly ScopeConfigInterface $scopeConfig,
+        protected readonly StateInterface $inlineTranslation,
+        protected readonly TransportBuilder $transportBuilder,
         int $level = Logger::ALERT,
         bool $bubble = true
     ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->inlineTranslation = $inlineTranslation;
-        $this->transportBuilder = $transportBuilder;
         parent::__construct($level, $bubble);
     }
 

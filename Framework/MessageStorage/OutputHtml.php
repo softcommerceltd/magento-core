@@ -14,6 +14,8 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * @inheritDoc
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 class OutputHtml implements OutputHtmlInterface
 {

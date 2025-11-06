@@ -19,16 +19,11 @@ class Logger
     public const DEBUG_KEYS_MASK = '****';
 
     /**
-     * @var LoggerInterface
-     */
-    protected LoggerInterface $logger;
-
-    /**
      * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        protected readonly LoggerInterface $logger
+    ) {
     }
 
     /**

@@ -20,16 +20,6 @@ use function is_string;
 class FlattenArray implements FlattenArrayInterface
 {
     /**
-     * @var RemoveTags
-     */
-    private RemoveTags $removeTags;
-
-    /**
-     * @var StringUtils
-     */
-    private StringUtils $string;
-
-    /**
      * @var int
      */
     private int $flattenValueSize;
@@ -45,12 +35,10 @@ class FlattenArray implements FlattenArrayInterface
      * @param int $flattenValueSize
      */
     public function __construct(
-        RemoveTags $removeTags,
-        StringUtils $string,
+        private readonly RemoveTags $removeTags,
+        private readonly StringUtils $string,
         int $flattenValueSize = 128
     ) {
-        $this->removeTags = $removeTags;
-        $this->string = $string;
         $this->flattenValueSize = $flattenValueSize;
     }
     /**

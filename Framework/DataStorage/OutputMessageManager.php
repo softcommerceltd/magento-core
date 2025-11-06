@@ -17,33 +17,15 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 class OutputMessageManager implements OutputMessageManagerInterface
 {
     /**
-     * @var ManagerInterface
-     */
-    private ManagerInterface $messageManager;
-
-    /**
-     * @var OutputArrayInterface
-     */
-    private OutputArrayInterface $outputArray;
-
-    /**
-     * @var OutputHtmlInterface
-     */
-    private OutputHtmlInterface $outputHtml;
-
-    /**
      * @param ManagerInterface $messageManager
      * @param OutputArrayInterface $outputArray
      * @param OutputHtmlInterface $outputHtml
      */
     public function __construct(
-        ManagerInterface $messageManager,
-        OutputArrayInterface $outputArray,
-        OutputHtmlInterface $outputHtml
+        private readonly ManagerInterface $messageManager,
+        private readonly OutputArrayInterface $outputArray,
+        private readonly OutputHtmlInterface $outputHtml
     ) {
-        $this->messageManager = $messageManager;
-        $this->outputArray = $outputArray;
-        $this->outputHtml = $outputHtml;
     }
 
     /**

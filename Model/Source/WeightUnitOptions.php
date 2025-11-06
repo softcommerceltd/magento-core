@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
-use SoftCommerce\PlentyItemRestApi\Model\VariationInterface;
+use SoftCommerce\PlentyItem\RestApi\VariationInterface;
 
 /**
  * @inheritDoc

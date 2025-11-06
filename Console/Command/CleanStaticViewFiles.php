@@ -24,19 +24,13 @@ class CleanStaticViewFiles extends Command
     private const COMMAND_NAME = 'pub:static:clean';
 
     /**
-     * @var Filesystem
-     */
-    private Filesystem $filesystem;
-
-    /**
      * @param Filesystem $filesystem
      * @param string|null $name
      */
     public function __construct(
-        Filesystem $filesystem,
+        private readonly Filesystem $filesystem,
         ?string $name = null
     ) {
-        $this->filesystem = $filesystem;
         parent::__construct($name);
     }
 

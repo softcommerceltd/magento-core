@@ -27,31 +27,6 @@ class ModuleListProvider implements ModuleListProviderInterface
     private ?array $data = null;
 
     /**
-     * @var ComponentRegistrar
-     */
-    private ComponentRegistrar $componentRegistrar;
-
-    /**
-     * @var DirectoryList
-     */
-    private DirectoryList $directoryList;
-
-    /**
-     * @var Reader
-     */
-    private Reader $reader;
-
-    /**
-     * @var ReadFactory
-     */
-    private ReadFactory $readDirFactory;
-
-    /**
-     * @var SerializerInterface
-     */
-    protected SerializerInterface $serializer;
-
-    /**
      * @param ComponentRegistrar $componentRegistrar
      * @param DirectoryList $directoryList
      * @param ReadFactory $readDirFactory
@@ -59,17 +34,12 @@ class ModuleListProvider implements ModuleListProviderInterface
      * @param SerializerInterface $serializer
      */
     public function __construct(
-        ComponentRegistrar $componentRegistrar,
-        DirectoryList $directoryList,
-        ReadFactory $readDirFactory,
-        Reader $reader,
-        SerializerInterface $serializer
+        private readonly ComponentRegistrar $componentRegistrar,
+        private readonly DirectoryList $directoryList,
+        private readonly ReadFactory $readDirFactory,
+        private readonly Reader $reader,
+        private readonly SerializerInterface $serializer
     ) {
-        $this->componentRegistrar = $componentRegistrar;
-        $this->directoryList = $directoryList;
-        $this->readDirFactory = $readDirFactory;
-        $this->reader = $reader;
-        $this->serializer = $serializer;
     }
 
     /**

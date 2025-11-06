@@ -11,6 +11,8 @@ namespace SoftCommerce\Core\Framework\MessageStorage;
 /**
  * Interface OutputArrayInterface used to output
  * data to array.
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 interface OutputArrayInterface
 {

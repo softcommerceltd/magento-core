@@ -22,16 +22,11 @@ class OutputArray implements OutputArrayInterface
     private $data;
 
     /**
-     * @var Status
-     */
-    private Status $statusOptions;
-
-    /**
      * @param Status $statusOptions
      */
-    public function __construct(Status $statusOptions)
-    {
-        $this->statusOptions = $statusOptions;
+    public function __construct(
+        private readonly Status $statusOptions
+    ) {
     }
 
     /**

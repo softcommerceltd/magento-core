@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Framework\DataStorage;
 
 use Magento\Framework\Phrase;
-use SoftCommerce\Core\Model\Source\Status;
+use SoftCommerce\Core\Model\Source\StatusInterface;
 
 /**
  * @inheritDoc
@@ -29,21 +29,16 @@ class OutputHtml implements OutputHtmlInterface
     private string $dataOutputToHtml = '';
 
     /**
-     * @var Status
-     */
-    private Status $statusOptions;
-
-    /**
      * @var int
      */
     private int $index = 0;
 
     /**
-     * @param Status $statusOptions
+     * @param StatusInterface $statusOptions
      */
-    public function __construct(Status $statusOptions)
-    {
-        $this->statusOptions = $statusOptions;
+    public function __construct(
+        private readonly StatusInterface $statusOptions
+    ) {
     }
 
     /**
@@ -114,7 +109,7 @@ class OutputHtml implements OutputHtmlInterface
         }
 
         foreach ($data as $key => $item) {
-            if (is_string($key) && in_array($key, $this->statusOptions->getAllOptions())) {
+            if (is_string($key) && in_array($key, $this->statusOptions->getOptions())) {
                 $status = $key;
             }
 
@@ -138,7 +133,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param string|null $status
      * @return $this
      */
-    private function setDataOutput($data, $status = Status::SUCCESS)
+    private function setDataOutput($data, ?string $status = StatusInterface::SUCCESS)
     {
         $htmlTag = $this->format[self::HTML_TAG] ?? '%1';
         $index = explode('%', $htmlTag);

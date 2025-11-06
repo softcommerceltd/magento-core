@@ -16,29 +16,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @inheritDoc
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 class OutputConsole implements OutputConsoleInterface
 {
-    /**
-     * @var IsMultidimensionalArrayInterface
-     */
-    private IsMultidimensionalArrayInterface $isMultidimensionalArray;
-
-    /**
-     * @var StatusPredictionInterface
-     */
-    private StatusPredictionInterface $statusPrediction;
-
     /**
      * @param IsMultidimensionalArrayInterface $isMultidimensionalArray
      * @param StatusPredictionInterface $statusPrediction
      */
     public function __construct(
-        IsMultidimensionalArrayInterface $isMultidimensionalArray,
-        StatusPredictionInterface $statusPrediction
+        private readonly IsMultidimensionalArrayInterface $isMultidimensionalArray,
+        private readonly StatusPredictionInterface $statusPrediction
     ) {
-        $this->isMultidimensionalArray = $isMultidimensionalArray;
-        $this->statusPrediction = $statusPrediction;
     }
 
     /**

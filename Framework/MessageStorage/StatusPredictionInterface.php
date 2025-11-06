@@ -13,6 +13,8 @@ use SoftCommerce\Core\Model\Source\StatusInterface;
 /**
  * Interface StatusPredictionInterface used to
  * predict output status.
+ * @deprecated in favour of
+ * @see \SoftCommerce\Core\Framework\MessageCollectorInterface
  */
 interface StatusPredictionInterface
 {

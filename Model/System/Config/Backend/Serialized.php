@@ -24,16 +24,6 @@ use Magento\Framework\Serialize\SerializerInterface;
 class Serialized extends Value
 {
     /**
-     * @var Json|mixed
-     */
-    protected $serializer;
-
-    /**
-     * @var Random
-     */
-    protected Random $mathRandom;
-
-    /**
      * @param Random $mathRandom
      * @param SerializerInterface $serializer
      * @param Context $context
@@ -45,18 +35,16 @@ class Serialized extends Value
      * @param array $data
      */
     public function __construct(
-        Random $mathRandom,
-        SerializerInterface $serializer,
+        protected readonly Random $mathRandom,
+        protected readonly SerializerInterface $serializer,
         Context $context,
         Registry $registry,
         ScopeConfigInterface $config,
         TypeListInterface $cacheTypeList,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->mathRandom = $mathRandom;
-        $this->serializer = $serializer;
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
     }
 

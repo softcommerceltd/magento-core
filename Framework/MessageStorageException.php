@@ -17,31 +17,19 @@ use Magento\Framework\Phrase;
 class MessageStorageException extends LocalizedException
 {
     /**
-     * @var int|string|null
-     */
-    private $entity;
-
-    /**
-     * @var array
-     */
-    private array $messages;
-
-    /**
      * @param Phrase $phrase
-     * @param $entity
+     * @param int|string|null $entity
      * @param array $messages
      * @param \Exception|null $cause
      * @param int $code
      */
     public function __construct(
         Phrase $phrase,
-        $entity = null,
-        array $messages = [],
-        \Exception $cause = null,
+        private int|string|null $entity = null,
+        private array $messages = [],
+        ?\Exception $cause = null,
         int $code = 0
     ) {
-        $this->entity = $entity;
-        $this->messages = $messages;
         parent::__construct($phrase, $cause, $code);
     }
 

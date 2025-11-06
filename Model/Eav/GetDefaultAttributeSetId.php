@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace SoftCommerce\Core\Model\Eav;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
  * @inheritDoc
@@ -22,16 +21,11 @@ class GetDefaultAttributeSetId implements GetDefaultAttributeSetIdInterface
     private array $attributeSetId = [];
 
     /**
-     * @var AdapterInterface
-     */
-    private AdapterInterface $connection;
-
-    /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(ResourceConnection $resourceConnection)
-    {
-        $this->connection = $resourceConnection->getConnection();
+    public function __construct(
+        private readonly ResourceConnection $resourceConnection
+    ) {
     }
 
     /**
@@ -40,10 +34,11 @@ class GetDefaultAttributeSetId implements GetDefaultAttributeSetIdInterface
     public function execute(string $entityTypeCode): int
     {
         if (!isset($this->attributeSetId[$entityTypeCode])) {
-            $select = $this->connection->select()
-                ->from($this->connection->getTableName('eav_entity_type'), 'default_attribute_set_id')
+            $connection = $this->resourceConnection->getConnection();
+            $select = $connection->select()
+                ->from($connection->getTableName('eav_entity_type'), 'default_attribute_set_id')
                 ->where('entity_type_code = ?', $entityTypeCode);
-            $this->attributeSetId[$entityTypeCode] = (int) $this->connection->fetchOne($select);
+            $this->attributeSetId[$entityTypeCode] = (int) $connection->fetchOne($select);
         }
         return $this->attributeSetId[$entityTypeCode];
     }

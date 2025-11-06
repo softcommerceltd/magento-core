@@ -17,16 +17,11 @@ use Magento\Tax\Model\TaxClass\Source\Product as ProductTaxClassSource;
 class Classes implements OptionSourceInterface
 {
     /**
-     * @var ProductTaxClassSource
-     */
-    private ProductTaxClassSource $productTaxClassSource;
-
-    /**
      * @param ProductTaxClassSource $productTaxClassSource
      */
-    public function __construct(ProductTaxClassSource $productTaxClassSource)
-    {
-        $this->productTaxClassSource = $productTaxClassSource;
+    public function __construct(
+        private readonly ProductTaxClassSource $productTaxClassSource
+    ) {
     }
 
     /**

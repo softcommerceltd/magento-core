@@ -19,61 +19,6 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class DeleteButton implements ButtonProviderInterface
 {
     /**
-     * @var string|null
-     */
-    protected ?string $aclResource;
-
-    /**
-     * @var string
-     */
-    protected string $actionRoutePath;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $buttonClass;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $buttonLabel;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $confirmationMessage;
-
-    /**
-     * @var Escaper
-     */
-    protected Escaper $escaper;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $fontName;
-
-    /**
-     * @var string
-     */
-    protected string $idFieldName;
-
-    /**
-     * @var RequestInterface
-     */
-    protected RequestInterface $request;
-
-    /**
-     * @var int|null
-     */
-    protected ?int $sortOrder;
-
-    /**
-     * @var UrlInterface
-     */
-    protected UrlInterface $urlBuilder;
-
-    /**
      * @param Escaper $escaper
      * @param RequestInterface $request
      * @param UrlInterface $urlBuilder
@@ -87,29 +32,18 @@ class DeleteButton implements ButtonProviderInterface
      * @param int|null $sortOrder
      */
     public function __construct(
-        Escaper $escaper,
-        RequestInterface $request,
-        UrlInterface $urlBuilder,
-        string $idFieldName,
-        string $actionRoutePath,
-        ?string $aclResource = null,
-        ?string $buttonClass = null,
-        ?string $buttonLabel = null,
-        ?string $confirmationMessage = null,
-        ?string $fontName = null,
-        ?int $sortOrder = null
+        protected readonly Escaper $escaper,
+        protected readonly RequestInterface $request,
+        protected readonly UrlInterface $urlBuilder,
+        protected string $idFieldName,
+        protected string $actionRoutePath,
+        protected ?string $aclResource = null,
+        protected ?string $buttonClass = null,
+        protected ?string $buttonLabel = null,
+        protected ?string $confirmationMessage = null,
+        protected ?string $fontName = null,
+        protected ?int $sortOrder = null
     ) {
-        $this->escaper = $escaper;
-        $this->request = $request;
-        $this->urlBuilder = $urlBuilder;
-        $this->idFieldName = $idFieldName;
-        $this->actionRoutePath = $actionRoutePath;
-        $this->aclResource = $aclResource;
-        $this->buttonClass = $buttonClass;
-        $this->buttonLabel = $buttonLabel;
-        $this->confirmationMessage = $confirmationMessage;
-        $this->fontName = $fontName;
-        $this->sortOrder = $sortOrder;
     }
 
     /**
