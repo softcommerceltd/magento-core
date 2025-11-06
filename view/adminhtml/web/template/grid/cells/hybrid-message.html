@@ -1,0 +1,30 @@
+<!--
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<div class="data-grid-cell-content hybrid-message-cell" 
+     attr="'modal-trigger': ++ko.uid"
+     data-bind="
+        css: $col.getFieldClass($row()),
+        event: {
+            mouseenter: function(data, event) { $col.onMouseEnter($row(), event); },
+            mouseleave: function(data, event) { $col.onMouseLeave($row(), event); }
+        }
+     ">
+    <span data-bind="html: $col.getCellLabel($row())"></span>
+    <!-- ko if: $col.hasCellContent($row()) -->
+    <div data-bind="mageInit: {
+        'Magento_Ui/js/modal/modal':{
+            'type': $col.modalType,
+            'title': $col.getModalTitle(),
+            'trigger': '[modal-trigger=' + ko.uid + ']',
+            'responsive': true,
+            'buttons': [],
+            'modalClass': $col.modalClass
+        }}">
+        <div class="content hybrid-message-modal" data-bind="html: $col.getCellContent($row())"></div>
+    </div>
+    <!-- /ko -->
+</div>
