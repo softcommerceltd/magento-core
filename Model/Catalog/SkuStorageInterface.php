@@ -43,6 +43,21 @@ interface SkuStorageInterface
     public function getDataByEntityId(int $entityId, ?string $index = null);
 
     /**
+     * Get product data by custom attribute value
+     *
+     * This method searches through the skuStorage to find a product where
+     * the specified attribute matches the given value. Useful for custom
+     * attribute mapping scenarios.
+     *
+     * @param string $attributeCode The attribute code to search by
+     * @param string $value The attribute value to match
+     * @param string|null $index Optional specific field to return
+     * @return array|mixed|string|null Product data array, specific field value, or null if not found
+     * @throws \Exception
+     */
+    public function getDataByAttribute(string $attributeCode, string $value, ?string $index = null);
+
+    /**
      * @param string $sku
      * @return bool
      * @throws \Exception
