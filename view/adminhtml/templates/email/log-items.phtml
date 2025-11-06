@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Soft Commerce Ltd. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var array $items */
+$items = $block->getItems() ?: [];
+?>
+<?php if ($items): ?>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr style="background-color: #f5f5f5;">
+            <th style="text-align: left;">Time</th>
+            <th style="text-align: left;">Level</th>
+            <th style="text-align: left;">Message</th>
+            <th style="text-align: left;">Context</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($items as $item): ?>
+        <tr>
+            <td><?= $block->escapeHtml($item['datetime'] ?? 'N/A') ?></td>
+            <td style="font-weight: bold; color: <?= $item['level_name'] === 'CRITICAL' ? '#ff0000' : '#666' ?>">
+                <?= $block->escapeHtml($item['level_name'] ?? 'INFO') ?>
+            </td>
+            <td><?= $block->escapeHtml($item['message'] ?? '') ?></td>
+            <td>
+                <?php if (!empty($item['context'])): ?>
+                    <pre style="font-size: 11px; margin: 0;"><?= $block->escapeHtml(json_encode($item['context'], JSON_PRETTY_PRINT)) ?></pre>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php endif; ?>
