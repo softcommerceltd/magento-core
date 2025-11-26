@@ -25,7 +25,7 @@ class MessageStorageException extends LocalizedException
      */
     public function __construct(
         Phrase $phrase,
-        private int|string|null $entity = null,
+        private mixed $entity = null,
         private array $messages = [],
         ?\Exception $cause = null,
         int $code = 0
