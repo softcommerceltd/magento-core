@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2025-11-27
+### Fixed
+- replace union type with mixed for laminas-code compatibility
+- remove typed class constants for PHP 8.1/8.2 compatibility
+
 ## [2.0.0] - 2025-11-07
 ### BREAKING CHANGES
 - add PHP 8.3/8.4 compatibility with enhanced type safety
