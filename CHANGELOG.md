@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-12-19
+### Added
+- add CronHeartbeat service for monitoring cron system health
+
 ## [2.0.1] - 2025-11-27
 ### Fixed
 - replace union type with mixed for laminas-code compatibility
