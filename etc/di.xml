@@ -29,6 +29,7 @@
 
     <!-- global framework interfaces :: message storage -->
     <preference for="SoftCommerce\Core\Framework\MessageCollectorInterface" type="SoftCommerce\Core\Framework\MessageCollector"/>
+    <preference for="SoftCommerce\Core\Framework\MessageStorageInterface" type="SoftCommerce\Core\Framework\MessageStorage"/>
 
     <!-- global config ::: interface | repository | management -->
     <preference for="SoftCommerce\Core\Model\Config\DateTimeLocaleInterface" type="SoftCommerce\Core\Model\Config\DateTimeLocale"/>
@@ -62,6 +63,9 @@
 
     <!-- model source options ::: interface -->
     <preference for="SoftCommerce\Core\Model\Source\StatusInterface" type="SoftCommerce\Core\Model\Source\Status"/>
+
+    <!-- cron heartbeat ::: interface -->
+    <preference for="SoftCommerce\Core\Model\Cron\CronHeartbeatInterface" type="SoftCommerce\Core\Model\Cron\CronHeartbeat"/>
 
     <!-- model utilities -->
     <preference for="SoftCommerce\Core\Model\Utils\GetEntityMetadataInterface" type="SoftCommerce\Core\Model\Utils\GetEntityMetadata"/>
