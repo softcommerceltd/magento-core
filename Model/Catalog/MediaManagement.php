@@ -158,6 +158,7 @@ class MediaManagement implements MediaManagementInterface
 
         $md5ChecksumSaveRequest = [];
         $mediaGalleryValueTableName = $this->getConnection()->getTableName('catalog_product_entity_media_gallery_value');
+
         foreach ($this->getConnection()->fetchAll($select) as $item) {
             $value = $item['value'] ?? null;
             if (!$value || !$valueId = $item['value_id'] ?? null) {
@@ -358,5 +359,21 @@ class MediaManagement implements MediaManagementInterface
                 'attribute_id IN (?)' => array_keys($this->getImageTypesLabels())
             ]
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function reset(?int $productId = null): void
+    {
+        if ($productId !== null) {
+            unset($this->mediaGalleryData[$productId]);
+            // For video gallery, we'd need to iterate since it's keyed by URL
+            // For now, clearing specific product from video gallery is not straightforward
+            // so we only clear the main media gallery for specific product
+        } else {
+            $this->mediaGalleryData = [];
+            $this->mediaVideoGalleryData = [];
+        }
     }
 }

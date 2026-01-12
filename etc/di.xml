@@ -42,6 +42,7 @@
     <preference for="SoftCommerce\Core\Model\Catalog\GetProductAttributeDataInterface" type="SoftCommerce\Core\Model\Catalog\GetProductAttributeData"/>
     <preference for="SoftCommerce\Core\Model\Catalog\IsCatalogProductSuperLinkInterface" type="SoftCommerce\Core\Model\Catalog\IsCatalogProductSuperLink"/>
     <preference for="SoftCommerce\Core\Model\Catalog\MediaManagementInterface" type="SoftCommerce\Core\Model\Catalog\MediaManagement"/>
+    <preference for="SoftCommerce\Core\Model\Catalog\MediaChecksumComputeServiceInterface" type="SoftCommerce\Core\Model\Catalog\MediaChecksumComputeService"/>
     <preference for="SoftCommerce\Core\Model\Catalog\SkuStorageInterface" type="SoftCommerce\Core\Model\Catalog\SkuStorage"/>
 
     <!-- Customer modules :: interface | repository -->

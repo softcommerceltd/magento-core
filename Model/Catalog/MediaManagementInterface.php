@@ -77,4 +77,15 @@ interface MediaManagementInterface
      * @return int
      */
     public function deleteMediaGalleryImageLabel(int $entityId): int;
+
+    /**
+     * Reset in-memory cache
+     *
+     * Clears cached media gallery data to free memory during batch operations.
+     * Should be called between batch executions or at the start of an export.
+     *
+     * @param int|null $productId Clear cache for specific product, or all if null
+     * @return void
+     */
+    public function reset(?int $productId = null): void;
 }
