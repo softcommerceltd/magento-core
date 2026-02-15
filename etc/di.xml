@@ -35,6 +35,9 @@
     <preference for="SoftCommerce\Core\Model\Config\DateTimeLocaleInterface" type="SoftCommerce\Core\Model\Config\DateTimeLocale"/>
     <preference for="SoftCommerce\Core\Model\Config\DeveloperInterface" type="SoftCommerce\Core\Model\Config\Developer"/>
 
+    <!-- email notification service -->
+    <preference for="SoftCommerce\Core\Api\EmailNotificationInterface" type="SoftCommerce\Core\Model\EmailNotification"/>
+
     <!-- Catalog modules ::: interface | repository -->
     <preference for="SoftCommerce\Core\Model\Catalog\FileImageManagementInterface" type="SoftCommerce\Core\Model\Catalog\FileImageManagement"/>
     <preference for="SoftCommerce\Core\Model\Catalog\GetCatalogCategoryDataInterface" type="SoftCommerce\Core\Model\Catalog\GetCatalogCategoryData"/>
