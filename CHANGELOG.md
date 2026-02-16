@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-02-16
+### Added
+- add email notification service for admin alerts
+### Fixed
+- remove @media-common guard from adminhtml LESS
+
 ## [2.2.0] - 2026-01-12
 ### Added
 - add MediaChecksumComputeService and memory reset for MediaManagement
