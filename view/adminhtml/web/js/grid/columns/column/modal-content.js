@@ -1,5 +1,5 @@
 /**
- * Copyright © Soft Commerce Ltd. All rights reserved.
+ * Copyright © Byte8 Ltd. All rights reserved.
  * See LICENSE.txt for license details.
  */
 

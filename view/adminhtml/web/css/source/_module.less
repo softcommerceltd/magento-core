@@ -1,5 +1,5 @@
 // /**
-// * Copyright © Soft Commerce Ltd. All rights reserved.
+// * Copyright © Byte8 Ltd. All rights reserved.
 // * See LICENSE.txt for license details.
 // */
 
@@ -102,42 +102,42 @@
 /* Hybrid Message Renderer Styles */
 .hybrid-message-cell {
     text-align: center;
-    
+
     &.clickable {
         cursor: pointer;
     }
-    
+
     .fa-comment-dots,
     .fa-comment {
         font-size: 1.8rem;
         transition: color 0.2s ease;
-        
+
         &.message-icon-error {
             color: #f44336;
         }
-        
+
         &.message-icon-warning {
             color: #ff9800;
         }
-        
+
         &.message-icon-notice {
             color: #2196f3;
         }
-        
+
         &.message-icon-success {
             color: #4caf50;
         }
-        
+
         &.message-icon-info {
             color: #666;
         }
-        
+
         &.empty {
             color: #ddd;
             cursor: default;
         }
     }
-    
+
     &.has-messages:hover {
         .fa-comment-dots {
             transform: scale(1.1);
@@ -161,7 +161,7 @@
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     pointer-events: none;
-    
+
     &:after {
         content: '';
         position: absolute;
@@ -174,18 +174,18 @@
         border-right: 6px solid transparent;
         border-top: 6px solid #333;
     }
-    
+
     &.tooltip-below:after {
         bottom: auto;
         top: -6px;
         border-top: none;
         border-bottom: 6px solid #333;
     }
-    
+
     br {
         margin-bottom: 4px;
     }
-    
+
     .icon-success,
     .icon-error,
     .icon-warning,
@@ -197,7 +197,7 @@
         margin-right: 4px;
         font-weight: bold;
     }
-    
+
     .icon-success { color: #81c784; }
     .icon-error { color: #e57373; }
     .icon-warning { color: #ffb74d; }
@@ -216,14 +216,14 @@
     padding: 20px;
     max-height: 500px;
     overflow-y: auto;
-    
+
     .message-group {
         margin-bottom: 24px;
-        
+
         &:last-child {
             margin-bottom: 0;
         }
-        
+
         h4 {
             font-size: 16px;
             font-weight: 600;
@@ -232,17 +232,17 @@
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 8px;
         }
-        
+
         &.status-error h4 { color: #d32f2f; }
         &.status-warning h4 { color: #f57c00; }
         &.status-success h4 { color: #388e3c; }
         &.status-notice h4 { color: #1976d2; }
-        
+
         ul {
             list-style: none;
             padding: 0;
             margin: 0;
-            
+
             li {
                 padding: 8px 12px;
                 margin-bottom: 8px;
@@ -251,11 +251,11 @@
                 line-height: 1.5;
                 background-color: #f5f5f5;
                 border: 1px solid #e0e0e0;
-                
+
                 &:last-child {
                     margin-bottom: 0;
                 }
-                
+
                 .icon-success,
                 .icon-error,
                 .icon-warning,
@@ -267,7 +267,7 @@
             }
         }
     }
-    
+
     .message-modal-empty {
         text-align: center;
         color: #999;

@@ -5,5 +5,5 @@ Magento - SoftCommerce Core module.
 Used to provide commonly used functionalities for bundled modules.
 
 ## Support
-Soft Commerce Ltd <br />
-support@softcommerce.co.uk
+Byte8 Ltd <br />
+support@byte8.io

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Soft Commerce Ltd. All rights reserved.
+ * Copyright © Byte8 Ltd (formerly Soft Commerce). All rights reserved.
  * See LICENSE.txt for license details.
  */
 -->
@@ -9,7 +9,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="SoftCommerce_Core::softcommerce_core" title="SoftCommerce Extensions" translate="title" sortOrder="100">
+                <resource id="SoftCommerce_Core::softcommerce_core" title="Byte8 Extensions" translate="title" sortOrder="100">
                     <resource id="SoftCommerce_Core::configuration" title="Configuration" translate="title" sortOrder="10">
                         <resource id="SoftCommerce_Core::core_configuration" title="Core Configuration" translate="title" sortOrder="10"/>
                     </resource>
@@ -17,7 +17,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="SoftCommerce_Core::system_config" title="SoftCommerce Core Section" translate="title" sortOrder="999"/>
+                            <resource id="SoftCommerce_Core::system_config" title="Byte8 Core Section" translate="title" sortOrder="999"/>
                         </resource>
                     </resource>
                 </resource>

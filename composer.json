@@ -1,6 +1,6 @@
 {
     "name": "softcommerce/module-core",
-    "description": "Soft Commerce - Magento: Core Module.",
+    "description": "Byte8 -- Magento: Core Module.",
     "require": {
         "php": "~8.1.0||~8.2.0||~8.3.0||~8.4.0",
         "magento/framework": "^102||^103",

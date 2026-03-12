@@ -1,18 +1,18 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* Soft Commerce Ltd                                                             *
+* Byte8 Ltd                                                             *
 * -----------------                                                             *
 *                                                                               *
 * NOTICE OF LICENSE                                                             *
 *                                                                               *
-* This source file is subject to the Soft Commerce Ltd                          *
+* This source file is subject to the Byte8 Ltd                          *
 * Open Software License ("OSL") v. 3.0                                          *
 * which is bundled with this package in the file LICENSE.txt.                   *
 * It is also available through the world-wide-web at this URL:                  *
-* https://softcommerce.co.uk/pub/license/index.html                             *
+* https://byte8.io/pub/license/index.html                             *
 *                                                                               *
 * If you did not receive a copy of the license and are unable to                *
 * obtain it through the world-wide-web, please email to                         *
-* admin@softcommerce.co.uk, so we can send you a copy immediately.              *
+* support@byte8.io, so we can send you a copy immediately.              *
 *                                                                               *
 * DISCLAIMER                                                                    *
 *                                                                               *
@@ -21,7 +21,7 @@
 *                                                                               *
 * @category  SoftCommerce                                                       *
 * @package   SoftCommerce\Core                                                  *
-* @copyright © 2021 Soft Commerce Ltd. All Rights Reserved.                     *
-* @link      https://softcommerce.com                                           *
-* @license   https://softcommerce.co.uk/pub/license/index.html                  *
+* @copyright © 2021 Byte8 Ltd (formerly Soft Commerce). All Rights Reserved.                     *
+* @link      https://byte8.io                                           *
+* @license   https://byte8.io/pub/license/index.html                  *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

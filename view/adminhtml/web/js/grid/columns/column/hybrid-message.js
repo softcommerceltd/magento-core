@@ -1,5 +1,5 @@
 /**
- * Copyright © Soft Commerce Ltd. All rights reserved.
+ * Copyright © Byte8 Ltd. All rights reserved.
  * See LICENSE.txt for license details.
  */
 
@@ -42,7 +42,7 @@ define([
             if (!record) {
                 return 'far fa-comment empty';
             }
-            
+
             var hasMessages = record[this.index + '_has_messages'],
                 status = record[this.index + '_status'] || 'info',
                 iconClass;

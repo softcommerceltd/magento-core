@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © Soft Commerce Ltd. All rights reserved.
+ * Copyright © Byte8 Ltd (formerly Soft Commerce). All rights reserved.
  * See LICENSE.txt for license details.
  */
 -->
@@ -16,6 +16,13 @@
                         <item name="template" xsi:type="string">SoftCommerce_Core::messages/html.phtml</item>
                     </item>
                 </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Notification\MessageList">
+        <arguments>
+            <argument name="messages" xsi:type="array">
+                <item name="softcommerce_rebrand_byte8" xsi:type="string">SoftCommerce\Core\Model\System\Message\RebrandNotice</item>
             </argument>
         </arguments>
     </type>
