@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-03-13
+### Added
+- add rebrand notice and update copyright headers to Byte8 Ltd
+
 ## [2.3.0] - 2026-02-16
 ### Added
 - add email notification service for admin alerts
