@@ -46,7 +46,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param array $format
      * @return string
      */
-    public function execute(array $data, $format = [])
+    public function execute(array $data, mixed $format = [])
     {
         $this->executeBefore($format);
 
@@ -72,7 +72,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $format
      * @return $this
      */
-    private function executeBefore($format)
+    private function executeBefore(mixed $format)
     {
         $this->index = 0;
         $this->format = $format;
@@ -96,7 +96,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param null $status
      * @return $this
      */
-    private function generateDataOutput($data, $status = null)
+    private function generateDataOutput(mixed $data, mixed $status = null)
     {
         if ($this->index > self::LIMIT) {
             return $this;
@@ -133,7 +133,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param string|null $status
      * @return $this
      */
-    private function setDataOutput($data, ?string $status = StatusInterface::SUCCESS)
+    private function setDataOutput(mixed $data, ?string $status = StatusInterface::SUCCESS)
     {
         $htmlTag = $this->format[self::HTML_TAG] ?? '%1';
         $index = explode('%', $htmlTag);
@@ -172,7 +172,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $classTag
      * @return string
      */
-    private function getClassTag($classTag): string
+    private function getClassTag(mixed $classTag): string
     {
         $classTag = is_array($classTag)
             ? implode(' ', $classTag)

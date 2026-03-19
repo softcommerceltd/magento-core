@@ -45,7 +45,7 @@ class OutputArray implements OutputArrayInterface
      * @param null $status
      * @return $this
      */
-    private function generateDataOutput($data, $status = null)
+    private function generateDataOutput(mixed $data, mixed $status = null)
     {
         if (!is_array($data)) {
             $this->setDataOutput($data, $status);
@@ -77,7 +77,7 @@ class OutputArray implements OutputArrayInterface
      * @param string|int|null $key
      * @return $this
      */
-    private function setDataOutput($result, $key = null)
+    private function setDataOutput(mixed $result, mixed $key = null)
     {
         if (null !== $key) {
             $this->data[$key][] = $result;

@@ -57,7 +57,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $format
      * @return $this
      */
-    private function executeBefore($format)
+    private function executeBefore(mixed $format)
     {
         $this->format = $format;
         $this->dataHtml = '';
@@ -85,7 +85,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param null $status
      * @return $this
      */
-    private function generateDataOutput($data, $status = null)
+    private function generateDataOutput(mixed $data, mixed $status = null)
     {
         foreach ($data as $item) {
             if (!is_array($item)) {
@@ -149,7 +149,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $entityGroup
      * @return $this
      */
-    private function setHeader($entityGroup)
+    private function setHeader(mixed $entityGroup)
     {
         if (isset($this->flag[self::HTML_HEADER_TAG][$entityGroup])
             || !$headerTag = $this->format[self::HTML_HEADER_TAG] ?? null
@@ -166,7 +166,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $entityGroup
      * @return $this
      */
-    private function setWrapper($entityGroup)
+    private function setWrapper(mixed $entityGroup)
     {
         if (!isset($this->format[self::HTML_WRAPPER])) {
             return $this;
@@ -194,7 +194,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $classTag
      * @return string
      */
-    private function getClassTag($classTag): string
+    private function getClassTag(mixed $classTag): string
     {
         $classTag = is_array($classTag)
             ? implode(' ', $classTag)
@@ -206,7 +206,7 @@ class OutputHtml implements OutputHtmlInterface
      * @param $item
      * @return string
      */
-    private function parseToString($item): string
+    private function parseToString(mixed $item): string
     {
         if (is_array($item)) {
             $item = implode(' | ', $item);

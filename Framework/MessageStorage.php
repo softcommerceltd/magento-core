@@ -30,7 +30,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData($entity = null, array $status = []): array
+    public function getData(mixed $entity = null, array $status = []): array
     {
         $data = null !== $entity
             ? ($this->data[$entity] ?? [])
@@ -88,7 +88,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function addData($message, $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static
+    public function addData(mixed $message, mixed $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static
     {
         $data = [
             self::ENTITY => $entity,
@@ -116,7 +116,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function mergeData(array $data, $key = null): static
+    public function mergeData(array $data, mixed $key = null): static
     {
         null !== $key
             ? $this->data[$key] = array_merge_recursive($this->data[$key] ?? [], $data[$key] ?? [])
@@ -136,7 +136,7 @@ class MessageStorage implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function resetData($key = null): static
+    public function resetData(mixed $key = null): static
     {
         if (null === $key) {
             $this->data = [];

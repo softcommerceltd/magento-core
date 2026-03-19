@@ -33,7 +33,7 @@ class DateTimeLocale implements DateTimeLocaleInterface
     /**
      * @inheritDoc
      */
-    public function getGmtDateTime($input = null, ?string $format = \DateTime::W3C): ?string
+    public function getGmtDateTime(mixed $input = null, ?string $format = \DateTime::W3C): ?string
     {
         return $this->dateTime->gmtDate($format, $input);
     }
@@ -41,7 +41,7 @@ class DateTimeLocale implements DateTimeLocaleInterface
     /**
      * @inheritDoc
      */
-    public function getDateTime($date = null, string $format = 'Y-m-d H:i:s'): string
+    public function getDateTime(mixed $date = null, string $format = 'Y-m-d H:i:s'): string
     {
         return $this->timezone->date($date)->format($format);
     }
@@ -49,7 +49,7 @@ class DateTimeLocale implements DateTimeLocaleInterface
     /**
      * @inheritDoc
      */
-    public function setTimeZoneLocal($UTC = false)
+    public function setTimeZoneLocal(mixed $UTC = false)
     {
         if ($UTC) {
             return date_default_timezone_set($UTC);

@@ -21,18 +21,18 @@ interface DateTimeLocaleInterface
      * @param string|null $format
      * @return string|null
      */
-    public function getGmtDateTime($input = null, ?string $format = \DateTime::W3C): ?string;
+    public function getGmtDateTime(mixed $input = null, ?string $format = \DateTime::W3C): ?string;
 
     /**
      * @param mixed|null $date
      * @param string $format
      * @return string
      */
-    public function getDateTime($date = null, string $format = 'Y-m-d H:i:s'): string;
+    public function getDateTime(mixed $date = null, string $format = 'Y-m-d H:i:s'): string;
 
     /**
      * @param false $UTC
      * @return bool
      */
-    public function setTimeZoneLocal($UTC = false);
+    public function setTimeZoneLocal(mixed $UTC = false);
 }

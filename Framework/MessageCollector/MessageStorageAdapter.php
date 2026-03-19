@@ -31,7 +31,7 @@ class MessageStorageAdapter implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function getData($entity = null, array $status = []): array
+    public function getData(mixed $entity = null, array $status = []): array
     {
         $messages = null !== $entity
             ? $this->messageCollector->getEntityMessages($entity)
@@ -67,7 +67,7 @@ class MessageStorageAdapter implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function addData($message, $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static
+    public function addData(mixed $message, mixed $entity, string $status = StatusInterface::SUCCESS, array $metadata = []): static
     {
         // Convert Phrase to string if needed
         if ($message instanceof \Magento\Framework\Phrase) {
@@ -117,7 +117,7 @@ class MessageStorageAdapter implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function mergeData(array $data, $key = null): static
+    public function mergeData(array $data, mixed $key = null): static
     {
         if (null !== $key) {
             // Merge only specific key
@@ -167,7 +167,7 @@ class MessageStorageAdapter implements MessageStorageInterface
     /**
      * @inheritDoc
      */
-    public function resetData($key = null): static
+    public function resetData(mixed $key = null): static
     {
         if (null === $key) {
             $this->messageCollector->reset();
