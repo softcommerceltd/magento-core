@@ -6,6 +6,15 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        Magento's CatalogImportExport image Uploader resolves DomainManagerInterface at runtime, but the only
+        preference for it ships in Magento_Downloadable's di.xml. When Magento_Downloadable is disabled the
+        interface has no implementation and product image import fails with "Cannot instantiate interface".
+        DomainManager only reads/writes the downloadable_domains whitelist in env.php, so binding it here is
+        safe and lets image import work without re-enabling Magento_Downloadable.
+    -->
+    <preference for="Magento\Downloadable\Api\DomainManagerInterface" type="Magento\Downloadable\Model\DomainManager"/>
+
     <!-- global framework interfaces :: data mapping-->
     <preference for="SoftCommerce\Core\Framework\DataMap\StatusToFaMappingInterface" type="SoftCommerce\Core\Framework\DataMap\StatusToFaMapping"/>
     <preference for="SoftCommerce\Core\Framework\DataMap\StatusToLabelMappingInterface" type="SoftCommerce\Core\Framework\DataMap\StatusToLabelMapping"/>
