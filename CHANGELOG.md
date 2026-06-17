@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-06-17
+### Added
+- add BatchPurgeTrait for batched DB cleanup
+### Fixed
+- bind DomainManagerInterface so image import works without Magento_Downloadable
+
 ## [2.4.1] - 2026-03-24
 
 ## [2.4.0] - 2026-03-13
