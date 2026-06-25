@@ -68,6 +68,14 @@ class AttributeManagement implements AttributeManagementInterface
     private array $attributeOptionSortOrderData = [];
 
     /**
+     * Normalized option label => option_id, per attribute id. Lazily built and kept in sync
+     * with option creation so existing options are matched regardless of case/whitespace.
+     *
+     * @var array<int, array<string, int>>
+     */
+    private array $attributeOptionNormalizedIndex = [];
+
+    /**
      * @var array
      */
     private array $attributeSortOrderData = [];
@@ -442,6 +450,9 @@ class AttributeManagement implements AttributeManagementInterface
      */
     public function setAttributeOptions(int $attributeId, int $optionId, int|string $label): void
     {
+        // Capture the human label before it is potentially swapped out below (LABEL index mode).
+        $normalizedLabel = $this->parseIndexValue((string) $label);
+
         $index = $optionId;
         if ($this->valueIndex === self::OPTION_INDEX_TYPE_LABEL) {
             $index = $this->parseIndexValue($label);
@@ -449,6 +460,59 @@ class AttributeManagement implements AttributeManagementInterface
         }
 
         $this->attributeData[$attributeId]['options'][$index] = $label;
+
+        if (isset($this->attributeOptionNormalizedIndex[$attributeId])
+            && is_string($normalizedLabel)
+            && $normalizedLabel !== ''
+        ) {
+            $this->attributeOptionNormalizedIndex[$attributeId][$normalizedLabel] = $optionId;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttributeOptionIdByNormalizedLabel(int $attributeId, string $label): ?int
+    {
+        $normalizedLabel = $this->parseIndexValue($label);
+        if (!is_string($normalizedLabel) || $normalizedLabel === '') {
+            return null;
+        }
+
+        if (!isset($this->attributeOptionNormalizedIndex[$attributeId])) {
+            $this->attributeOptionNormalizedIndex[$attributeId] = $this->buildAttributeOptionNormalizedIndex($attributeId);
+        }
+
+        return $this->attributeOptionNormalizedIndex[$attributeId][$normalizedLabel] ?? null;
+    }
+
+    /**
+     * Build the normalized option-label => option_id map for an attribute from its loaded options.
+     * Handles both option-index modes (VALUE: [id => label], LABEL: [label => id]).
+     * The first occurrence of a normalized label wins, so case/whitespace duplicates that already
+     * exist in the catalog resolve to a single, stable option id.
+     *
+     * @param int $attributeId
+     * @return array<string, int>
+     */
+    private function buildAttributeOptionNormalizedIndex(int $attributeId): array
+    {
+        $index = [];
+        foreach ($this->attributeData[$attributeId]['options'] ?? [] as $key => $value) {
+            if ($this->valueIndex === self::OPTION_INDEX_TYPE_LABEL) {
+                $normalizedLabel = $this->parseIndexValue((string) $key);
+                $optionId = (int) $value;
+            } else {
+                $normalizedLabel = $this->parseIndexValue((string) $value);
+                $optionId = (int) $key;
+            }
+
+            if (is_string($normalizedLabel) && $normalizedLabel !== '' && !isset($index[$normalizedLabel])) {
+                $index[$normalizedLabel] = $optionId;
+            }
+        }
+
+        return $index;
     }
 
     /**
@@ -544,8 +608,12 @@ class AttributeManagement implements AttributeManagementInterface
                 continue;
             }
 
-            // Check if option already exists to prevent duplicates
-            if ($this->isAttributeOptionExist($attributeId, $value)) {
+            // Return the existing option (case/whitespace-insensitive) instead of creating a duplicate.
+            // This also assigns the existing id to the product so the value is not dropped.
+            if (null !== ($existingOptionId = $this->getAttributeOptionIdByNormalizedLabel($attributeId, $value))) {
+                if (!in_array($existingOptionId, $result, true)) {
+                    $result[] = $existingOptionId;
+                }
                 continue;
             }
 

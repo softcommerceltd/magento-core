@@ -181,6 +181,18 @@ interface AttributeManagementInterface
     public function getAttributeOptions(int $attributeId, int|string|null $index = null): array|int|string|null;
 
     /**
+     * Resolve an option id by its label using normalized matching (trim + case-fold).
+     *
+     * Used to find an existing option regardless of letter case or surrounding whitespace,
+     * so the import does not create case/whitespace variant duplicates.
+     *
+     * @param int $attributeId
+     * @param string $label
+     * @return int|null
+     */
+    public function getAttributeOptionIdByNormalizedLabel(int $attributeId, string $label): ?int;
+
+    /**
      * @param int $attributeId
      * @param int $optionId
      * @param int|string $label
