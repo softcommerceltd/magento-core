@@ -23,6 +23,7 @@ interface StatusInterface extends OptionSourceInterface
     public const MISSED = 'missed';
     public const PENDING = 'pending';
     public const PENDING_COLLECT = 'pending_collect';
+    public const DEFERRED = 'deferred';
     public const COMPLETE = 'complete';
     public const RUNNING = 'running';
     public const PROCESSING = 'processing';
