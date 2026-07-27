@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-07-27
+### Added
+- add DEFERRED status for order import deferral
+### Fixed
+- rebrand admin menu and configuration tab from Soft Commerce to Byte8
+
 ## [2.5.1] - 2026-06-25
 ### Fixed
 - prevent duplicate attribute options via normalized label matching
