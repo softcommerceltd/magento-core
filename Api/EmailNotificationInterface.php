@@ -15,7 +15,7 @@ use Magento\Framework\Exception\MailException;
  * Interface EmailNotificationInterface
  *
  * Service for sending email notifications using the global email log configuration.
- * Uses settings from Stores > Configuration > Soft Commerce > Core Configuration > Developer Settings.
+ * Uses settings from Stores > Configuration > Byte8 > Core Configuration > Developer Settings.
  */
 interface EmailNotificationInterface
 {

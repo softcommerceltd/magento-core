@@ -8,7 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="SoftCommerce_Core::softcommerce_core"
-             title="Soft Commerce"
+             title="Byte8"
              translate="title"
              module="SoftCommerce_Core"
              sortOrder="55"
