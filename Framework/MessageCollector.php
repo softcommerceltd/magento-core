@@ -157,6 +157,32 @@ class MessageCollector implements MessageCollectorInterface
             $totals[StatusInterface::INFO] += $stats[StatusInterface::INFO] ?? 0;
         }
 
+        return $this->resolveStatusFromTotals($totals);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOverallStatusByEntity(int|string $entity): string
+    {
+        $stats = $this->statistics[$entity] ?? [];
+
+        return $this->resolveStatusFromTotals([
+            StatusInterface::SUCCESS => $stats[StatusInterface::SUCCESS] ?? 0,
+            StatusInterface::ERROR => $stats[StatusInterface::ERROR] ?? 0,
+            StatusInterface::WARNING => $stats[StatusInterface::WARNING] ?? 0,
+            StatusInterface::INFO => $stats[StatusInterface::INFO] ?? 0
+        ]);
+    }
+
+    /**
+     * Derive a single status from success/error/warning/info counters.
+     *
+     * @param array $totals
+     * @return string
+     */
+    private function resolveStatusFromTotals(array $totals): string
+    {
         // Has both successes and errors = partial success (some entities worked, some failed)
         if ($totals[StatusInterface::SUCCESS] > 0 && $totals[StatusInterface::ERROR] > 0) {
             return StatusInterface::WARNING;

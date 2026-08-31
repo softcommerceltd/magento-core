@@ -92,6 +92,19 @@ interface MessageCollectorInterface
     public function getOverallStatus(): string;
 
     /**
+     * Resolve the overall status for a single entity only.
+     *
+     * Applies the same rules as {@see getOverallStatus()} but restricted to the
+     * given entity's statistics. Use this for per-record status writes so that
+     * one entity is never inflated to warning/error by a sibling entity that
+     * shares the (batch-scoped) collector.
+     *
+     * @param int|string $entity
+     * @return string Status constant (error, warning, complete, info)
+     */
+    public function getOverallStatusByEntity(int|string $entity): string;
+
+    /**
      * Clear messages for a specific entity or all entities
      *
      * When entity is provided, clears messages and statistics for that specific entity only.
