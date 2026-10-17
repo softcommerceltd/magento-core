@@ -86,7 +86,11 @@ class ConsoleRenderer implements RendererInterface
             $summary = $this->buildEntitySummary($entity, $entityMessages, $idField);
 
             // Always show the entity, even if metadata is incomplete
-            $statusIcon = $stats['error'] > 0 ? '<error>✗</error>' : '<info>✓</info>';
+            $statusIcon = match (true) {
+                $stats['error'] > 0 => '<error>✗</error>',
+                ($stats['warning'] ?? 0) > 0 => '<comment>⚠</comment>',
+                default => '<info>✓</info>'
+            };
             if ($summary) {
                 $this->output->writeln(sprintf('  %s %s: %s', $statusIcon, $entity, $summary));
             } else {
@@ -148,6 +152,24 @@ class ConsoleRenderer implements RendererInterface
     }
 
     /**
+     * Return the first message of an entity whose status is one of the given statuses.
+     *
+     * @param array $entityMessages Array of messages for this entity
+     * @param string[] $statuses Status keys to look for, e.g. ['error', 'critical']
+     * @return array|null
+     */
+    private function findMessageByStatus(array $entityMessages, array $statuses): ?array
+    {
+        foreach ($entityMessages as $msg) {
+            if (in_array($msg['status'] ?? 'info', $statuses, true)) {
+                return $msg;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Build summary string from entity messages
      *
      * @param int|string $entity The parent entity identifier
@@ -181,12 +203,16 @@ class ConsoleRenderer implements RendererInterface
             }
         }
 
-        // If no metadata summary was built, use the message text as fallback
+        // If no metadata summary was built, use a message text as fallback. Prefer the first
+        // error, then the first warning, so the line explains its status icon instead of showing
+        // an earlier success message next to a failure marker.
         if (empty($parts) && !empty($entityMessages)) {
-            $firstMessage = reset($entityMessages);
-            if (isset($firstMessage['message'])) {
+            $message = $this->findMessageByStatus($entityMessages, ['error', 'critical', 'failed'])
+                ?? $this->findMessageByStatus($entityMessages, ['warning'])
+                ?? reset($entityMessages);
+            if (isset($message['message'])) {
                 // Return the message text (can be multi-line)
-                return (string) $firstMessage['message'];
+                return (string) $message['message'];
             }
         }
 
