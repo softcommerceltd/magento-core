@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - console summary line shows an entity's first error (then first warning) message instead of its first message and marks warning-only entities with ⚠, so a failed entity no longer reads as a success such as 'Updated product'
+### Fixed
+- normalized attribute option label index only indexes numeric EAV option ids: custom source-model attributes keyed by string codes (country_of_manufacture "DE") were cast to 0 and resolved as a bogus option id before the label match, so e.g. "Germany" imported as 0 with an "invalid option: 0" warning and the value was never written (regression from the duplicate-option fix)
 
 
 ## [2.7.0] - 2026-09-14

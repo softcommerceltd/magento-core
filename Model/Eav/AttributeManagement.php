@@ -501,14 +501,22 @@ class AttributeManagement implements AttributeManagementInterface
         foreach ($this->attributeData[$attributeId]['options'] ?? [] as $key => $value) {
             if ($this->valueIndex === self::OPTION_INDEX_TYPE_LABEL) {
                 $normalizedLabel = $this->parseIndexValue((string) $key);
-                $optionId = (int) $value;
+                $optionId = $value;
             } else {
                 $normalizedLabel = $this->parseIndexValue((string) $value);
-                $optionId = (int) $key;
+                $optionId = $key;
+            }
+
+            // Only EAV option ids are numeric. Custom source models (e.g. country_of_manufacture)
+            // key their options by string codes such as "DE"; casting those to int yields 0, which
+            // then resolves as a bogus option id before the label lookup gets a chance. Leave them
+            // out so they fall through to the direct key / label matching.
+            if (!is_numeric($optionId)) {
+                continue;
             }
 
             if (is_string($normalizedLabel) && $normalizedLabel !== '' && !isset($index[$normalizedLabel])) {
-                $index[$normalizedLabel] = $optionId;
+                $index[$normalizedLabel] = (int) $optionId;
             }
         }
 
